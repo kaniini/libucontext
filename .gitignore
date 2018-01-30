@@ -34,4 +34,5 @@ Makefile.in
 
 *.o
 test_libucontext
+libucontext.so
 libucontext.so.*

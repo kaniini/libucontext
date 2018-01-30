@@ -1,8 +1,15 @@
 ARCH := x86_64
-LIBUCONTEXT_C_SRC =
+
+CFLAGS = -ggdb -O2 -Wall
+
+LIBUCONTEXT_C_SRC = \
+	arch/${ARCH}/makecontext.c
+
 LIBUCONTEXT_S_SRC = \
 	arch/${ARCH}/getcontext.S \
-	arch/${ARCH}/setcontext.S
+	arch/${ARCH}/setcontext.S \
+	arch/${ARCH}/swapcontext.S \
+	arch/${ARCH}/startcontext.S
 
 LIBUCONTEXT_OBJ = ${LIBUCONTEXT_C_SRC:.c=.o} ${LIBUCONTEXT_S_SRC:.S=.o}
 LIBUCONTEXT_SOVERSION = 0

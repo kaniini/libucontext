@@ -10,9 +10,10 @@
  * from the use of this software.
  */
 
-.globl __getcontext;
-__getcontext:
-	/* copy all of the current registers into the ucontext structure */
+.globl __swapcontext;
+__swapcontext:
+	/* copy all of the current registers into the ucontext structure pointed by
+	   the first argument */
 	movq	%r8, 40(%rdi)
 	movq	%r9, 48(%rdi)
 	movq	%r10, 56(%rdi)
@@ -39,13 +40,35 @@ __getcontext:
 	leaq	8(%rsp), %rcx
 	movq	%rcx, 160(%rdi)
 
-	/* we need to restore %rcx because we clobbered it earlier */	
-	movq	152(%rdi), %rcx
+	/* set all of the registers to their new states, stored in the second
+	   ucontext structure */	
+	movq	40(%rsi), %r8
+	movq	48(%rsi), %r9
+	movq	56(%rsi), %r10
+	movq	64(%rsi), %r11
+	movq	72(%rsi), %r12
+	movq	80(%rsi), %r13
+	movq	88(%rsi), %r14
+	movq	96(%rsi), %r15
+	movq	104(%rsi), %rdi
+	movq	112(%rsi), %rbp
+	movq	128(%rsi), %rbx
+	movq	136(%rsi), %rdx
+	movq	144(%rsi), %rax
+	movq	152(%rsi), %rcx
+	movq	160(%rsi), %rsp
+
+	/* set the jump target by pushing it to the stack.
+	   ret will pop the new %rip from the stack, causing us to jump there. */
+	pushq	168(%rsi)
+
+	/* finally, set %rsi correctly since we do not need it anymore. */
+	movq	120(%rsi), %rsi
 
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret
 
 
-.weak getcontext;
-getcontext = __getcontext;
+.weak swapcontext;
+swapcontext = __swapcontext;

@@ -31,6 +31,7 @@ int main (int argc, const char *argv[]) {
 	char st2[8192];
 
 
+	/* poison each coroutine's stack memory for debugging purposes */
 	memset(st1, 'A', sizeof st1);
 	memset(st2, 'B', sizeof st2);
 

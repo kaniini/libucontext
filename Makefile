@@ -1,6 +1,6 @@
 ARCH := $(shell uname -m)
 
-CFLAGS = -ggdb3 -O2 -Wall
+CFLAGS = -ggdb3 -O2 -Wall -Iarch/${ARCH}
 
 LIBUCONTEXT_C_SRC = \
 	arch/${ARCH}/makecontext.c

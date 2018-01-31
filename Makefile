@@ -1,4 +1,4 @@
-ARCH := $(uname -m)
+ARCH := $(shell uname -m)
 
 CFLAGS = -ggdb3 -O2 -Wall
 

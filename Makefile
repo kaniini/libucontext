@@ -1,6 +1,6 @@
-ARCH := x86_64
+ARCH := $(uname -m)
 
-CFLAGS = -ggdb -O2 -Wall
+CFLAGS = -ggdb3 -O2 -Wall
 
 LIBUCONTEXT_C_SRC = \
 	arch/${ARCH}/makecontext.c

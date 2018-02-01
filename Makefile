@@ -42,7 +42,7 @@ install: all
 check: test_libucontext ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=. ./test_libucontext
 
-test_libucontext: ${LIBUCONTEXT_NAME}
+test_libucontext: test_libucontext.c ${LIBUCONTEXT_NAME}
 	$(CC) -std=c99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ ${LIBUCONTEXT_NAME}
 
 .PHONY: check

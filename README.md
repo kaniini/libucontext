@@ -13,6 +13,7 @@ Adding support for new architectures is easy, but you need to know assembly lang
 
 Right now these archs are supported:
 
+ * x86
  * x86_64
  * armv6+ (`arm`)
  * aarch64

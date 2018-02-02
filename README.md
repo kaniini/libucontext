@@ -17,3 +17,4 @@ Right now these archs are supported:
  * x86_64
  * armv6+ (`arm`)
  * aarch64
+ * ppc

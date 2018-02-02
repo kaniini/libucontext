@@ -11,10 +11,13 @@ functions that are ABI compatible with glibc.
 
 Adding support for new architectures is easy, but you need to know assembly language to do it.
 
-Right now these archs are supported:
+Right now these archs are supported and should work on bare metal:
 
  * x86
  * x86_64
  * armv6+ (`arm`)
  * aarch64
+
+These archs require kernel assistance and use a syscall (the only assembly is the trampoline):
+
  * ppc

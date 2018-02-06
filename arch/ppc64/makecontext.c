@@ -39,10 +39,11 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	sp -= (uc_link + 1);
 	sp = (greg_t *) (((uintptr_t) sp & -16L));
 
-	ucp->uc_mcontext.gp_regs[REG_NIP]  = (uintptr_t) func;
-	ucp->uc_mcontext.gp_regs[REG_LNK]  = (uintptr_t) &__start_context;
-	ucp->uc_mcontext.gp_regs[REG_R31]  = (uintptr_t) ucp->uc_link;
-	ucp->uc_mcontext.gp_regs[REG_SP]   = (uintptr_t) sp;
+	ucp->uc_mcontext.gp_regs[REG_NIP]   = (uintptr_t) func;
+	ucp->uc_mcontext.gp_regs[REG_LNK]   = (uintptr_t) &__start_context;
+	ucp->uc_mcontext.gp_regs[REG_SP]    = (uintptr_t) sp;
+	ucp->uc_mcontext.gp_regs[REG_ENTRY] = (uintptr_t) func;
+	ucp->uc_mcontext.gp_regs[REG_R31]   = (uintptr_t) ucp->uc_link;
 
 	sp[0] = (uintptr_t) &__start_context;
 	sp[uc_link] = (uintptr_t) ucp->uc_link;

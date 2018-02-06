@@ -21,3 +21,4 @@ Right now these archs are supported and should work on bare metal:
 These archs require kernel assistance and use a syscall (the only assembly is the trampoline):
 
  * ppc
+ * ppc64 (ELFv2 ABI spec only, ELFv1 not supported)

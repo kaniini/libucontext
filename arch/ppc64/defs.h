@@ -56,7 +56,10 @@
 /* nip register is actually %srr0 (r32) */
 #define REG_NIP		REG_R32
 
-/* lnk register is actually r32 */
+/* entry register is actually %r12 */
+#define REG_ENTRY	REG_R12
+
+/* lnk register is actually %r36 */
 #define REG_LNK		REG_R36
 
 #endif

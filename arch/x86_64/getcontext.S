@@ -39,9 +39,6 @@ __getcontext:
 	leaq	8(%rsp), %rcx
 	movq	%rcx, 160(%rdi)
 
-	/* we need to restore %rcx because we clobbered it earlier */	
-	movq	152(%rdi), %rcx
-
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret

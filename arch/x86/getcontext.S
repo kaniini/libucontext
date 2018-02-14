@@ -42,9 +42,6 @@ __getcontext:
 	movw	%fs, %cx
 	movl	%ecx, OFFSET_REG_FS(%eax)
 
-	/* we need to restore %ecx because we clobbered it earlier */	
-	movl	OFFSET_REG_ECX(%eax), %ecx
-
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret

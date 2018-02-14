@@ -18,7 +18,7 @@ __start_context:
 	je	hosed
 
 	/* call setcontext to switch to the linked context */
-	call	__setcontext
+	call	__setcontext@plt
 	movl	%eax, (%esp)
 
 hosed:

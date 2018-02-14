@@ -22,3 +22,21 @@ These archs require kernel assistance and use a syscall (the only assembly is th
 
  * ppc
  * ppc64 (ELFv2 ABI spec only, ELFv1 not supported)
+
+
+## building
+
+`libucontext` uses a simple makefile build system.  You should define `ARCH=` at build time, otherwise
+the build system will attempt to guess using `uname -m`.
+
+```
+$ make ARCH=x86_64
+$ make ARCH=x86_64 check
+$ make ARCH=x86_64 DESTDIR=out install
+```
+
+
+## support
+
+`libucontext` is offered as part of the `gcompat` project.  Accordingly, please address all questions
+and bug reports to gcompat@lists.adelielinux.org.

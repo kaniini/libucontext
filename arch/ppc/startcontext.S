@@ -14,8 +14,12 @@
 __start_context:
 	/* get the proper context into position and test for NULL */
 	mr.	3,31
-	beq	hosed
+
+	/* if we have no linked context, lets get out of here */
+	beq	no_linked_context
+
+	/* jump to setcontext */
 	bl	__setcontext@local
 
-hosed:
+no_linked_context:
 	b	exit@GOT

@@ -17,6 +17,7 @@ Right now these archs are supported and should work on bare metal:
  * x86_64
  * armv6+ (`arm`)
  * aarch64
+ * s390x
 
 These archs require kernel assistance and use a syscall (the only assembly is the trampoline):
 

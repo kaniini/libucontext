@@ -16,13 +16,15 @@ __start_context:
 	movq	%rbx, %rsp
 	movq	(%rsp), %rdi
 	testq	%rdi, %rdi
-	je	hosed
+
+	/* if we have no linked context, lets get out of here */
+	je	no_linked_context
 
 	/* call setcontext to switch to the linked context */
 	call	__setcontext@plt
 	movq	%rax, %rdi
 
-hosed:
+no_linked_context:
 	/* we are returning into a null context, it seems, so maybe we should exit */
 	call	exit@plt
 

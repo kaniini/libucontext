@@ -13,19 +13,19 @@
 .globl __start_context;
 .hidden __start_context;
 __start_context:
-	cmpdi	31,0		/* test if ucontext link pointer is null */
-	beq	do_exit		/* if it is, exit */
+	cmpdi	31,0			/* test if ucontext link pointer is null */
+	beq	no_linked_context	/* if it is, exit */
 
 	/* now, call SYS_swapcontext */
-	mr      4,31		/* ucp is in r31 */
-	li      3,0		/* don't care about restoring, set oucp to NULL */
-	li      5,1696		/* sizeof(ucontext_t) */
-	li      0,249		/* SYS_swapcontext */
+	mr      4,31			/* ucp is in r31 */
+	li      3,0			/* don't care about restoring, set oucp to NULL */
+	li      5,1696			/* sizeof(ucontext_t) */
+	li      0,249			/* SYS_swapcontext */
 	sc
 
 	/* we should not wind back up here, if we do, exit with -1 */
 	li	3,-1
 
-do_exit:
+no_linked_context:
 	b	exit@GOT
 	nop

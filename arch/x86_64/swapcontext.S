@@ -23,8 +23,8 @@ __swapcontext:
 	movq	%r14, 88(%rdi)
 	movq	%r15, 96(%rdi)
 	movq	%rdi, 104(%rdi)
-	movq	%rbp, 112(%rdi)
-	movq	%rsi, 120(%rdi)
+	movq	%rsi, 112(%rdi)
+	movq	%rbp, 120(%rdi)
 	movq	%rbx, 128(%rdi)
 	movq	%rdx, 136(%rdi)
 	movq	$1, 144(%rdi)		/* $1 is %rax */
@@ -51,7 +51,7 @@ __swapcontext:
 	movq	88(%rsi), %r14
 	movq	96(%rsi), %r15
 	movq	104(%rsi), %rdi
-	movq	112(%rsi), %rbp
+	movq	120(%rsi), %rbp
 	movq	128(%rsi), %rbx
 	movq	136(%rsi), %rdx
 	movq	144(%rsi), %rax
@@ -63,7 +63,7 @@ __swapcontext:
 	pushq	168(%rsi)
 
 	/* finally, set %rsi correctly since we do not need it anymore. */
-	movq	120(%rsi), %rsi
+	movq	112(%rsi), %rsi
 
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax

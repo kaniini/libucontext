@@ -22,8 +22,8 @@ __getcontext:
 	movq	%r14, 88(%rdi)
 	movq	%r15, 96(%rdi)
 	movq	%rdi, 104(%rdi)
-	movq	%rbp, 112(%rdi)
-	movq	%rsi, 120(%rdi)
+	movq	%rsi, 112(%rdi)
+	movq	%rbp, 120(%rdi)
 	movq	%rbx, 128(%rdi)
 	movq	%rdx, 136(%rdi)
 	movq	$1, 144(%rdi)		/* $1 is %rax */

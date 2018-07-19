@@ -21,8 +21,8 @@ __setcontext:
 	movq    80(%rdi), %r13
 	movq    88(%rdi), %r14
 	movq    96(%rdi), %r15
-	movq    112(%rdi), %rbp
-	movq    120(%rdi), %rsi
+	movq    112(%rdi), %rsi
+	movq    120(%rdi), %rbp
 	movq    128(%rdi), %rbx
 	movq    136(%rdi), %rdx
 	movq    144(%rdi), %rax

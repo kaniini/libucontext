@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2018 William Pitcock <nenolod@dereferenced.org>
+ * Copyright (c) 2019 Bobby Bingham <koorogi@koorogi.info>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -10,36 +11,15 @@
  * from the use of this software.
  */
 
-#define _GNU_SOURCE
-#include <stddef.h>
-#include <stdarg.h>
-#include <signal.h>
-#include <string.h>
-#include <stdint.h>
 #include <errno.h>
-#include <unistd.h>
-#include <sys/syscall.h>
 
-
-int
-__setcontext(const ucontext_t *ucp)
+__attribute__ ((visibility ("hidden")))
+int __retfromsyscall(long retval)
 {
-#ifdef SYS_swapcontext
-	int r;
-
-	r = syscall(SYS_swapcontext, NULL, (void *) ucp, sizeof(ucontext_t));
-	if (r < 0)
-	{
-		errno = -r;
+	if (retval < 0) {
+		errno = -retval;
 		return -1;
 	}
-
-	return r;
-#else
-	errno = ENOSYS;
-	return -1;
-#endif
+	return 0;
 }
 
-
-extern __typeof(__setcontext) setcontext __attribute__((weak, __alias__("__setcontext")));

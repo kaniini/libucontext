@@ -2,14 +2,8 @@ ARCH := $(shell uname -m)
 
 CFLAGS = -ggdb3 -O2 -Wall -Iarch/${ARCH}
 
-LIBUCONTEXT_C_SRC = \
-	arch/${ARCH}/makecontext.c
-
-LIBUCONTEXT_S_SRC = \
-	arch/${ARCH}/getcontext.S \
-	arch/${ARCH}/setcontext.S \
-	arch/${ARCH}/swapcontext.S \
-	arch/${ARCH}/startcontext.S
+LIBUCONTEXT_C_SRC = $(wildcard arch/${ARCH}/*.c)
+LIBUCONTEXT_S_SRC = $(wildcard arch/${ARCH}/*.S)
 
 LIBUCONTEXT_OBJ = ${LIBUCONTEXT_C_SRC:.c=.o} ${LIBUCONTEXT_S_SRC:.S=.o}
 LIBUCONTEXT_SOVERSION = 0

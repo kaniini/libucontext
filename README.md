@@ -19,7 +19,7 @@ Right now these archs are supported and should work on bare metal:
  * aarch64
  * s390x
 
-These archs require kernel assistance and use a syscall (the only assembly is the trampoline):
+These archs require kernel assistance and use a syscall:
 
  * ppc
  * ppc64 (ELFv2 ABI spec only, ELFv1 not supported)

@@ -48,6 +48,7 @@ static void f2 (void) {
 int main (int argc, const char *argv[]) {
 	char st1[8192];
 	char st2[8192];
+	volatile int done = 0;
 
 
 	/* poison each coroutine's stack memory for debugging purposes */
@@ -70,5 +71,16 @@ int main (int argc, const char *argv[]) {
 
 
 	swapcontext(&ctx[0], &ctx[2]);
+
+
+	/* test ability to use getcontext/setcontext without makecontext */
+	getcontext(&ctx[1]);
+	printf("done = %d\n", done);
+	if (done++ == 0) setcontext(&ctx[1]);
+	if (done != 2) {
+		fprintf(stderr, "wrong value for done.  got %d, expected 2\n", done);
+		abort();
+	}
+
 	return 0;
 }

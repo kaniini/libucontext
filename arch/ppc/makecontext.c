@@ -30,13 +30,12 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	greg_t *sp, *argp;
 	va_list va;
 	int i;
-	unsigned int uc_link, stack_args;
+	unsigned int stack_args;
 
 	stack_args = argc > 8 ? argc - 8 : 0;
-	uc_link = stack_args + 1;
 
 	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
-	sp -= (uc_link + 1);
+	sp -= stack_args + 2;
 	sp = (greg_t *) ((uintptr_t) sp & -16L);
 
 	ucp->uc_mcontext.gregs[REG_NIP]  = (uintptr_t) func;
@@ -45,7 +44,6 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	ucp->uc_mcontext.gregs[REG_SP]   = (uintptr_t) sp;
 
 	sp[0] = 0;
-	sp[uc_link] = (uintptr_t) ucp->uc_link;
 	argp = &sp[2];
 
 	va_start(va, argc);

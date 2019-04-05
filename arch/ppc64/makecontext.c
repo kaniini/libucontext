@@ -25,7 +25,7 @@ extern void __start_context(void);
 
 
 void
-__makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
+__makecontext(ucontext_t *ucp, void (*func)(), int argc, ...)
 {
 	greg_t *sp;
 	va_list va;

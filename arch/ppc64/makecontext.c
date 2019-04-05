@@ -27,7 +27,7 @@ extern void __start_context(void);
 void
 __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
-	greg_t *sp, *argp;
+	greg_t *sp;
 	va_list va;
 	int i;
 	unsigned int stack_args;
@@ -45,27 +45,15 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	ucp->uc_mcontext.gp_regs[REG_R31]   = (uintptr_t) ucp->uc_link;
 
 	sp[0] = 0;
-	argp = &sp[2];
 
 	va_start(va, argc);
 
-	for (i = 0; i < argc; i++)
-		switch (i)
-		{
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 7:
+	for (i = 0; i < argc; i++) {
+		if (i < 8)
 			ucp->uc_mcontext.gp_regs[i + 3] = va_arg (va, greg_t);
-			break;
-		default:
-			*argp++ = va_arg (va, greg_t);
-			break;
-		}
+		else
+			sp[i-8 + 2] = va_arg (va, greg_t);
+	}
 
 	va_end(va);
 }

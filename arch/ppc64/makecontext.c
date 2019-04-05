@@ -35,7 +35,7 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	stack_args = argc > 8 ? argc : 0;
 
 	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
-	sp -= stack_args + 2;
+	sp -= stack_args + 4;
 	sp = (greg_t *) (((uintptr_t) sp & -16L));
 
 	ucp->uc_mcontext.gp_regs[REG_NIP]   = (uintptr_t) func;
@@ -52,7 +52,7 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 		if (i < 8)
 			ucp->uc_mcontext.gp_regs[i + 3] = va_arg (va, greg_t);
 		else
-			sp[i + 2] = va_arg (va, greg_t);
+			sp[i + 4] = va_arg (va, greg_t);
 	}
 
 	va_end(va);

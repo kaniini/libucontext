@@ -37,7 +37,7 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 
 	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
 	sp -= (uc_link + 1);
-	sp = (greg_t *) (((uintptr_t) sp & -16L) - 8);
+	sp = (greg_t *) ((uintptr_t) sp & -16L);
 
 	ucp->uc_mcontext.gregs[REG_NIP]  = (uintptr_t) func;
 	ucp->uc_mcontext.gregs[REG_LNK]  = (uintptr_t) &__start_context;

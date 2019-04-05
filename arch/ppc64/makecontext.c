@@ -45,7 +45,7 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	ucp->uc_mcontext.gp_regs[REG_ENTRY] = (uintptr_t) func;
 	ucp->uc_mcontext.gp_regs[REG_R31]   = (uintptr_t) ucp->uc_link;
 
-	sp[0] = (uintptr_t) &__start_context;
+	sp[0] = 0;
 	sp[uc_link] = (uintptr_t) ucp->uc_link;
 	argp = &sp[2];
 

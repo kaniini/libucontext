@@ -1,4 +1,7 @@
 ARCH := $(shell uname -m)
+ifeq ($(ARCH),$(filter $(ARCH),i386 i686))
+	override ARCH = x86
+endif
 
 CFLAGS = -ggdb3 -O2 -Wall -Iarch/${ARCH}
 

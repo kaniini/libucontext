@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 William Pitcock <nenolod@dereferenced.org>
+ * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
  * Copyright (c) 2019 Bobby Bingham <koorogi@koorogi.info>
  *
  * Permission to use, copy, modify, and/or distribute this software for any

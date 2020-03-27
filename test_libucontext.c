@@ -70,6 +70,9 @@ int main (int argc, const char *argv[]) {
 	makecontext(&ctx[2], f2, 0);
 
 
+	printf("doing initial swapcontext\n");
+
+
 	swapcontext(&ctx[0], &ctx[2]);
 
 

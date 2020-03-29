@@ -18,7 +18,7 @@
 #endif
 
 #define FUNC(__proc)					\
-	.globl 	__proc;					\
+	.global __proc;					\
 	.align  2;					\
 	.type   __proc, @function;			\
 	ENT(__proc)					\
@@ -28,5 +28,9 @@ __proc:							\
 #define END(__proc)					\
 	.end	__proc;					\
 	.size	__proc,.-__proc;
+
+#define ALIAS(__alias, __real)				\
+	.weak	__alias;				\
+	__alias = __real;
 
 #endif

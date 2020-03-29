@@ -3,7 +3,7 @@ ifeq ($(ARCH),$(filter $(ARCH),i386 i686))
 	override ARCH = x86
 endif
 
-CFLAGS = -ggdb3 -O2 -Wall -Iarch/${ARCH}
+CFLAGS = -ggdb3 -O2 -Wall -Iarch/${ARCH} -Iarch/common
 
 LIBUCONTEXT_C_SRC = $(wildcard arch/${ARCH}/*.c)
 LIBUCONTEXT_S_SRC = $(wildcard arch/${ARCH}/*.S)

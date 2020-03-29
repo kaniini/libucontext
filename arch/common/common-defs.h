@@ -33,6 +33,6 @@ __proc:							\
 	.weak	__alias;				\
 	__alias = __real;
 
-#define REG_OFFSET(__reg)       (MCONTEXT_GREGS + ((__reg) * SZ_REG))
+#define REG_OFFSET(__reg)       (MCONTEXT_GREGS + ((__reg) * REG_SZ))
 
 #endif

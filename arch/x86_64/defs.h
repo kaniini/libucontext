@@ -29,7 +29,7 @@
 
 #define MCONTEXT_GREGS	(40)
 
-#define SZ_REG		(8)
+#define REG_SZ		(8)
 
 #include "common-defs.h"
 

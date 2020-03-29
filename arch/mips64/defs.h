@@ -85,6 +85,8 @@
 	.cpreturn;					\
 	daddiu		$sp, FRAMESZ
 
+#define ENT(__proc)	.ent    __proc, 0;
+
 #include <common-defs.h>
 
 #endif

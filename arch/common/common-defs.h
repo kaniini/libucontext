@@ -13,11 +13,15 @@
 # define POP_FRAME(__proc)
 #endif
 
+#ifndef ENT
+# define ENT(__proc)
+#endif
+
 #define FUNC(__proc)					\
 	.globl 	__proc;					\
 	.align  2;					\
 	.type   __proc, @function;			\
-	.ent    __proc, 0;				\
+	ENT(__proc)					\
 __proc:							\
 	SETUP_FRAME(__proc)
 

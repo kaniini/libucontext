@@ -24,7 +24,7 @@ FUNC(__start_context)
 	move	$a0, $s0
 	dla	$t9, __setcontext
 
-	jalr	$t9
+	jr	$t9
 
 no_linked_context:
 	move	$a0, $zero

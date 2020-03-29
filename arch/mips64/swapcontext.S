@@ -24,10 +24,6 @@ FUNC(__swapcontext)
 
 	PUSH_FRAME(__swapcontext)
 
-	/* set the magic flag */
-	li	$v0, 1
-	sd	$v0, ((0 * REG_SZ) + MCONTEXT_GREGS)($a0)
-
 	/* set registers */
 	sd	$s0, ((16 * REG_SZ) + MCONTEXT_GREGS)($a0)
 	sd	$s1, ((17 * REG_SZ) + MCONTEXT_GREGS)($a0)

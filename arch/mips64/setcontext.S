@@ -17,11 +17,6 @@ LOCALSZ = 1
 FUNC(__setcontext)
 	PUSH_FRAME(__setcontext)
 
-	/* check for the magic flag. */
-	li	$v0, 1
-	dla	$v1, ((0 * REG_SZ) + MCONTEXT_GREGS)($a0)
-	bne	$v0, $v1, fail
-
 	/* move the context to $v0 */	
 	move	$v0, $a0
 
@@ -53,12 +48,7 @@ FUNC(__setcontext)
 	move	$v0, $zero
 	jr	$t9
 
-fail:
-	dla	$t9, exit
-
 	POP_FRAME(__setcontext)
-
-	jalr	$t9
 END(__setcontext)
 
 .weak setcontext;

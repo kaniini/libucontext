@@ -46,7 +46,7 @@ static void f2 (void) {
 	printf("start f2\n");
 	printf("swap to f1\n");
 	swapcontext(&ctx[2], &ctx[1]);
-	printf("finish f2, should swap to main\n");
+	printf("finish f2, should swap to f1\n");
 }
 
 

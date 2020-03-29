@@ -21,6 +21,9 @@ static void check_arg(int actual, int expected) {
 
 
 static void f1 (int a, int b, int c, int d, int e, int f, int g, int h, int i, int j) {
+	printf("start f1\n");
+
+	printf("checking provided arguments to function f1\n");
 	check_arg(a, 1);
 	check_arg(b, 2);
 	check_arg(c, 3);
@@ -31,8 +34,9 @@ static void f1 (int a, int b, int c, int d, int e, int f, int g, int h, int i, i
 	check_arg(h, 8);
 	check_arg(i, 9);
 	check_arg(j, 10);
+	printf("looks like all arguments are passed correctly\n");
 
-	printf("start f1\n");
+	printf("swap back to f2\n");
 	swapcontext(&ctx[1], &ctx[2]);
 	printf("finish f1\n");
 }
@@ -40,8 +44,9 @@ static void f1 (int a, int b, int c, int d, int e, int f, int g, int h, int i, i
 
 static void f2 (void) {
 	printf("start f2\n");
+	printf("swap to f1\n");
 	swapcontext(&ctx[2], &ctx[1]);
-	printf("finish f2\n");
+	printf("finish f2, should swap to main\n");
 }
 
 
@@ -80,6 +85,9 @@ int main (int argc, const char *argv[]) {
 
 
 	swapcontext(&ctx[0], &ctx[2]);
+
+
+	printf("returned from initial swapcontext\n");
 
 
 	/* test ability to use getcontext/setcontext without makecontext */

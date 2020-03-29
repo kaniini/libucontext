@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -10,65 +10,65 @@
  * from the use of this software.
  */
 
-.globl __swapcontext;
-__swapcontext:
+#include "defs.h"
+
+ALIAS(swapcontext, __swapcontext)
+
+FUNC(__swapcontext)
 	/* copy all of the current registers into the ucontext structure pointed by
 	   the first argument */
-	movq	%r8, 40(%rdi)
-	movq	%r9, 48(%rdi)
-	movq	%r10, 56(%rdi)
-	movq	%r11, 64(%rdi)
-	movq	%r12, 72(%rdi)
-	movq	%r13, 80(%rdi)
-	movq	%r14, 88(%rdi)
-	movq	%r15, 96(%rdi)
-	movq	%rdi, 104(%rdi)
-	movq	%rsi, 112(%rdi)
-	movq	%rbp, 120(%rdi)
-	movq	%rbx, 128(%rdi)
-	movq	%rdx, 136(%rdi)
-	movq	$1, 144(%rdi)		/* $1 is %rax */
-	movq	%rcx, 152(%rdi)
+	movq	%r8, REG_OFFSET(REG_R8)(%rdi)
+	movq	%r9, REG_OFFSET(REG_R9)(%rdi)
+	movq	%r10, REG_OFFSET(REG_R10)(%rdi)
+	movq	%r11, REG_OFFSET(REG_R11)(%rdi)
+	movq	%r12, REG_OFFSET(REG_R12)(%rdi)
+	movq	%r13, REG_OFFSET(REG_R13)(%rdi)
+	movq	%r14, REG_OFFSET(REG_R14)(%rdi)
+	movq	%r15, REG_OFFSET(REG_R15)(%rdi)
+	movq	%rdi, REG_OFFSET(REG_RDI)(%rdi)
+	movq	%rsi, REG_OFFSET(REG_RSI)(%rdi)
+	movq	%rbp, REG_OFFSET(REG_RBP)(%rdi)
+	movq	%rbx, REG_OFFSET(REG_RBX)(%rdi)
+	movq	%rdx, REG_OFFSET(REG_RDX)(%rdi)
+	movq	%rax, REG_OFFSET(REG_RAX)(%rdi)
+	movq	%rcx, REG_OFFSET(REG_RCX)(%rdi)
 
 	/* the first argument on the stack is the jump target (%rip), so we store it in the RIP
 	   register in the ucontext structure. */
 	movq	(%rsp), %rcx
-	movq	%rcx, 168(%rdi)
+	movq	%rcx, REG_OFFSET(REG_RIP)(%rdi)
 
 	/* finally take the stack pointer address (%rsp) offsetting by 8 to skip over the jump
 	   target. */
 	leaq	8(%rsp), %rcx
-	movq	%rcx, 160(%rdi)
+	movq	%rcx, REG_OFFSET(REG_RSP)(%rdi)
 
 	/* set all of the registers to their new states, stored in the second
 	   ucontext structure */	
-	movq	40(%rsi), %r8
-	movq	48(%rsi), %r9
-	movq	56(%rsi), %r10
-	movq	64(%rsi), %r11
-	movq	72(%rsi), %r12
-	movq	80(%rsi), %r13
-	movq	88(%rsi), %r14
-	movq	96(%rsi), %r15
-	movq	104(%rsi), %rdi
-	movq	120(%rsi), %rbp
-	movq	128(%rsi), %rbx
-	movq	136(%rsi), %rdx
-	movq	144(%rsi), %rax
-	movq	152(%rsi), %rcx
-	movq	160(%rsi), %rsp
+	movq	REG_OFFSET(REG_R8)(%rsi), %r8
+	movq	REG_OFFSET(REG_R9)(%rsi), %r9
+	movq	REG_OFFSET(REG_R10)(%rsi), %r10
+	movq	REG_OFFSET(REG_R11)(%rsi), %r11
+	movq	REG_OFFSET(REG_R12)(%rsi), %r12
+	movq	REG_OFFSET(REG_R13)(%rsi), %r13
+	movq	REG_OFFSET(REG_R14)(%rsi), %r14
+	movq	REG_OFFSET(REG_R15)(%rsi), %r15
+	movq	REG_OFFSET(REG_RDI)(%rsi), %rdi
+	movq	REG_OFFSET(REG_RBP)(%rsi), %rbp
+	movq	REG_OFFSET(REG_RBX)(%rsi), %rbx
+	movq	REG_OFFSET(REG_RDX)(%rsi), %rdx
+	movq	REG_OFFSET(REG_RAX)(%rsi), %rax
+	movq	REG_OFFSET(REG_RCX)(%rsi), %rcx
+	movq	REG_OFFSET(REG_RSP)(%rsi), %rsp
 
 	/* set the jump target by pushing it to the stack.
 	   ret will pop the new %rip from the stack, causing us to jump there. */
-	pushq	168(%rsi)
+	pushq	REG_OFFSET(REG_RIP)(%rsi)
 
 	/* finally, set %rsi correctly since we do not need it anymore. */
-	movq	112(%rsi), %rsi
+	movq	REG_OFFSET(REG_RSI)(%rsi), %rsi
 
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret
-
-
-.weak swapcontext;
-swapcontext = __swapcontext;
+END(__swapcontext)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -10,35 +10,36 @@
  * from the use of this software.
  */
 
-.globl __setcontext;
-__setcontext:
+#include "defs.h"
+
+ALIAS(setcontext, __setcontext)
+
+FUNC(__setcontext)
 	/* set all of the registers */
-	movq    40(%rdi), %r8
-	movq    48(%rdi), %r9
-	movq    56(%rdi), %r10
-	movq    64(%rdi), %r11
-	movq    72(%rdi), %r12
-	movq    80(%rdi), %r13
-	movq    88(%rdi), %r14
-	movq    96(%rdi), %r15
-	movq    112(%rdi), %rsi
-	movq    120(%rdi), %rbp
-	movq    128(%rdi), %rbx
-	movq    136(%rdi), %rdx
-	movq    144(%rdi), %rax
-	movq    152(%rdi), %rcx
-	movq    160(%rdi), %rsp
+	movq	REG_OFFSET(REG_R8)(%rdi), %r8
+	movq	REG_OFFSET(REG_R9)(%rdi), %r9
+	movq	REG_OFFSET(REG_R10)(%rdi), %r10
+	movq	REG_OFFSET(REG_R11)(%rdi), %r11
+	movq	REG_OFFSET(REG_R12)(%rdi), %r12
+	movq	REG_OFFSET(REG_R13)(%rdi), %r13
+	movq	REG_OFFSET(REG_R14)(%rdi), %r14
+	movq	REG_OFFSET(REG_R15)(%rdi), %r15
+	movq	REG_OFFSET(REG_RSI)(%rdi), %rsi
+	movq	REG_OFFSET(REG_RBP)(%rdi), %rbp
+	movq	REG_OFFSET(REG_RBX)(%rdi), %rbx
+	movq	REG_OFFSET(REG_RDX)(%rdi), %rdx
+	movq	REG_OFFSET(REG_RAX)(%rdi), %rax
+	movq	REG_OFFSET(REG_RCX)(%rdi), %rcx
+	movq	REG_OFFSET(REG_RSP)(%rdi), %rsp
 
 	/* set the jump target by pushing it to the stack.
 	   ret will pop the new %rip from the stack, causing us to jump there. */
-	pushq   168(%rdi)
+	pushq	REG_OFFSET(REG_RIP)(%rdi)
 
 	/* finally, set %rdi correctly. */
-	movq    104(%rdi), %rdi
+	movq	REG_OFFSET(REG_RDI)(%rdi), %rdi
 
 	/* we're all done here, return 0 */
-	xorl    %eax, %eax
+	xorl	%eax, %eax
 	ret
-
-.weak setcontext;
-setcontext = __setcontext;
+END(__setcontext)

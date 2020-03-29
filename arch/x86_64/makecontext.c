@@ -17,6 +17,7 @@
 #include <string.h>
 #include <stdint.h>
 
+#include "defs.h"
 
 extern void __start_context(void);
 

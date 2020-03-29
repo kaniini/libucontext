@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -10,39 +10,39 @@
  * from the use of this software.
  */
 
-.globl __getcontext;
-__getcontext:
+#include "defs.h"
+
+ALIAS(getcontext, __getcontext)
+
+FUNC(__getcontext)
 	/* copy all of the current registers into the ucontext structure */
-	movq	%r8, 40(%rdi)
-	movq	%r9, 48(%rdi)
-	movq	%r10, 56(%rdi)
-	movq	%r11, 64(%rdi)
-	movq	%r12, 72(%rdi)
-	movq	%r13, 80(%rdi)
-	movq	%r14, 88(%rdi)
-	movq	%r15, 96(%rdi)
-	movq	%rdi, 104(%rdi)
-	movq	%rsi, 112(%rdi)
-	movq	%rbp, 120(%rdi)
-	movq	%rbx, 128(%rdi)
-	movq	%rdx, 136(%rdi)
-	movq	$1, 144(%rdi)		/* $1 is %rax */
-	movq	%rcx, 152(%rdi)
+	movq	%r8, REG_OFFSET(REG_R8)(%rdi)
+	movq	%r9, REG_OFFSET(REG_R9)(%rdi)
+	movq	%r10, REG_OFFSET(REG_R10)(%rdi)
+	movq	%r11, REG_OFFSET(REG_R11)(%rdi)
+	movq	%r12, REG_OFFSET(REG_R12)(%rdi)
+	movq	%r13, REG_OFFSET(REG_R13)(%rdi)
+	movq	%r14, REG_OFFSET(REG_R14)(%rdi)
+	movq	%r15, REG_OFFSET(REG_R15)(%rdi)
+	movq	%rdi, REG_OFFSET(REG_RDI)(%rdi)
+	movq	%rsi, REG_OFFSET(REG_RSI)(%rdi)
+	movq	%rbp, REG_OFFSET(REG_RBP)(%rdi)
+	movq	%rbx, REG_OFFSET(REG_RBX)(%rdi)
+	movq	%rdx, REG_OFFSET(REG_RDX)(%rdi)
+	movq	%rax, REG_OFFSET(REG_RAX)(%rdi)
+	movq	%rcx, REG_OFFSET(REG_RCX)(%rdi)
 
 	/* the first argument on the stack is the jump target (%rip), so we store it in the RIP
 	   register in the ucontext structure. */
 	movq	(%rsp), %rcx
-	movq	%rcx, 168(%rdi)
+	movq	%rcx, REG_OFFSET(REG_RIP)(%rdi)
 
 	/* finally take the stack pointer address (%rsp) offsetting by 8 to skip over the jump
 	   target. */
 	leaq	8(%rsp), %rcx
-	movq	%rcx, 160(%rdi)
+	movq	%rcx, REG_OFFSET(REG_RSP)(%rdi)
 
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret
-
-
-.weak getcontext;
-getcontext = __getcontext;
+END(__getcontext)

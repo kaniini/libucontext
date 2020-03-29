@@ -41,7 +41,6 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 
 	argp = sp;
 	*argp++ = (uintptr_t) &__start_context;
-	*argp++ = (uintptr_t) ucp->uc_link;
 
 	va_start(va, argc);
 
@@ -49,6 +48,8 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 		*argp++ = va_arg (va, greg_t);
 
 	va_end(va);
+
+	*argp++ = (uintptr_t) ucp->uc_link;
 }
 
 

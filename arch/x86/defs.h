@@ -1,18 +1,26 @@
 #ifndef __ARCH_X86_DEFS_H
 #define __ARCH_X86_DEFS_H
 
-#define OFFSET_REG_GS	20
-#define OFFSET_REG_FS	24
-#define OFFSET_REG_ES	28
-#define OFFSET_REG_DS	32
-#define OFFSET_REG_EDI	36
-#define OFFSET_REG_ESI	40
-#define OFFSET_REG_EBP	44
-#define OFFSET_REG_ESP	48
-#define OFFSET_REG_EBX	52
-#define OFFSET_REG_EDX	56
-#define OFFSET_REG_ECX	60
-#define OFFSET_REG_EAX	64
-#define OFFSET_REG_EIP	76
+#ifndef REG_GS
+# define REG_GS		(0)
+# define REG_FS		(1)
+# define REG_ES		(2)
+# define REG_DS		(3)
+# define REG_EDI	(4)
+# define REG_ESI	(5)
+# define REG_EBP	(6)
+# define REG_ESP	(7)
+# define REG_EBX	(8)
+# define REG_EDX	(9)
+# define REG_ECX	(10)
+# define REG_EAX	(11)
+# define REG_EIP	(14)
+#endif
+
+#define REG_SZ		(4)
+
+#define MCONTEXT_GREGS	(20)
+
+#include "common-defs.h"
 
 #endif

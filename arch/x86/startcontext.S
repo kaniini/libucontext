@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -10,8 +10,9 @@
  * from the use of this software.
  */
 
-.globl __start_context;
-__start_context:
+#include "defs.h"
+
+FUNC(__start_context)
 	/* get the proper context into position and test for NULL */
 	leal	(%esp,%ebx,4), %esp
 	cmpl	$0, (%esp)
@@ -34,7 +35,7 @@ no_linked_context:
 	/* something is really hosed, call hlt to force termination */
 	hlt
 
-
 __i686.get_pc_thunk.bx:
 	mov	(%esp), %ebx
 	ret
+END(__start_context)

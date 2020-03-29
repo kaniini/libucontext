@@ -16,6 +16,8 @@ LOCALSZ = 2
 
 A1_OFFSET = FRAMESZ - (1 * REG_SZ)
 
+ALIAS(swapcontext, __swapcontext)
+
 FUNC(__swapcontext)
 	/* copy $gp, $sp, $fp to temporary registers so we don't clobber them */
 	move	$a2, $gp
@@ -82,6 +84,3 @@ fail:
 	move	$v0, $zero
 	jalr	$t9
 END(__swapcontext)
-
-.weak swapcontext;
-swapcontext = __swapcontext;

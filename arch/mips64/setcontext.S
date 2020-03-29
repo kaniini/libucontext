@@ -14,6 +14,8 @@ LOCALSZ = 1
 
 #include "defs.h"
 
+ALIAS(setcontext, __setcontext)
+
 FUNC(__setcontext)
 	PUSH_FRAME(__setcontext)
 
@@ -50,6 +52,3 @@ FUNC(__setcontext)
 
 	POP_FRAME(__setcontext)
 END(__setcontext)
-
-.weak setcontext;
-setcontext = __setcontext;

@@ -26,6 +26,8 @@ A7_OFF = FRAMESZ - (1 * REG_SZ)
  * assembly rather than C.  Annoying, that...
  */
 
+ALIAS(makecontext, __makecontext)
+
 FUNC(__makecontext)
 	PUSH_FRAME(__makecontext)
 
@@ -102,7 +104,3 @@ no_more_arguments:
 
 	jr	$ra
 END(__makecontext)
-
-
-.weak makecontext
-makecontext = __makecontext;

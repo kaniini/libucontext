@@ -14,6 +14,8 @@ LOCALSZ = 1
 
 #include "defs.h"
 
+ALIAS(getcontext, __getcontext)
+
 FUNC(__getcontext)
 	/* copy $gp, $sp, $fp to temporary registers so we don't clobber them */
 	move	$a2, $gp
@@ -42,6 +44,3 @@ FUNC(__getcontext)
 
 	jr	$ra
 END(__getcontext)
-
-.weak getcontext;
-getcontext = __getcontext;

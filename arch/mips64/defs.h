@@ -85,16 +85,6 @@
 	.cpreturn;					\
 	daddiu		$sp, FRAMESZ
 
-#define FUNC(__proc)					\
-	.globl 	__proc;					\
-	.align  2;					\
-	.type   __proc, @function;			\
-	.ent    __proc, 0;				\
-__proc:							\
-	SETUP_FRAME(__proc)
-
-#define END(__proc)					\
-	.end	__proc;					\
-	.size	__proc,.-__proc;
+#include <common-defs.h>
 
 #endif

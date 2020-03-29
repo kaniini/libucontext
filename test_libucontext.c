@@ -56,11 +56,17 @@ int main (int argc, const char *argv[]) {
 	memset(st2, 'B', sizeof st2);
 
 
+	printf("setting up context 1\n");
+
+
 	getcontext(&ctx[1]);
 	ctx[1].uc_stack.ss_sp = st1;
 	ctx[1].uc_stack.ss_size = sizeof st1;
 	ctx[1].uc_link = &ctx[0];
 	makecontext(&ctx[1], f1, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+
+	printf("setting up context 2\n");
 
 
 	getcontext(&ctx[2]);

@@ -1,0 +1,46 @@
+Changes from 0.9.0 to 0.10
+--------------------------
+
+* Added MIPS O32 and MIPS N64 ports.
+
+* Improved test program (test_libucontext) verbosity.
+
+* Modernized all architectures to use common assembly
+  macros, such as REG_OFFSET(reg), FUNC() and ALIAS().
+
+* Added debugging hints to assembly functions for GDB.
+
+* Automatically alias i386/i686 to x86 in makefile.
+  Patch contributed by Gabriel Ivascu.
+
+Changes from 0.1.3 to 0.9.0
+---------------------------
+
+* Pass ${LDFLAGS} when linking the libucontext library.
+  Patch contributed by Khem Raj.
+
+* Fix clobbering of the first stack argument on x86.
+  Patch contributed by A. Wilcox.
+
+* Add support for building a static libucontext.
+  Patches contributed by Gabriel Ivascu.
+
+* Rewrite ppc/ppc64 implementation to fully use the
+  swapcontext(3) syscall.
+  Patches contributed by Bobby Bingham.
+
+Changes from 0.1.1 to 0.1.3
+---------------------------
+
+* Fix register clobbering on x86_64.
+  Patches contributed by A. Wilcox and Timo Teräs.
+
+Changes from 0.1.0 to 0.1.1
+---------------------------
+
+* Added S390X port.
+
+* Cleaned up the ppc/ppc64 trampoline.
+
+* Fixed up GOT clobbering and removed a textrel from the x86
+  trampoline.

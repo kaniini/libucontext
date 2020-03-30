@@ -10,11 +10,13 @@
  * from the use of this software.
  */
 
-.globl __start_context;
-__start_context:
+#include "defs.h"
+
+FUNC(__start_context)
 	/* get the proper context into position and test for NULL */
 	mov	x0, x19
 	cbnz	x0, __setcontext
 
 	/* something went wrong, exit */
 	b	exit
+END(__start_context)

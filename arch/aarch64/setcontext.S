@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,16 +12,17 @@
 
 #include "defs.h"
 
-.globl __setcontext;
-__setcontext:
+ALIAS(setcontext, __setcontext)
+
+FUNC(__setcontext)
 	/* restore GPRs */
-	ldp	x18, x19, [x0, #R0_OFFSET + (18 * REGSZ)]
-	ldp	x20, x21, [x0, #R0_OFFSET + (20 * REGSZ)]
-	ldp	x22, x23, [x0, #R0_OFFSET + (22 * REGSZ)]
-	ldp	x24, x25, [x0, #R0_OFFSET + (24 * REGSZ)]
-	ldp	x26, x27, [x0, #R0_OFFSET + (26 * REGSZ)]
-	ldp	x28, x29, [x0, #R0_OFFSET + (28 * REGSZ)]
-	ldr	x30,      [x0, #R0_OFFSET + (30 * REGSZ)]
+	ldp	x18, x19, [x0, #REG_OFFSET(18)]
+	ldp	x20, x21, [x0, #REG_OFFSET(20)]
+	ldp	x22, x23, [x0, #REG_OFFSET(22)]
+	ldp	x24, x25, [x0, #REG_OFFSET(24)]
+	ldp	x26, x27, [x0, #REG_OFFSET(26)]
+	ldp	x28, x29, [x0, #REG_OFFSET(28)]
+	ldr	x30,      [x0, #REG_OFFSET(30)]
 
 	/* save current stack pointer */
 	ldr	x2, [x0, #SP_OFFSET]
@@ -33,15 +34,11 @@ __setcontext:
 	ldr	x16, [x0, #PC_OFFSET]
 
 	/* restore args */
-	ldp	x2, x3, [x0, #R0_OFFSET + (2 * REGSZ)]
-	ldp	x4, x5, [x0, #R0_OFFSET + (4 * REGSZ)]
-	ldp	x6, x7, [x0, #R0_OFFSET + (6 * REGSZ)]
-	ldp	x0, x1, [x0, #R0_OFFSET + (0 * REGSZ)]
+	ldp	x2, x3, [x0, #REG_OFFSET(2)]
+	ldp	x4, x5, [x0, #REG_OFFSET(4)]
+	ldp	x6, x7, [x0, #REG_OFFSET(6)]
+	ldp	x0, x1, [x0, #REG_OFFSET(0)]
 
 	/* jump to new PC */
 	br	x16
-
-
-.weak setcontext;
-setcontext = __setcontext;
-
+END(__setcontext)

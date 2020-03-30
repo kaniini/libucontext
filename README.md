@@ -38,8 +38,3 @@ $ make ARCH=x86_64 check
 $ make ARCH=x86_64 DESTDIR=out install
 ```
 
-
-## support
-
-`libucontext` is offered as part of the `gcompat` project.  Accordingly, please address all questions
-and bug reports to gcompat@lists.adelielinux.org.

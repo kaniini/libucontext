@@ -31,7 +31,7 @@ FUNC(__makecontext)
 
 	/* set $zero in the mcontext to 1. */
 	li	$v0, 1
-	sw	$v0, ((0 * REG_SZ) + MCONTEXT_GREGS)($a0)
+	sw	$v0, REG_OFFSET(0)($a0)
 
 	/* ensure the stack is aligned on a quad-word boundary. */
 	lw	$t0, UCONTEXT_STACK_PTR($a0)
@@ -80,16 +80,16 @@ no_more_arguments:
 
 	/* copy link pointer as $s0... */
 	lw	$v1, UCONTEXT_UC_LINK($a0)
-	sw	$v1, ((16 * REG_SZ) + MCONTEXT_GREGS)($a0)
+	sw	$v1, REG_OFFSET(16)($a0)
 
 	/* set our $sp */
-	sw	$t0, ((29 * REG_SZ) + MCONTEXT_GREGS)($a0)
+	sw	$t0, REG_OFFSET(29)($a0)
 
 	/* $gp is copied as $s1 */
-	sw	$gp, ((17 * REG_SZ) + MCONTEXT_GREGS)($a0)
+	sw	$gp, REG_OFFSET(17)($a0)
 
 	/* set our $ra */
-	sw	$t9, ((31 * REG_SZ) + MCONTEXT_GREGS)($a0)
+	sw	$t9, REG_OFFSET(31)($a0)
 
 	/* set our $pc */
 	sw	$a1, MCONTEXT_PC($a0)

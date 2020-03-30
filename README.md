@@ -37,4 +37,3 @@ $ make ARCH=x86_64
 $ make ARCH=x86_64 check
 $ make ARCH=x86_64 DESTDIR=out install
 ```
-

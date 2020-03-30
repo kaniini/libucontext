@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,17 +12,14 @@
 
 #include "defs.h"
 
+ALIAS(getcontext, __getcontext)
 
-.globl __getcontext;
-__getcontext:
+FUNC(__getcontext)
 	lgr	%r1, %r2			/* use %r1 as our working register */
 	la	%r2, 0				/* we will return 0 */
 
-	stam	%a0, %a15, OFFSET_AREGS(%r1)	/* store access registers */
-	stmg	%r0, %r15, OFFSET_GREGS(%r1)	/* store general-purpose registers */
+	stam	%a0, %a15, AREG_OFFSET(0)(%r1)	/* store access registers */
+	stmg	%r0, %r15, REG_OFFSET(0)(%r1)	/* store general-purpose registers */
 
 	br	%r14				/* return to where we came from */
-
-
-.weak getcontext;
-getcontext = __getcontext;
+END(__getcontext)

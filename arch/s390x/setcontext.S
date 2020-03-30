@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,16 +12,13 @@
 
 #include "defs.h"
 
+ALIAS(setcontext, __setcontext)
 
-.globl __setcontext;
-__setcontext:
+FUNC(__setcontext)
 	lgr	%r1, %r2			/* use %r1 as our working register */
 
-	lam	%a2, %a15, OFFSET_AREGS+8(%r1)	/* load access registers, but skip %a0 and %a1 which are for TLS */
-	lmg	%r0, %r15, OFFSET_GREGS(%r1)	/* store general-purpose registers */
+	lam	%a2, %a15, AREG_OFFSET(2)(%r1)	/* load access registers, but skip %a0 and %a1 which are for TLS */
+	lmg	%r0, %r15, REG_OFFSET(0)(%r1)	/* store general-purpose registers */
 
 	br	%r14				/* return to new link register address */
-
-
-.weak setcontext;
-setcontext = __setcontext;
+END(__setcontext)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,9 +12,7 @@
 
 #include "defs.h"
 
-
-.globl __start_context;
-__start_context:
+FUNC(__start_context)
 	basr	%r14, %r7			/* run function pointer (%r7) and return here */
 	ltgr	%r8, %r8			/* check to see if uc_link (%r8) is null */
 
@@ -28,3 +26,4 @@ no_linked_context:
 	brasl	%r14, exit@plt			/* call exit */
 
 	j	.+2				/* crash if exit returns */
+END(__start_context)

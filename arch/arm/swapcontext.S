@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -10,21 +10,21 @@
  * from the use of this software.
  */
 
-.globl __swapcontext;
-__swapcontext:
+#include "defs.h"
+
+ALIAS(swapcontext, __swapcontext)
+
+FUNC(__swapcontext)
 	/* copy all of the current registers into the ucontext structure */
-	add	r2, r0, #32
+	add	r2, r0, #REG_OFFSET(0)
 	stmia	r2, {r0-r12}
-	str	r13, [r0,#84]
-	str	r14, [r0,#92]
+	str	r13, [r0,#REG_OFFSET(13)]
+	str	r14, [r0,#REG_OFFSET(15)]
 
 	/* load new registers from the second ucontext structure */
-	add	r14, r1, #32
+	add	r14, r1, #REG_OFFSET(0)
 	ldmia	r14, {r0-r12}
 	ldr	r13, [r14, #52]
 	add	r14, r14, #56
 	ldmia	r14, {r14, pc}
-
-
-.weak swapcontext;
-swapcontext = __swapcontext;
+END(__swapcontext)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -10,18 +10,18 @@
  * from the use of this software.
  */
 
-.globl __getcontext;
-__getcontext:
+#include "defs.h"
+
+ALIAS(getcontext, __getcontext)
+
+FUNC(__getcontext)
 	/* copy all of the current registers into the ucontext structure */
-	add	r1, r0, #48
+	add	r1, r0, #REG_OFFSET(4)
 	stmia	r1, {r4-r12}
-	str	r13, [r0,#84]
-	str	r14, [r0,#92]
+	str	r13, [r0, #REG_OFFSET(13)]
+	str	r14, [r0, #REG_OFFSET(15)]
 
 	/* return 0 */
 	mov	r0, #0
 	mov	pc, lr
-
-
-.weak getcontext;
-getcontext = __getcontext;
+END(__getcontext)

@@ -17,10 +17,14 @@
 # define ENT(__proc)
 #endif
 
+#ifndef TYPE
+# define TYPE(__proc)	.type	__proc, @function;
+#endif
+
 #define FUNC(__proc)					\
 	.global __proc;					\
 	.align  2;					\
-	.type   __proc, @function;			\
+	TYPE(__proc)					\
 	ENT(__proc)					\
 __proc:							\
 	SETUP_FRAME(__proc)

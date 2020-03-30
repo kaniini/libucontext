@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -17,6 +17,9 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
+
+
+#include "defs.h"
 
 
 extern void __start_context(void);
@@ -52,13 +55,6 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 		*sp++ = va_arg (va, unsigned long);
 
 	va_end(va);
-
-/*
-	printf("R4 offset = %d\n", offsetof(ucontext_t, uc_mcontext.arm_r4));
-	printf("SP offset = %d\n", offsetof(ucontext_t, uc_mcontext.arm_sp));
-	printf("LR offset = %d\n", offsetof(ucontext_t, uc_mcontext.arm_lr));
-	printf("PC offset = %d\n", offsetof(ucontext_t, uc_mcontext.arm_pc));
- */
 }
 
 

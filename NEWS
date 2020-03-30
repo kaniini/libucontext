@@ -2,6 +2,8 @@ Changes from 0.9.0 to 0.10
 --------------------------
 
 * Added MIPS O32 and MIPS N64 ports.
+  MIPS N32 ABI is theoretically supported by ARCH=mips64 with
+  a MIPS N32 toolchain, but this has not been tested.
 
 * Improved test program (test_libucontext) verbosity.
 

@@ -18,8 +18,8 @@ Right now these archs are supported and should work on bare metal:
  * armv6+ (`arm`)
  * aarch64
  * s390x
- * mips (O32 ABI only, like Alpine)
- * mips64 (N64 ABI only, like Alpine)
+ * mips (O32 ABI only)
+ * mips64 (N32/N64 ABI only, like Alpine, only N64 ABI has been tested)
 
 These archs require kernel assistance and use a syscall:
 

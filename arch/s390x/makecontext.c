@@ -28,41 +28,30 @@ extern int __setcontext(const ucontext_t *ucp);
 void
 __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
-	greg_t *sp, *argp;
+	greg_t *sp;
 	va_list va;
 	int i;
-	unsigned int stack_args;
-
-	stack_args = argc > 5 ? argc - 5 : 0;
 
 	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
-	sp -= stack_args;		// maybe +1
-	sp = (greg_t *) (((uintptr_t) sp & -16L));
+	sp = (greg_t *) (((uintptr_t) sp & -8L));
 
 	ucp->uc_mcontext.gregs[7]  = (uintptr_t) func;
 	ucp->uc_mcontext.gregs[8]  = (uintptr_t) ucp->uc_link;
 	ucp->uc_mcontext.gregs[9]  = (uintptr_t) &__setcontext;
 	ucp->uc_mcontext.gregs[14] = (uintptr_t) &__start_context;
 
-	argp = sp;
-
 	va_start(va, argc);
 
-	for (i = 0; i < argc; i++)
-		switch (i)
-		{
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-			ucp->uc_mcontext.gregs[i + 2] = va_arg (va, greg_t);
-			break;
-		default:
-			*argp++ = va_arg (va, greg_t);
-			break;
-		}
+	for (i = 0; i < argc && i < 5; i++)
+		ucp->uc_mcontext.gregs[i + 2] = va_arg (va, greg_t);
+
+	if (argc > 5)
+	{
+		sp -= argc - 5;
+
+		for (i = 5; i < argc; i++)
+			sp[i - 5] = va_arg (va, greg_t);
+	}
 
 	va_end(va);
 

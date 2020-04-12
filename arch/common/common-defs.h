@@ -28,10 +28,13 @@
 	ENT(__proc)					\
 __proc:							\
 	SETUP_FRAME(__proc)
-
+#ifdef __clang__
+#define END(__proc)
+#else
 #define END(__proc)					\
 	.end	__proc;					\
 	.size	__proc,.-__proc;
+#endif
 
 #define ALIAS(__alias, __real)				\
 	.weak	__alias;				\

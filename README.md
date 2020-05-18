@@ -20,6 +20,7 @@ Right now these archs are supported and should work on bare metal:
  * s390x
  * mips (O32 ABI only)
  * mips64 (N32/N64 ABI only, like Alpine, only N64 ABI has been tested)
+ * riscv64
 
 These archs require kernel assistance and use a syscall:
 

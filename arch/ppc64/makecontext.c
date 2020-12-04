@@ -13,7 +13,7 @@
 
 #define _GNU_SOURCE
 #include <stdarg.h>
-#include <signal.h>
+#include <ucontext.h>
 #include <stdint.h>
 
 

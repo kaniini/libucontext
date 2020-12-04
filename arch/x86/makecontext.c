@@ -14,7 +14,7 @@
 #define _GNU_SOURCE
 #include <stddef.h>
 #include <stdarg.h>
-#include <signal.h>
+#include <ucontext.h>
 #include <string.h>
 #include <stdint.h>
 

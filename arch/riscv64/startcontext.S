@@ -25,5 +25,5 @@ FUNC(__start_context)
 
 	/* otherwise, exit. */
 no_linked_context:
-	j	exit
+	tail	exit@plt
 END(__start_context)

@@ -5,7 +5,7 @@ endif
 
 LIBDIR := /lib
 CFLAGS := -ggdb3 -O2 -Wall
-CPPFLAGS := -Iarch/${ARCH} -Iarch/common
+CPPFLAGS := -Iinclude -Iarch/${ARCH} -Iarch/common
 EXPORT_UNPREFIXED := yes
 FREESTANDING := no
 
@@ -28,13 +28,16 @@ LIBUCONTEXT_STATIC_NAME = libucontext.a
 LIBUCONTEXT_SONAME = libucontext.so.${LIBUCONTEXT_SOVERSION}
 LIBUCONTEXT_PATH = ${LIBDIR}/${LIBUCONTEXT_SONAME}
 LIBUCONTEXT_STATIC_PATH = ${LIBDIR}/${LIBUCONTEXT_STATIC_NAME}
+LIBUCONTEXT_HEADERS = \
+	include/libucontext/libucontext.h \
+	include/libucontext/bits.h
 
 all: ${LIBUCONTEXT_SONAME} ${LIBUCONTEXT_STATIC_NAME}
 
 ${LIBUCONTEXT_STATIC_NAME}: ${LIBUCONTEXT_OBJ}
 	$(AR) rcs ${LIBUCONTEXT_STATIC_NAME} ${LIBUCONTEXT_OBJ}
 
-${LIBUCONTEXT_NAME}: ${LIBUCONTEXT_OBJ}
+${LIBUCONTEXT_NAME}: ${LIBUCONTEXT_HEADERS} ${LIBUCONTEXT_OBJ}
 	$(CC) -o ${LIBUCONTEXT_NAME} -Wl,-soname,${LIBUCONTEXT_SONAME} \
 		-shared ${LIBUCONTEXT_OBJ} ${LDFLAGS}
 
@@ -61,5 +64,17 @@ check: test_libucontext ${LIBUCONTEXT_SONAME}
 
 test_libucontext: test_libucontext.c ${LIBUCONTEXT_NAME}
 	$(CC) -std=c99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+
+ifeq ($(FREESTANDING),no)
+
+include/libucontext/bits.h: arch/common/bits.h
+	cp arch/common/bits.h $@
+
+else
+
+include/libucontext/bits.h: arch/${ARCH}/freestanding/bits.h
+	cp arch/${ARCH}/freestanding/bits.h
+
+endif
 
 .PHONY: check

@@ -32,12 +32,14 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 
 	/* set up and align the stack. */
 	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
-	sp -= (argc + 1);
+	sp -= (argc + 2);
 	sp = (greg_t *) (((uintptr_t) sp & ~0x3));
 
 	/* set up the ucontext structure */
 	ucp->uc_mcontext.gregs[REG_SP] = (greg_t) sp;
 	ucp->uc_mcontext.gregs[REG_A6] = 0;
+	ucp->uc_mcontext.gregs[REG_D7] = argc;
+	ucp->uc_mcontext.gregs[REG_PC] = (greg_t) func;
 
 	/* return address */
 	*sp++ = (greg_t) __start_context;
@@ -49,6 +51,9 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 		*sp++ = va_arg (va, greg_t);
 
 	va_end(va);
+
+	/* link pointer */
+	*sp++ = (greg_t) ucp->uc_link;
 }
 
 

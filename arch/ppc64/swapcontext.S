@@ -10,12 +10,12 @@
  * from the use of this software.
  */
 
-.global libucontext_swapcontext
-libucontext_swapcontext:
-	addis 2, 12, .TOC.-libucontext_swapcontext@ha
-	addi  2, 12, .TOC.-libucontext_swapcontext@l
+.global __libucontext_swapcontext
+__libucontext_swapcontext:
+	addis 2, 12, .TOC.-__libucontext_swapcontext@ha
+	addi  2, 12, .TOC.-__libucontext_swapcontext@l
 
-	.localentry libucontext_swapcontext,.-libucontext_swapcontext
+	.localentry __libucontext_swapcontext,.-__libucontext_swapcontext
 
 	li 0, 249     # SYS_swapcontext
 	li 5, 1696    # sizeof(ucontext_t)
@@ -25,4 +25,7 @@ libucontext_swapcontext:
 	b __retfromsyscall
 
 .weak swapcontext
-swapcontext = libucontext_swapcontext
+swapcontext = __libucontext_swapcontext
+
+.weak libucontext_swapcontext
+libucontext_swapcontext = __libucontext_swapcontext

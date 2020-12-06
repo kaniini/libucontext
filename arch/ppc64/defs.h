@@ -62,4 +62,6 @@
 /* lnk register is actually %r36 */
 #define REG_LNK		REG_R36
 
+#include "common-defs.h"
+
 #endif

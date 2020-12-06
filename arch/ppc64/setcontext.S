@@ -11,7 +11,7 @@
  */
 
 .global libucontext_setcontext
-.hidden libucontext_swapcontext
+.hidden __libucontext_swapcontext
 libucontext_setcontext:
 	addis 2, 12, .TOC.-libucontext_setcontext@ha
 	addi  2, 12, .TOC.-libucontext_setcontext@l
@@ -20,7 +20,7 @@ libucontext_setcontext:
 
 	mr 4, 3
 	li 3, 0
-	b libucontext_swapcontext
+	b __libucontext_swapcontext
 
 .weak setcontext
 setcontext = libucontext_setcontext

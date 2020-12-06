@@ -4,13 +4,12 @@
  */
 
 #include <stdio.h>
-#include <ucontext.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <libucontext/libucontext.h>
 
-
-static ucontext_t ctx[3];
+static libucontext_ucontext_t ctx[3];
 
 
 static void check_arg(int actual, int expected) {
@@ -37,7 +36,7 @@ static void f1 (int a, int b, int c, int d, int e, int f, int g, int h, int i, i
 	printf("looks like all arguments are passed correctly\n");
 
 	printf("swap back to f2\n");
-	swapcontext(&ctx[1], &ctx[2]);
+	libucontext_swapcontext(&ctx[1], &ctx[2]);
 	printf("finish f1\n");
 }
 
@@ -45,7 +44,7 @@ static void f1 (int a, int b, int c, int d, int e, int f, int g, int h, int i, i
 static void f2 (void) {
 	printf("start f2\n");
 	printf("swap to f1\n");
-	swapcontext(&ctx[2], &ctx[1]);
+	libucontext_swapcontext(&ctx[2], &ctx[1]);
 	printf("finish f2, should swap to f1\n");
 }
 
@@ -64,36 +63,36 @@ int main (int argc, const char *argv[]) {
 	printf("setting up context 1\n");
 
 
-	getcontext(&ctx[1]);
+	libucontext_getcontext(&ctx[1]);
 	ctx[1].uc_stack.ss_sp = st1;
 	ctx[1].uc_stack.ss_size = sizeof st1;
 	ctx[1].uc_link = &ctx[0];
-	makecontext(&ctx[1], f1, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+	libucontext_makecontext(&ctx[1], f1, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 
 	printf("setting up context 2\n");
 
 
-	getcontext(&ctx[2]);
+	libucontext_getcontext(&ctx[2]);
 	ctx[2].uc_stack.ss_sp = st2;
 	ctx[2].uc_stack.ss_size = sizeof st2;
 	ctx[2].uc_link = &ctx[1];
-	makecontext(&ctx[2], f2, 0);
+	libucontext_makecontext(&ctx[2], f2, 0);
 
 
 	printf("doing initial swapcontext\n");
 
 
-	swapcontext(&ctx[0], &ctx[2]);
+	libucontext_swapcontext(&ctx[0], &ctx[2]);
 
 
 	printf("returned from initial swapcontext\n");
 
 
 	/* test ability to use getcontext/setcontext without makecontext */
-	getcontext(&ctx[1]);
+	libucontext_getcontext(&ctx[1]);
 	printf("done = %d\n", done);
-	if (done++ == 0) setcontext(&ctx[1]);
+	if (done++ == 0) libucontext_setcontext(&ctx[1]);
 	if (done != 2) {
 		fprintf(stderr, "wrong value for done.  got %d, expected 2\n", done);
 		abort();

@@ -46,4 +46,19 @@ __proc:							\
 
 #define REG_OFFSET(__reg)       (MCONTEXT_GREGS + ((__reg) * REG_SZ))
 
+#ifndef LIBUCONTEXT_ASSEMBLY
+
+#ifndef FREESTANDING
+
+typedef ucontext_t libucontext_ucontext_t;
+
+#endif
+
+int  libucontext_getcontext(libucontext_ucontext_t *);
+void libucontext_makecontext(libucontext_ucontext_t *, void (*)(), int, ...);
+int  libucontext_setcontext(const libucontext_ucontext_t *);
+int  libucontext_swapcontext(libucontext_ucontext_t *, const libucontext_ucontext_t *);
+
+#endif
+
 #endif

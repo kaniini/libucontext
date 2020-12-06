@@ -19,7 +19,7 @@ FUNC(__setcontext)
 	mv t0, a0
 
 	ld t1, PC_OFFSET(t0)
-	ld ra, REG_OFFSET(REG_PC)(t0)
+	ld ra, REG_OFFSET(REG_RA)(t0)
 	ld sp, REG_OFFSET(REG_SP)(t0)
 
 	/* first saved register block */

@@ -36,12 +36,12 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	sp = (greg_t *) (((uintptr_t) sp & -16L));
 
 	/* set up the ucontext structure */
-	ucp->uc_mcontext.__gregs[REG_PC] = (greg_t) __start_context;
+	ucp->uc_mcontext.__gregs[REG_RA] = (greg_t) __start_context;
 	ucp->uc_mcontext.__gregs[REG_S0] = 0;
 	ucp->uc_mcontext.__gregs[REG_S1] = (greg_t) func;
 	ucp->uc_mcontext.__gregs[REG_S2] = (greg_t) ucp->uc_link;
 	ucp->uc_mcontext.__gregs[REG_SP] = (greg_t) sp;
-	ucp->uc_mcontext.__gregs[REG_PC_SAVE] = 0;
+	ucp->uc_mcontext.__gregs[REG_PC] = 0;
 
 	va_start(va, argc);
 

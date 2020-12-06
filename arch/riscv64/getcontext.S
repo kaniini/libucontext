@@ -15,8 +15,8 @@
 ALIAS(getcontext, __getcontext)
 
 FUNC(__getcontext)
-	sd ra, PC_OFFSET(a0)
 	sd ra, REG_OFFSET(REG_PC)(a0)
+	sd ra, REG_OFFSET(REG_RA)(a0)
 	sd sp, REG_OFFSET(REG_SP)(a0)
 
 	/* first saved register block */

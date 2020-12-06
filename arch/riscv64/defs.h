@@ -5,12 +5,28 @@
 #define MCONTEXT_GREGS	(176)
 
 /* program counter is saved in x0 as well as x1, similar to mips */
-#define REG_PC_SAVE	(0)
-#define REG_PC		(1)
+#ifndef REG_PC
+#define REG_PC		(0)
+#endif
+
+#ifndef REG_RA
+#define REG_RA		(1)
+#endif
+
+#ifndef REG_SP
 #define REG_SP		(2)
+#endif
+
+#ifndef REG_S0
 #define REG_S0		(8)
+#endif
+
 #define REG_S1		(9)
+
+#ifndef REG_A0
 #define REG_A0		(10)
+#endif
+
 #define REG_A1		(11)
 #define REG_A2		(12)
 #define REG_A3		(13)
@@ -29,7 +45,7 @@
 #define REG_S10		(26)
 #define REG_S11		(27)
 
-#define PC_OFFSET	REG_OFFSET(REG_PC_SAVE)
+#define PC_OFFSET	REG_OFFSET(REG_PC)
 
 #include "common-defs.h"
 

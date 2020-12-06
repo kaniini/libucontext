@@ -18,8 +18,8 @@ FUNC(__swapcontext)
 	/* move $a1 to $t0 to avoid clobbering. */
 	mv t0, a1
 
-	sd ra, PC_OFFSET(a0)
 	sd ra, REG_OFFSET(REG_PC)(a0)
+	sd ra, REG_OFFSET(REG_RA)(a0)
 	sd sp, REG_OFFSET(REG_SP)(a0)
 
 	/* first saved register block */
@@ -43,8 +43,8 @@ FUNC(__swapcontext)
 	sd s11, REG_OFFSET(REG_S11)(a0)
 
 	/* restore the other context from $t0. */
-	ld t1, PC_OFFSET(t0)
-	ld ra, REG_OFFSET(REG_PC)(t0)
+	ld t1, REG_OFFSET(REG_PC)(t0)
+	ld ra, REG_OFFSET(REG_RA)(t0)
 	ld sp, REG_OFFSET(REG_SP)(t0)
 
 	/* first saved register block */

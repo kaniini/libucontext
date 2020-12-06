@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(swapcontext, __swapcontext)
+ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(__swapcontext)
+FUNC(libucontext_swapcontext)
 	/* copy all of the current registers into the ucontext structure pointed by
 	   the first argument */
 	movq	%r8, REG_OFFSET(REG_R8)(%rdi)
@@ -71,4 +71,4 @@ FUNC(__swapcontext)
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret
-END(__swapcontext)
+END(libucontext_swapcontext)

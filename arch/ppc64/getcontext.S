@@ -11,7 +11,7 @@
  */
 
 .global libucontext_getcontext
-.hidden __swapcontext
+.hidden libucontext_swapcontext
 libucontext_getcontext:
 	addis 2, 12, .TOC.-libucontext_getcontext@ha
 	addi  2, 12, .TOC.-libucontext_getcontext@l
@@ -19,7 +19,7 @@ libucontext_getcontext:
 	.localentry libucontext_getcontext,.-libucontext_getcontext
 
 	li 4, 0
-	b __swapcontext
+	b libucontext_swapcontext
 
 .weak getcontext
 getcontext = libucontext_getcontext

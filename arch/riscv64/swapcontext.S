@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(swapcontext, __swapcontext)
+ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(__swapcontext)
+FUNC(libucontext_swapcontext)
 	/* move $a1 to $t0 to avoid clobbering. */
 	mv t0, a1
 
@@ -77,4 +77,4 @@ FUNC(__swapcontext)
 
 	/* done swapping, return */
 	ret
-END(__swapcontext)
+END(libucontext_swapcontext)

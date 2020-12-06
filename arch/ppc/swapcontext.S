@@ -10,8 +10,8 @@
  * from the use of this software.
  */
 
-.global __swapcontext
-__swapcontext:
+.global libucontext_swapcontext
+libucontext_swapcontext:
 	li 0, 249     # SYS_swapcontext
 	li 5, 1184    # sizeof(ucontext_t)
 	sc
@@ -20,4 +20,4 @@ __swapcontext:
 	b __retfromsyscall@local
 
 .weak swapcontext
-swapcontext = __swapcontext
+swapcontext = libucontext_swapcontext

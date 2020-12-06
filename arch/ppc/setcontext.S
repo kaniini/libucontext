@@ -11,11 +11,11 @@
  */
 
 .global libucontext_setcontext
-.hidden __swapcontext
+.hidden libucontext_swapcontext
 libucontext_setcontext:
 	mr 4, 3
 	li 3, 0
-	b __swapcontext@local
+	b libucontext_swapcontext@local
 
 .weak setcontext
 setcontext = libucontext_setcontext

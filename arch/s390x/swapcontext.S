@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(swapcontext, __swapcontext)
+ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(__swapcontext)
+FUNC(libucontext_swapcontext)
 	lgr	%r1, %r2			/* use %r1 to save current context to */
 	lgr	%r0, %r3			/* use %r0 for source context */
 
@@ -26,4 +26,4 @@ FUNC(__swapcontext)
 	lmg	%r0, %r15, REG_OFFSET(0)(%r2)	/* load general-purpose registers */
 
 	br	%r14				/* return to new link register address */
-END(__swapcontext)
+END(libucontext_swapcontext)

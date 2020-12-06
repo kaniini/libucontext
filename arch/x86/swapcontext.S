@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(swapcontext, __swapcontext)
+ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(__swapcontext)
+FUNC(libucontext_swapcontext)
 	/* load address of the ucontext structure */
 	movl	4(%esp), %eax
 
@@ -69,4 +69,4 @@ FUNC(__swapcontext)
 	movl	REG_OFFSET(REG_EAX)(%eax), %eax
 
 	ret
-END(__swapcontext)
+END(libucontext_swapcontext)

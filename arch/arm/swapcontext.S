@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(swapcontext, __swapcontext)
+ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(__swapcontext)
+FUNC(libucontext_swapcontext)
 	/* copy all of the current registers into the ucontext structure */
 	add	r2, r0, #REG_OFFSET(0)
 	stmia	r2, {r0-r12}
@@ -27,4 +27,4 @@ FUNC(__swapcontext)
 	ldr	r13, [r14, #52]
 	add	r14, r14, #56
 	ldmia	r14, {r14, pc}
-END(__swapcontext)
+END(libucontext_swapcontext)

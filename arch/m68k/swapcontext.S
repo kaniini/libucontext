@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(swapcontext, __swapcontext)
+ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(__swapcontext)
+FUNC(libucontext_swapcontext)
 	move.l		4(%sp), %a0				/* load save ucontext_t pointer from stack */
 
 	movem.l		%d2-%d7, REG_OFFSET(REG_D2)(%a0)	/* preserve $d2 through $d7 */
@@ -36,4 +36,4 @@ FUNC(__swapcontext)
 	move.l		REG_OFFSET(REG_PC)(%a0), %a1		/* load jump target */
 
 	jmp		(%a1)					/* jump to *$a1 */
-END(__swapcontext)
+END(libucontext_swapcontext)

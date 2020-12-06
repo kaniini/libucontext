@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(swapcontext, __swapcontext)
+ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(__swapcontext)
+FUNC(libucontext_swapcontext)
 	str	xzr, [x0, #REG_OFFSET(0)]
 
 	/* save GPRs */
@@ -55,4 +55,4 @@ FUNC(__swapcontext)
 	/* hmm, we came back here try to return */
 	mov	x30, x28
 	ret
-END(__swapcontext)
+END(libucontext_swapcontext)

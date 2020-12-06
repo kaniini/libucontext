@@ -16,14 +16,14 @@ LOCALSZ = 2
 
 A1_OFFSET = FRAMESZ - (1 * REG_SZ)
 
-ALIAS(swapcontext, __swapcontext)
+ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(__swapcontext)
+FUNC(libucontext_swapcontext)
 	/* copy $gp, $sp, $fp to temporary registers so we don't clobber them */
 	move	$a2, $gp
 	move	$a3, $sp
 
-	PUSH_FRAME(__swapcontext)
+	PUSH_FRAME(libucontext_swapcontext)
 
 	/* set registers */
 	sd	$s0, REG_OFFSET(16)($a0)
@@ -74,8 +74,8 @@ FUNC(__swapcontext)
 fail:
 	la	$t9, exit
 
-	POP_FRAME(__swapcontext)
+	POP_FRAME(libucontext_swapcontext)
 
 	move	$v0, $zero
 	jalr	$t9
-END(__swapcontext)
+END(libucontext_swapcontext)

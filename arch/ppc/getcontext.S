@@ -11,10 +11,10 @@
  */
 
 .global libucontext_getcontext
-.hidden __swapcontext
+.hidden libucontext_swapcontext
 libucontext_getcontext:
 	li 4, 0
-	b __swapcontext@local
+	b libucontext_swapcontext@local
 
 .weak getcontext
 getcontext = libucontext_getcontext

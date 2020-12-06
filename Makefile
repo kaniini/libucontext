@@ -6,6 +6,11 @@ endif
 LIBDIR := /lib
 CFLAGS := -ggdb3 -O2 -Wall
 CPPFLAGS := -Iarch/${ARCH} -Iarch/common
+EXPORT_UNPREFIXED := yes
+
+ifeq ($(EXPORT_UNPREFIXED),yes)
+	CFLAGS += -DEXPORT_UNPREFIXED
+endif
 
 LIBUCONTEXT_C_SRC = $(wildcard arch/${ARCH}/*.c)
 LIBUCONTEXT_S_SRC = $(wildcard arch/${ARCH}/*.S)

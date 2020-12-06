@@ -36,9 +36,13 @@ __proc:							\
 	.size	__proc,.-__proc;
 #endif
 
+#ifdef EXPORT_UNPREFIXED
 #define ALIAS(__alias, __real)				\
 	.weak	__alias;				\
 	__alias = __real;
+#else
+#define ALIAS(...)
+#endif
 
 #define REG_OFFSET(__reg)       (MCONTEXT_GREGS + ((__reg) * REG_SZ))
 

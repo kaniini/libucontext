@@ -2,7 +2,7 @@
 #define __ARCH_M68K_DEFS_H
 
 #define REG_SZ		(4)
-#define MCONTEXT_GREGS	(20)
+#define MCONTEXT_GREGS	(24)
 
 #define REG_D0		(0)
 #define REG_D1		(1)

@@ -21,6 +21,7 @@ Right now these archs are supported and should work on bare metal:
  * mips (O32 ABI only)
  * mips64 (N32/N64 ABI only, like Alpine, only N64 ABI has been tested)
  * riscv64
+ * m68k
 
 These archs require kernel assistance and use a syscall:
 

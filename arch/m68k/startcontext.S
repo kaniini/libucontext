@@ -18,7 +18,7 @@ FUNC(libucontext_trampoline)
 	tst.l	(%sp)				/* test next content for NULL */
 	jeq	no_linked_context
 
-	jbsr	__setcontext			/* call setcontext */
+	jbsr	libucontext_setcontext			/* call setcontext */
 	move.l	%d0, (%sp)
 
 no_linked_context:

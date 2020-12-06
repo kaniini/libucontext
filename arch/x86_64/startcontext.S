@@ -22,7 +22,7 @@ FUNC(libucontext_trampoline)
 	je	no_linked_context
 
 	/* call setcontext to switch to the linked context */
-	call	__setcontext@plt
+	call	libucontext_setcontext@plt
 	movq	%rax, %rdi
 
 no_linked_context:

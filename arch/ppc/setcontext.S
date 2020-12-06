@@ -10,12 +10,12 @@
  * from the use of this software.
  */
 
-.global __setcontext
+.global libucontext_setcontext
 .hidden __swapcontext
-__setcontext:
+libucontext_setcontext:
 	mr 4, 3
 	li 3, 0
 	b __swapcontext@local
 
 .weak setcontext
-setcontext = __setcontext
+setcontext = libucontext_setcontext

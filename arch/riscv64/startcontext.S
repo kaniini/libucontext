@@ -21,7 +21,7 @@ FUNC(libucontext_trampoline)
 
 	/* if one is set, invoke it */
 	mv	a0, s2
-	jal	__setcontext
+	jal	libucontext_setcontext
 
 	/* otherwise, exit. */
 no_linked_context:

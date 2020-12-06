@@ -19,7 +19,7 @@ libucontext_trampoline:
 	beq	no_linked_context
 
 	/* jump to setcontext */
-	bl	__setcontext@local
+	bl	libucontext_setcontext@local
 
 no_linked_context:
 	b	exit@GOT

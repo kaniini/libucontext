@@ -22,7 +22,7 @@ FUNC(libucontext_trampoline)
 
 	/* call setcontext */
 	move	$a0, $s0
-	la	$t9, __setcontext
+	la	$t9, libucontext_setcontext
 
 	jr	$t9
 

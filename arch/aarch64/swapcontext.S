@@ -50,7 +50,7 @@ FUNC(__swapcontext)
 
 	/* move x1 to x0 and call setcontext */
 	mov	x0, x1
-	bl	__setcontext
+	bl	libucontext_setcontext
 
 	/* hmm, we came back here try to return */
 	mov	x30, x28

@@ -17,7 +17,7 @@ FUNC(libucontext_trampoline)
 	leal	(%esp,%ebx,4), %esp
 	cmpl	$0, (%esp)
 
-	/* restore global offset table, exit@plt and __setcontext@plt need this */
+	/* restore global offset table, exit@plt and libucontext_setcontext@plt need this */
 	call	__i686.get_pc_thunk.bx
 	addl	$_GLOBAL_OFFSET_TABLE_, %ebx
 
@@ -25,7 +25,7 @@ FUNC(libucontext_trampoline)
 	je	no_linked_context
 
 	/* call setcontext to switch to the linked context */
-	call	__setcontext@plt
+	call	libucontext_setcontext@plt
 	movl	%eax, (%esp)
 
 no_linked_context:

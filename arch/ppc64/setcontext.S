@@ -10,17 +10,17 @@
  * from the use of this software.
  */
 
-.global __setcontext
+.global libucontext_setcontext
 .hidden __swapcontext
-__setcontext:
-	addis 2, 12, .TOC.-__setcontext@ha
-	addi  2, 12, .TOC.-__setcontext@l
+libucontext_setcontext:
+	addis 2, 12, .TOC.-libucontext_setcontext@ha
+	addi  2, 12, .TOC.-libucontext_setcontext@l
 
-	.localentry __setcontext,.-__setcontext
+	.localentry libucontext_setcontext,.-libucontext_setcontext
 
 	mr 4, 3
 	li 3, 0
 	b __swapcontext
 
 .weak setcontext
-setcontext = __setcontext
+setcontext = libucontext_setcontext

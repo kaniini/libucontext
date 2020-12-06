@@ -17,7 +17,7 @@
 libucontext_trampoline:
 	/* get the proper context into position and test for NULL */
 	movs	r0, r4
-	bne	__setcontext@plt
+	bne	libucontext_setcontext@plt
 
 	/* we are returning into a null context, it seems, so maybe we should exit */
 	b	exit@plt

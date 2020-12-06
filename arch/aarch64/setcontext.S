@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(setcontext, __setcontext)
+ALIAS(setcontext, libucontext_setcontext)
 
-FUNC(__setcontext)
+FUNC(libucontext_setcontext)
 	/* restore GPRs */
 	ldp	x18, x19, [x0, #REG_OFFSET(18)]
 	ldp	x20, x21, [x0, #REG_OFFSET(20)]
@@ -41,4 +41,4 @@ FUNC(__setcontext)
 
 	/* jump to new PC */
 	br	x16
-END(__setcontext)
+END(libucontext_setcontext)

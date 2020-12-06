@@ -14,10 +14,10 @@ LOCALSZ = 1
 
 #include "defs.h"
 
-ALIAS(setcontext, __setcontext)
+ALIAS(setcontext, libucontext_setcontext)
 
-FUNC(__setcontext)
-	PUSH_FRAME(__setcontext)
+FUNC(libucontext_setcontext)
+	PUSH_FRAME(libucontext_setcontext)
 
 	/* move the context to $v0 */	
 	move	$v0, $a0
@@ -46,5 +46,5 @@ FUNC(__setcontext)
 	move	$v0, $zero
 	jr	$t9
 
-	POP_FRAME(__setcontext)
-END(__setcontext)
+	POP_FRAME(libucontext_setcontext)
+END(libucontext_setcontext)

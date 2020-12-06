@@ -12,13 +12,13 @@
 
 #include "defs.h"
 
-ALIAS(setcontext, __setcontext)
+ALIAS(setcontext, libucontext_setcontext)
 
-FUNC(__setcontext)
+FUNC(libucontext_setcontext)
 	lgr	%r1, %r2			/* use %r1 as our working register */
 
 	lam	%a2, %a15, AREG_OFFSET(2)(%r1)	/* load access registers, but skip %a0 and %a1 which are for TLS */
 	lmg	%r0, %r15, REG_OFFSET(0)(%r1)	/* store general-purpose registers */
 
 	br	%r14				/* return to new link register address */
-END(__setcontext)
+END(libucontext_setcontext)

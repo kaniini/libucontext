@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(setcontext, __setcontext)
+ALIAS(setcontext, libucontext_setcontext)
 
-FUNC(__setcontext)
+FUNC(libucontext_setcontext)
 	/* move $a0 to $t0 to avoid clobbering. */
 	mv t0, a0
 
@@ -52,4 +52,4 @@ FUNC(__setcontext)
 
 	/* done saving, return */
 	ret
-END(__setcontext)
+END(libucontext_setcontext)

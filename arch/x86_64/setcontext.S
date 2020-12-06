@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(setcontext, __setcontext)
+ALIAS(setcontext, libucontext_setcontext)
 
-FUNC(__setcontext)
+FUNC(libucontext_setcontext)
 	/* set all of the registers */
 	movq	REG_OFFSET(REG_R8)(%rdi), %r8
 	movq	REG_OFFSET(REG_R9)(%rdi), %r9
@@ -42,4 +42,4 @@ FUNC(__setcontext)
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret
-END(__setcontext)
+END(libucontext_setcontext)

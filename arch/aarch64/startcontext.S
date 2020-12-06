@@ -15,7 +15,7 @@
 FUNC(libucontext_trampoline)
 	/* get the proper context into position and test for NULL */
 	mov	x0, x19
-	cbnz	x0, __setcontext
+	cbnz	x0, libucontext_setcontext
 
 	/* something went wrong, exit */
 	b	exit

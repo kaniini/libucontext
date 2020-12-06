@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(setcontext, __setcontext)
+ALIAS(setcontext, libucontext_setcontext)
 
-FUNC(__setcontext)
+FUNC(libucontext_setcontext)
 	/* copy all of the current registers into the ucontext structure */
 	add	r14, r0, #REG_OFFSET(0)
 	ldmia	r14, {r0-r12}
@@ -23,4 +23,4 @@ FUNC(__setcontext)
 
 	/* load link register and jump to new context */
 	ldmia	r14, {r14, pc}
-END(__setcontext)
+END(libucontext_setcontext)

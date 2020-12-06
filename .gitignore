@@ -4,3 +4,4 @@ test_libucontext
 libucontext.a
 libucontext.so
 libucontext.so.*
+libucontext.pc

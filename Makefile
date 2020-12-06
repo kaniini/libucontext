@@ -5,6 +5,7 @@ endif
 
 LIBDIR := /lib
 INCLUDEDIR := /usr/include
+PKGCONFIGDIR := /usr/lib/pkgconfig
 CFLAGS := -ggdb3 -O2 -Wall
 CPPFLAGS := -Iinclude -Iarch/${ARCH} -Iarch/common
 EXPORT_UNPREFIXED := yes
@@ -22,10 +23,12 @@ endif
 LIBUCONTEXT_C_SRC = $(wildcard arch/${ARCH}/*.c)
 LIBUCONTEXT_S_SRC = $(wildcard arch/${ARCH}/*.S)
 
+LIBUCONTEXT_VERSION = 0.13
 LIBUCONTEXT_OBJ = ${LIBUCONTEXT_C_SRC:.c=.o} ${LIBUCONTEXT_S_SRC:.S=.o}
 LIBUCONTEXT_SOVERSION = 0
 LIBUCONTEXT_NAME = libucontext.so
 LIBUCONTEXT_STATIC_NAME = libucontext.a
+LIBUCONTEXT_PC = libucontext.pc
 LIBUCONTEXT_SONAME = libucontext.so.${LIBUCONTEXT_SOVERSION}
 LIBUCONTEXT_PATH = ${LIBDIR}/${LIBUCONTEXT_SONAME}
 LIBUCONTEXT_STATIC_PATH = ${LIBDIR}/${LIBUCONTEXT_STATIC_NAME}
@@ -33,7 +36,7 @@ LIBUCONTEXT_HEADERS = \
 	include/libucontext/libucontext.h \
 	include/libucontext/bits.h
 
-all: ${LIBUCONTEXT_SONAME} ${LIBUCONTEXT_STATIC_NAME}
+all: ${LIBUCONTEXT_SONAME} ${LIBUCONTEXT_STATIC_NAME} ${LIBUCONTEXT_PC}
 
 ${LIBUCONTEXT_STATIC_NAME}: ${LIBUCONTEXT_OBJ}
 	$(AR) rcs ${LIBUCONTEXT_STATIC_NAME} ${LIBUCONTEXT_OBJ}
@@ -45,6 +48,11 @@ ${LIBUCONTEXT_NAME}: ${LIBUCONTEXT_HEADERS} ${LIBUCONTEXT_OBJ}
 ${LIBUCONTEXT_SONAME}: ${LIBUCONTEXT_NAME}
 	ln -sf ${LIBUCONTEXT_NAME} ${LIBUCONTEXT_SONAME}
 
+${LIBUCONTEXT_PC}: libucontext.pc.in
+	sed -e s:@LIBUCONTEXT_VERSION@:${LIBUCONTEXT_VERSION}:g \
+	    -e s:@LIBUCONTEXT_LIBDIR@:${LIBDIR}:g \
+	    -e s:@LIBUCONTEXT_INCLUDEDIR@:${INCLUDEDIR}:g $< > $@
+
 .c.o:
 	$(CC) -std=c99 -D_BSD_SOURCE -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
@@ -53,7 +61,8 @@ ${LIBUCONTEXT_SONAME}: ${LIBUCONTEXT_NAME}
 
 clean:
 	rm -f ${LIBUCONTEXT_NAME} ${LIBUCONTEXT_SONAME} ${LIBUCONTEXT_STATIC_NAME} \
-		${LIBUCONTEXT_OBJ} include/libucontext/bits.h test_libucontext
+		${LIBUCONTEXT_OBJ} ${LIBUCONTEXT_PC} \
+		include/libucontext/bits.h test_libucontext
 
 install: all
 	install -D -m755 ${LIBUCONTEXT_NAME} ${DESTDIR}${LIBUCONTEXT_PATH}
@@ -63,6 +72,7 @@ install: all
 		destfn=$$(echo $$i | sed s:include/::g); \
 		install -D -m644 $$i ${DESTDIR}${INCLUDEDIR}/$$destfn; \
 	done
+	install -D -m644 ${LIBUCONTEXT_PC} ${DESTDIR}${PKGCONFIGDIR}
 
 check: test_libucontext ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext

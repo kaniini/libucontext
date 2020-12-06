@@ -4,6 +4,7 @@ ifeq ($(ARCH),$(filter $(ARCH),i386 i686))
 endif
 
 LIBDIR := /lib
+INCLUDEDIR := /usr/include
 CFLAGS := -ggdb3 -O2 -Wall
 CPPFLAGS := -Iinclude -Iarch/${ARCH} -Iarch/common
 EXPORT_UNPREFIXED := yes
@@ -58,6 +59,10 @@ install: all
 	install -D -m755 ${LIBUCONTEXT_NAME} ${DESTDIR}${LIBUCONTEXT_PATH}
 	install -D -m664 ${LIBUCONTEXT_STATIC_NAME} ${DESTDIR}${LIBUCONTEXT_STATIC_PATH}
 	ln -sf ${LIBUCONTEXT_SONAME} ${DESTDIR}${LIBDIR}/${LIBUCONTEXT_NAME}
+	for i in ${LIBUCONTEXT_HEADERS}; do \
+		destfn=$$(echo $$i | sed s:include/::g); \
+		install -D -m644 $$i ${DESTDIR}${INCLUDEDIR}/$$destfn; \
+	done
 
 check: test_libucontext ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext

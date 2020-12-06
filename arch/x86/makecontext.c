@@ -16,13 +16,14 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdint.h>
+#include "defs.h"
 
 
 extern void libucontext_trampoline(void);
 
 
 void
-libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
+libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
 	libucontext_greg_t *sp, *argp;
 	va_list va;

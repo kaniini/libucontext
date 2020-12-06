@@ -26,10 +26,10 @@ A7_OFF = FRAMESZ - (1 * REG_SZ)
  * assembly rather than C.  Annoying, that...
  */
 
-ALIAS(makecontext, __makecontext)
+ALIAS(makecontext, libucontext_makecontext)
 
-FUNC(__makecontext)
-	PUSH_FRAME(__makecontext)
+FUNC(libucontext_makecontext)
+	PUSH_FRAME(libucontext_makecontext)
 
 	/* store $a3 through $a7 to the stack frame. */
 	sd	$a3, A3_OFF($sp)
@@ -100,7 +100,7 @@ no_more_arguments:
 	/* set our $pc */
 	sd	$a1, MCONTEXT_PC($a0)
 
-	POP_FRAME(__makecontext)
+	POP_FRAME(libucontext_makecontext)
 
 	jr	$ra
-END(__makecontext)
+END(libucontext_makecontext)

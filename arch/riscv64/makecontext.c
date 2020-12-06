@@ -24,7 +24,7 @@ extern void __start_context(void);
 
 
 void
-__makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
+libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
 	greg_t *sp, *regp;
 	va_list va;
@@ -59,4 +59,4 @@ __makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 }
 
 
-extern __typeof(__makecontext) makecontext __attribute__((weak, __alias__("__makecontext")));
+extern __typeof(libucontext_makecontext) makecontext __attribute__((weak, __alias__("libucontext_makecontext")));

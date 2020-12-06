@@ -82,7 +82,7 @@ store_stack_arg:
 
 no_more_arguments:
 	/* trampoline setup. */
-	dla	$t9, __start_context
+	dla	$t9, libucontext_trampoline
 
 	/* copy link pointer as $s0... */
 	ld	$v1, UCONTEXT_UC_LINK($a0)

@@ -12,7 +12,7 @@
 
 #include "defs.h"
 
-FUNC(__start_context)
+FUNC(libucontext_trampoline)
 	/* call the function passed to makecontext() */
 	jalr	s1
 
@@ -26,4 +26,4 @@ FUNC(__start_context)
 	/* otherwise, exit. */
 no_linked_context:
 	tail	exit@plt
-END(__start_context)
+END(libucontext_trampoline)

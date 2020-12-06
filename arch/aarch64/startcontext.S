@@ -12,11 +12,11 @@
 
 #include "defs.h"
 
-FUNC(__start_context)
+FUNC(libucontext_trampoline)
 	/* get the proper context into position and test for NULL */
 	mov	x0, x19
 	cbnz	x0, __setcontext
 
 	/* something went wrong, exit */
 	b	exit
-END(__start_context)
+END(libucontext_trampoline)

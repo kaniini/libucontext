@@ -14,7 +14,7 @@ LOCALSZ = 1
 
 #include "defs.h"
 
-FUNC(__start_context)
+FUNC(libucontext_trampoline)
 	move	$gp, $s1
 
 	/* we receive our initial ucontext in $s0, so if $s0 is nil, bail */
@@ -31,4 +31,4 @@ no_linked_context:
 	la	$t9, exit
 	jalr	$t9
 	nop
-END(__start_context)
+END(libucontext_trampoline)

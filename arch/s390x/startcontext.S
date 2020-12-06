@@ -12,7 +12,7 @@
 
 #include "defs.h"
 
-FUNC(__start_context)
+FUNC(libucontext_trampoline)
 	basr	%r14, %r7			/* run function pointer (%r7) and return here */
 	ltgr	%r8, %r8			/* check to see if uc_link (%r8) is null */
 
@@ -26,4 +26,4 @@ no_linked_context:
 	brasl	%r14, exit@plt			/* call exit */
 
 	j	.+2				/* crash if exit returns */
-END(__start_context)
+END(libucontext_trampoline)

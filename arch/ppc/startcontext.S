@@ -10,8 +10,8 @@
  * from the use of this software.
  */
 
-.globl __start_context;
-__start_context:
+.globl libucontext_trampoline;
+libucontext_trampoline:
 	/* get the proper context into position and test for NULL */
 	mr.	3,31
 

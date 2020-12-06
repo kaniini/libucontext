@@ -12,7 +12,7 @@
 
 #include "defs.h"
 
-FUNC(__start_context)
+FUNC(libucontext_trampoline)
 	/* get the proper context into position and test for NULL */
 	movq	%rbx, %rsp
 	movq	(%rsp), %rdi
@@ -31,4 +31,4 @@ no_linked_context:
 
 	/* something is really hosed, call hlt to force termination */
 	hlt
-END(__start_context)
+END(libucontext_trampoline)

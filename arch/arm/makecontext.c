@@ -22,7 +22,7 @@
 #include "defs.h"
 
 
-extern void __start_context(void);
+extern void libucontext_trampoline(void);
 
 
 void
@@ -42,7 +42,7 @@ libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	ucp->uc_mcontext.arm_sp = (uintptr_t) sp;
 	ucp->uc_mcontext.arm_pc = (uintptr_t) func;
 	ucp->uc_mcontext.arm_r4 = (uintptr_t) ucp->uc_link;
-	ucp->uc_mcontext.arm_lr = (uintptr_t) &__start_context;
+	ucp->uc_mcontext.arm_lr = (uintptr_t) &libucontext_trampoline;
 
 	va_start(va, argc);
 

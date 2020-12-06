@@ -20,7 +20,7 @@
 #include "defs.h"
 
 
-extern void __start_context(void);
+extern void libucontext_trampoline(void);
 
 
 void
@@ -42,7 +42,7 @@ libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	ucp->uc_mcontext.gregs[REG_PC] = (greg_t) func;
 
 	/* return address */
-	*sp++ = (greg_t) __start_context;
+	*sp++ = (greg_t) libucontext_trampoline;
 
 	va_start(va, argc);
 

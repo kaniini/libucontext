@@ -76,7 +76,7 @@ no_more_arguments:
 	addiu	$t0, -(4 * REG_SZ)
 
 	/* trampoline setup. */
-	la	$t9, __start_context
+	la	$t9, libucontext_trampoline
 
 	/* copy link pointer as $s0... */
 	lw	$v1, UCONTEXT_UC_LINK($a0)

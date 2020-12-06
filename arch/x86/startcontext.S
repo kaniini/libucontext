@@ -12,7 +12,7 @@
 
 #include "defs.h"
 
-FUNC(__start_context)
+FUNC(libucontext_trampoline)
 	/* get the proper context into position and test for NULL */
 	leal	(%esp,%ebx,4), %esp
 	cmpl	$0, (%esp)
@@ -38,4 +38,4 @@ no_linked_context:
 __i686.get_pc_thunk.bx:
 	mov	(%esp), %ebx
 	ret
-END(__start_context)
+END(libucontext_trampoline)

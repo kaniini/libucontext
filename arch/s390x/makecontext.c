@@ -21,7 +21,7 @@
 #include "defs.h"
 
 
-extern void __start_context(void);
+extern void libucontext_trampoline(void);
 extern int __setcontext(const ucontext_t *ucp);
 
 
@@ -38,7 +38,7 @@ libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	ucp->uc_mcontext.gregs[7]  = (uintptr_t) func;
 	ucp->uc_mcontext.gregs[8]  = (uintptr_t) ucp->uc_link;
 	ucp->uc_mcontext.gregs[9]  = (uintptr_t) &__setcontext;
-	ucp->uc_mcontext.gregs[14] = (uintptr_t) &__start_context;
+	ucp->uc_mcontext.gregs[14] = (uintptr_t) &libucontext_trampoline;
 
 	va_start(va, argc);
 

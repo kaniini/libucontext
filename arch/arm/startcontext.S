@@ -10,11 +10,11 @@
  * from the use of this software.
  */
 
-.globl __start_context;
+.globl libucontext_trampoline;
 .fnstart
 .cantunwind
 	nop
-__start_context:
+libucontext_trampoline:
 	/* get the proper context into position and test for NULL */
 	movs	r0, r4
 	bne	__setcontext@plt

@@ -10,9 +10,9 @@
  * from the use of this software.
  */
 
-.globl __start_context;
-.hidden __start_context;
-__start_context:
+.globl libucontext_trampoline;
+.hidden libucontext_trampoline;
+libucontext_trampoline:
 	cmpdi	31,0			/* test if ucontext link pointer is null */
 	beq	no_linked_context	/* if it is, exit */
 

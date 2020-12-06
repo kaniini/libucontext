@@ -12,7 +12,7 @@
 
 #include "defs.h"
 
-FUNC(__start_context)
+FUNC(libucontext_trampoline)
 	lea	(%sp, %d7.l * REG_SZ), %sp	/* place uc_link in $sp */
 
 	tst.l	(%sp)				/* test next content for NULL */
@@ -23,4 +23,4 @@ FUNC(__start_context)
 
 no_linked_context:
 	jbsr	exit
-END(__start_context)
+END(libucontext_trampoline)

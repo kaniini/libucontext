@@ -20,7 +20,7 @@
 #include "defs.h"
 
 
-extern void __start_context(void);
+extern void libucontext_trampoline(void);
 
 
 void
@@ -38,7 +38,7 @@ libucontext_makecontext(ucontext_t *ucp, void (*func)(), int argc, ...)
 	sp = (greg_t *) ((uintptr_t) sp & -16L);
 
 	ucp->uc_mcontext.gp_regs[REG_NIP]   = (uintptr_t) func;
-	ucp->uc_mcontext.gp_regs[REG_LNK]   = (uintptr_t) &__start_context;
+	ucp->uc_mcontext.gp_regs[REG_LNK]   = (uintptr_t) &libucontext_trampoline;
 	ucp->uc_mcontext.gp_regs[REG_SP]    = (uintptr_t) sp;
 	ucp->uc_mcontext.gp_regs[REG_ENTRY] = (uintptr_t) func;
 	ucp->uc_mcontext.gp_regs[REG_R31]   = (uintptr_t) ucp->uc_link;

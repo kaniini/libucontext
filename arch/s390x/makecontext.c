@@ -25,7 +25,7 @@ extern int libucontext_setcontext(const ucontext_t *ucp);
 
 
 void
-libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
+libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
 	libucontext_greg_t *sp;
 	va_list va;

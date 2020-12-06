@@ -23,7 +23,7 @@ extern void libucontext_trampoline(void);
 
 
 void
-libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
+libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
 	libucontext_greg_t *sp, *regp;
 	va_list va;

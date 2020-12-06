@@ -1,3 +1,4 @@
+include/libucontext/bits.h
 *.o
 test_libucontext
 libucontext.a

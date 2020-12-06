@@ -13,7 +13,6 @@
 #define _GNU_SOURCE
 #include <stddef.h>
 #include <stdarg.h>
-#include <ucontext.h>
 #include <string.h>
 #include <stdint.h>
 
@@ -25,16 +24,16 @@ extern void libucontext_trampoline(void);
 void
 libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
-	greg_t *sp;
+	libucontext_greg_t *sp;
 	va_list va;
 	int i;
 	unsigned int uc_link;
 
 	uc_link = (argc > 6 ? argc - 6 : 0) + 1;
 
-	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
+	sp = (libucontext_greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
 	sp -= uc_link;
-	sp = (greg_t *) (((uintptr_t) sp & -16L) - 8);
+	sp = (libucontext_greg_t *) (((uintptr_t) sp & -16L) - 8);
 
 	ucp->uc_mcontext.gregs[REG_RIP] = (uintptr_t) func;
 	ucp->uc_mcontext.gregs[REG_RBX] = (uintptr_t) &sp[uc_link];
@@ -49,25 +48,25 @@ libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 		switch (i)
 		{
 		case 0:
-			ucp->uc_mcontext.gregs[REG_RDI] = va_arg (va, greg_t);
+			ucp->uc_mcontext.gregs[REG_RDI] = va_arg (va, libucontext_greg_t);
 			break;
 		case 1:
-			ucp->uc_mcontext.gregs[REG_RSI] = va_arg (va, greg_t);
+			ucp->uc_mcontext.gregs[REG_RSI] = va_arg (va, libucontext_greg_t);
 			break;
 		case 2:
-			ucp->uc_mcontext.gregs[REG_RDX] = va_arg (va, greg_t);
+			ucp->uc_mcontext.gregs[REG_RDX] = va_arg (va, libucontext_greg_t);
 			break;
 		case 3:
-			ucp->uc_mcontext.gregs[REG_RCX] = va_arg (va, greg_t);
+			ucp->uc_mcontext.gregs[REG_RCX] = va_arg (va, libucontext_greg_t);
 			break;
 		case 4:
-			ucp->uc_mcontext.gregs[REG_R8] = va_arg (va, greg_t);
+			ucp->uc_mcontext.gregs[REG_R8] = va_arg (va, libucontext_greg_t);
 			break;
 		case 5:
-			ucp->uc_mcontext.gregs[REG_R9] = va_arg (va, greg_t);
+			ucp->uc_mcontext.gregs[REG_R9] = va_arg (va, libucontext_greg_t);
 			break;
 		default:
-			sp[i - 5] = va_arg (va, greg_t);
+			sp[i - 5] = va_arg (va, libucontext_greg_t);
 			break;
 		}
 

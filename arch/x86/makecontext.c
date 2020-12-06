@@ -14,7 +14,6 @@
 #define _GNU_SOURCE
 #include <stddef.h>
 #include <stdarg.h>
-#include <ucontext.h>
 #include <string.h>
 #include <stdint.h>
 
@@ -25,16 +24,16 @@ extern void libucontext_trampoline(void);
 void
 libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
-	greg_t *sp, *argp;
+	libucontext_greg_t *sp, *argp;
 	va_list va;
 	int i;
 	unsigned int uc_link;
 
 	uc_link = (argc > 6 ? argc - 6 : 0) + 1;
 
-	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
+	sp = (libucontext_greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
 	sp -= uc_link;
-	sp = (greg_t *) (((uintptr_t) sp & -16L) - 8);
+	sp = (libucontext_greg_t *) (((uintptr_t) sp & -16L) - 8);
 
 	ucp->uc_mcontext.gregs[REG_EIP] = (uintptr_t) func;
 	ucp->uc_mcontext.gregs[REG_EBX] = (uintptr_t) argc;
@@ -46,7 +45,7 @@ libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	va_start(va, argc);
 
 	for (i = 0; i < argc; i++)
-		*argp++ = va_arg (va, greg_t);
+		*argp++ = va_arg (va, libucontext_greg_t);
 
 	va_end(va);
 

@@ -13,7 +13,6 @@
 #define _GNU_SOURCE
 #include <stddef.h>
 #include <stdarg.h>
-#include <ucontext.h>
 #include <string.h>
 #include <stdint.h>
 
@@ -28,12 +27,12 @@ extern int libucontext_setcontext(const ucontext_t *ucp);
 void
 libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
-	greg_t *sp;
+	libucontext_greg_t *sp;
 	va_list va;
 	int i;
 
-	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
-	sp = (greg_t *) (((uintptr_t) sp & -8L));
+	sp = (libucontext_greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
+	sp = (libucontext_greg_t *) (((uintptr_t) sp & -8L));
 
 	ucp->uc_mcontext.gregs[7]  = (uintptr_t) func;
 	ucp->uc_mcontext.gregs[8]  = (uintptr_t) ucp->uc_link;
@@ -43,14 +42,14 @@ libucontext_makecontext(ucontext_t *ucp, void (*func)(void), int argc, ...)
 	va_start(va, argc);
 
 	for (i = 0; i < argc && i < 5; i++)
-		ucp->uc_mcontext.gregs[i + 2] = va_arg (va, greg_t);
+		ucp->uc_mcontext.gregs[i + 2] = va_arg (va, libucontext_greg_t);
 
 	if (argc > 5)
 	{
 		sp -= argc - 5;
 
 		for (i = 5; i < argc; i++)
-			sp[i - 5] = va_arg (va, greg_t);
+			sp[i - 5] = va_arg (va, libucontext_greg_t);
 	}
 
 	va_end(va);

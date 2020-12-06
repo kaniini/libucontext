@@ -13,7 +13,6 @@
 
 #define _GNU_SOURCE
 #include <stdarg.h>
-#include <ucontext.h>
 #include <stdint.h>
 
 
@@ -26,16 +25,16 @@ extern void libucontext_trampoline(void);
 void
 libucontext_makecontext(ucontext_t *ucp, void (*func)(), int argc, ...)
 {
-	greg_t *sp;
+	libucontext_greg_t *sp;
 	va_list va;
 	int i;
 	unsigned int stack_args;
 
 	stack_args = argc > 8 ? argc : 0;
 
-	sp = (greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
+	sp = (libucontext_greg_t *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
 	sp -= stack_args + 4;
-	sp = (greg_t *) ((uintptr_t) sp & -16L);
+	sp = (libucontext_greg_t *) ((uintptr_t) sp & -16L);
 
 	ucp->uc_mcontext.gp_regs[REG_NIP]   = (uintptr_t) func;
 	ucp->uc_mcontext.gp_regs[REG_LNK]   = (uintptr_t) &libucontext_trampoline;
@@ -49,9 +48,9 @@ libucontext_makecontext(ucontext_t *ucp, void (*func)(), int argc, ...)
 
 	for (i = 0; i < argc; i++) {
 		if (i < 8)
-			ucp->uc_mcontext.gp_regs[i + 3] = va_arg (va, greg_t);
+			ucp->uc_mcontext.gp_regs[i + 3] = va_arg (va, libucontext_greg_t);
 		else
-			sp[i + 4] = va_arg (va, greg_t);
+			sp[i + 4] = va_arg (va, libucontext_greg_t);
 	}
 
 	va_end(va);

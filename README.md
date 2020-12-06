@@ -18,7 +18,7 @@ Adding support for new architectures is easy, but you need to know assembly lang
 | Architecture | Works on musl | Syscall | Supports FREESTANDING |
 |--------------|---------------|---------|-----------------------|
 |    aarch64   | ✓             |         |                       |
-|      arm     | ✓             |         |                       |
+|      arm     | ✓             |         | ✓                     |
 |     m68k     | ✓             |         | ✓                     |
 |     mips     | ✓             |         | ✓                     |
 |    mips64    | ✓             |         | ✓                     |

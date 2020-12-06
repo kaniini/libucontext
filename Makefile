@@ -7,6 +7,12 @@ LIBDIR := /lib
 CFLAGS := -ggdb3 -O2 -Wall
 CPPFLAGS := -Iarch/${ARCH} -Iarch/common
 EXPORT_UNPREFIXED := yes
+FREESTANDING := no
+
+ifeq ($(FREESTANDING),yes)
+	CFLAGS += -DFREESTANDING -isystem arch/${ARCH}/freestanding
+	EXPORT_UNPREFIXED = no
+endif
 
 ifeq ($(EXPORT_UNPREFIXED),yes)
 	CFLAGS += -DEXPORT_UNPREFIXED

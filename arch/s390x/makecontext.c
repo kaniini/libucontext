@@ -21,7 +21,7 @@
 
 
 extern void libucontext_trampoline(void);
-extern int libucontext_setcontext(const ucontext_t *ucp);
+extern int libucontext_setcontext(const libucontext_ucontext_t *ucp);
 
 
 void

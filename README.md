@@ -25,7 +25,7 @@ Adding support for new architectures is easy, but you need to know assembly lang
 |      ppc     | ✓             | ✓       |                       |
 |     ppc64    | ✓             | ✓       |                       |
 |    riscv64   | ✓             |         |                       |
-|     s390x    | ✓             |         |                       |
+|     s390x    | ✓             |         | ✓                     |
 |      x86     | ✓             |         | ✓                     |
 |    x86_64    | ✓             |         | ✓                     |
 

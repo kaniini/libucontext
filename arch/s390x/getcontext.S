@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(getcontext, __getcontext)
+ALIAS(getcontext, libucontext_getcontext)
 
-FUNC(__getcontext)
+FUNC(libucontext_getcontext)
 	lgr	%r1, %r2			/* use %r1 as our working register */
 	la	%r2, 0				/* we will return 0 */
 
@@ -22,4 +22,4 @@ FUNC(__getcontext)
 	stmg	%r0, %r15, REG_OFFSET(0)(%r1)	/* store general-purpose registers */
 
 	br	%r14				/* return to where we came from */
-END(__getcontext)
+END(libucontext_getcontext)

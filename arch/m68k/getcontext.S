@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(getcontext, __getcontext)
+ALIAS(getcontext, libucontext_getcontext)
 
-FUNC(__getcontext)
+FUNC(libucontext_getcontext)
 	move.l		4(%sp), %a0				/* load ucontext_t pointer from stack */
 
 	movem.l		%d2-%d7, REG_OFFSET(REG_D2)(%a0)	/* preserve $d2 through $d7 */
@@ -26,4 +26,4 @@ FUNC(__getcontext)
 
 	clr.l		%d0					/* return 0 */
 	rts
-END(__getcontext)
+END(libucontext_getcontext)

@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(getcontext, __getcontext)
+ALIAS(getcontext, libucontext_getcontext)
 
-FUNC(__getcontext)
+FUNC(libucontext_getcontext)
 	/* load address of the ucontext structure */
 	movl	4(%esp), %eax
 
@@ -46,4 +46,4 @@ FUNC(__getcontext)
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret
-END(__getcontext)
+END(libucontext_getcontext)

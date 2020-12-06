@@ -10,16 +10,16 @@
  * from the use of this software.
  */
 
-.global __getcontext
+.global libucontext_getcontext
 .hidden __swapcontext
-__getcontext:
-	addis 2, 12, .TOC.-__getcontext@ha
-	addi  2, 12, .TOC.-__getcontext@l
+libucontext_getcontext:
+	addis 2, 12, .TOC.-libucontext_getcontext@ha
+	addi  2, 12, .TOC.-libucontext_getcontext@l
 
-	.localentry __getcontext,.-__getcontext
+	.localentry libucontext_getcontext,.-libucontext_getcontext
 
 	li 4, 0
 	b __swapcontext
 
 .weak getcontext
-getcontext = __getcontext
+getcontext = libucontext_getcontext

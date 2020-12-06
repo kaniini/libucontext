@@ -10,11 +10,11 @@
  * from the use of this software.
  */
 
-.global __getcontext
+.global libucontext_getcontext
 .hidden __swapcontext
-__getcontext:
+libucontext_getcontext:
 	li 4, 0
 	b __swapcontext@local
 
 .weak getcontext
-getcontext = __getcontext
+getcontext = libucontext_getcontext

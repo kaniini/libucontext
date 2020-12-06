@@ -14,15 +14,15 @@ LOCALSZ = 1
 
 #include "defs.h"
 
-ALIAS(getcontext, __getcontext)
+ALIAS(getcontext, libucontext_getcontext)
 
-FUNC(__getcontext)
+FUNC(libucontext_getcontext)
 	/* copy $gp, $sp, $fp to temporary registers so we don't clobber them */
 	move	$a2, $gp
 	move	$a3, $sp
 	move	$a1, $fp
 
-	PUSH_FRAME(__getcontext)
+	PUSH_FRAME(libucontext_getcontext)
 
 	/* set registers */
 	sw	$s0, REG_OFFSET(16)($a0)
@@ -40,7 +40,7 @@ FUNC(__getcontext)
 	sw	$ra, REG_OFFSET(31)($a0)
 	sw	$ra, (MCONTEXT_PC)($a0)
 
-	POP_FRAME(__getcontext)
+	POP_FRAME(libucontext_getcontext)
 
 	jr	$ra
-END(__getcontext)
+END(libucontext_getcontext)

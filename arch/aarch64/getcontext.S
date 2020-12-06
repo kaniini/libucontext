@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(getcontext, __getcontext)
+ALIAS(getcontext, libucontext_getcontext)
 
-FUNC(__getcontext)
+FUNC(libucontext_getcontext)
 	str	xzr, [x0, #REG_OFFSET(0)]
 
 	/* save GPRs */
@@ -49,4 +49,4 @@ FUNC(__getcontext)
 
 	mov	x0, #0
 	ret
-END(__getcontext)
+END(libucontext_getcontext)

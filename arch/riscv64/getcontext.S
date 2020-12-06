@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(getcontext, __getcontext)
+ALIAS(getcontext, libucontext_getcontext)
 
-FUNC(__getcontext)
+FUNC(libucontext_getcontext)
 	sd ra, REG_OFFSET(REG_PC)(a0)
 	sd ra, REG_OFFSET(REG_RA)(a0)
 	sd sp, REG_OFFSET(REG_SP)(a0)
@@ -41,4 +41,4 @@ FUNC(__getcontext)
 
 	/* done saving, return */
 	ret
-END(__getcontext)
+END(libucontext_getcontext)

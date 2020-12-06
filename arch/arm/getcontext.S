@@ -12,9 +12,9 @@
 
 #include "defs.h"
 
-ALIAS(getcontext, __getcontext)
+ALIAS(getcontext, libucontext_getcontext)
 
-FUNC(__getcontext)
+FUNC(libucontext_getcontext)
 	/* copy all of the current registers into the ucontext structure */
 	add	r1, r0, #REG_OFFSET(4)
 	stmia	r1, {r4-r12}
@@ -24,4 +24,4 @@ FUNC(__getcontext)
 	/* return 0 */
 	mov	r0, #0
 	mov	pc, lr
-END(__getcontext)
+END(libucontext_getcontext)

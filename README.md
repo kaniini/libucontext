@@ -6,27 +6,28 @@ it faithfully follows the kernel process ABI when doing context swaps.
 Notably, when combined with `gcompat`, it provides a fully compatible implementation of the ucontext
 functions that are ABI compatible with glibc.
 
+Since version 0.13, for some architectures, you can deploy to bare metal using newlib via the
+`FREESTANDING=yes` make option.  Systems which use a syscall cannot work this way.  The table
+below shows which architecture ports have been adapted to build with `FREESTANDING=yes`.
+
 
 ## supported architectures
 
 Adding support for new architectures is easy, but you need to know assembly language to do it.
 
-Right now these archs are supported and should work on bare metal:
-
- * x86
- * x86_64
- * armv6+ (`arm`)
- * aarch64
- * s390x
- * mips (O32 ABI only)
- * mips64 (N32/N64 ABI only, like Alpine, only N64 ABI has been tested)
- * riscv64
- * m68k
-
-These archs require kernel assistance and use a syscall:
-
- * ppc
- * ppc64 (ELFv2 ABI spec only, ELFv1 not supported)
+| Architecture | Works on musl | Syscall | Supports FREESTANDING |
+|--------------|---------------|---------|-----------------------|
+|    aarch64   | ✓             |         |                       |
+|      arm     | ✓             |         |                       |
+|     m68k     | ✓             |         | ✓                     |
+|     mips     | ✓             |         |                       |
+|    mips64    | ✓             |         |                       |
+|      ppc     | ✓             | ✓       |                       |
+|     ppc64    | ✓             | ✓       |                       |
+|    riscv64   | ✓             |         |                       |
+|     s390x    | ✓             |         |                       |
+|      x86     | ✓             |         |                       |
+|    x86_64    | ✓             |         | ✓                     |
 
 
 ## building

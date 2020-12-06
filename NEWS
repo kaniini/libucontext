@@ -9,7 +9,8 @@ Changes from 0.12 to 0.13
 * Added support for building for bare-metal targets with newlib via
   make FREESTANDING=yes.  Other OS are also supported (for example,
   the m68k freestanding port was tested on AmigaOS), PowerPC requires
-  kernel assistance and cannot be built with FREESTANDING=yes.
+  kernel assistance and cannot be built with FREESTANDING=yes.  Not
+  all ports have support for FREESTANDING yet, patches welcome.
 
 Changes from 0.11 to 0.12
 -------------------------

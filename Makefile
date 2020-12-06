@@ -52,7 +52,7 @@ ${LIBUCONTEXT_SONAME}: ${LIBUCONTEXT_NAME}
 
 clean:
 	rm -f ${LIBUCONTEXT_NAME} ${LIBUCONTEXT_SONAME} ${LIBUCONTEXT_STATIC_NAME} \
-		${LIBUCONTEXT_OBJ} test_libucontext
+		${LIBUCONTEXT_OBJ} include/libucontext/bits.h test_libucontext
 
 install: all
 	install -D -m755 ${LIBUCONTEXT_NAME} ${DESTDIR}${LIBUCONTEXT_PATH}
@@ -73,7 +73,7 @@ include/libucontext/bits.h: arch/common/bits.h
 else
 
 include/libucontext/bits.h: arch/${ARCH}/freestanding/bits.h
-	cp arch/${ARCH}/freestanding/bits.h
+	cp arch/${ARCH}/freestanding/bits.h $@
 
 endif
 

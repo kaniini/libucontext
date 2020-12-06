@@ -1,3 +1,11 @@
+Changes from 0.12 to 0.13
+-------------------------
+
+* Aligned RISC-V RV64 port's header usage with musl 1.2 to remove
+  warnings and ensure consistent register name usage.
+
+* Added Motorola 680X0 / NXP ColdFire port (m68k).
+
 Changes from 0.11 to 0.12
 -------------------------
 

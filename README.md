@@ -21,7 +21,7 @@ Adding support for new architectures is easy, but you need to know assembly lang
 |      arm     | ✓             |         |                       |
 |     m68k     | ✓             |         | ✓                     |
 |     mips     | ✓             |         |                       |
-|    mips64    | ✓             |         |                       |
+|    mips64    | ✓             |         | ✓                     |
 |      ppc     | ✓             | ✓       |                       |
 |     ppc64    | ✓             | ✓       |                       |
 |    riscv64   | ✓             |         | ✓                     |

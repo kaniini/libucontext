@@ -58,6 +58,16 @@ There are a few options:
   systems, but you may wish to disable this when using `FREESTANDING` mode to avoid conflicts with
   the target's libc.  Default is `yes`.
 
+* `DESTDIR`: If this variable is set, the installed files will be installed to the specified path instead
+  of the system root.
+
+If you have `scdoc` installed, you can build manpages and install them:
+
+```
+$ make docs
+$ make DESTDIR=out install_docs
+```
+
 
 ## caveats
 

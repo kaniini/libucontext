@@ -1,3 +1,5 @@
+SCDOC := scdoc
+
 ARCH := $(shell uname -m)
 ifeq ($(ARCH),$(filter $(ARCH),i386 i686))
 	override ARCH = x86
@@ -53,6 +55,22 @@ ${LIBUCONTEXT_PC}: libucontext.pc.in
 	    -e s:@LIBUCONTEXT_LIBDIR@:${LIBDIR}:g \
 	    -e s:@LIBUCONTEXT_INCLUDEDIR@:${INCLUDEDIR}:g $< > $@
 
+MANPAGES_SYMLINKS_3 = \
+	doc/libucontext_getcontext.3 \
+	doc/libucontext_makecontext.3 \
+	doc/libucontext_setcontext.3 \
+	doc/libucontext_swapcontext.3
+MANPAGES_3 = doc/libucontext.3
+
+MANPAGES = ${MANPAGES_3}
+
+.scd.3:
+	${SCDOC} < $< > $@
+
+.SUFFIXES: .scd .3
+
+docs: ${MANPAGES}
+
 .c.o:
 	$(CC) -std=c99 -D_BSD_SOURCE -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
@@ -62,7 +80,7 @@ ${LIBUCONTEXT_PC}: libucontext.pc.in
 clean:
 	rm -f ${LIBUCONTEXT_NAME} ${LIBUCONTEXT_SONAME} ${LIBUCONTEXT_STATIC_NAME} \
 		${LIBUCONTEXT_OBJ} ${LIBUCONTEXT_PC} \
-		include/libucontext/bits.h test_libucontext
+		include/libucontext/bits.h test_libucontext ${MANPAGES}
 
 install: all
 	install -D -m755 ${LIBUCONTEXT_NAME} ${DESTDIR}${LIBUCONTEXT_PATH}

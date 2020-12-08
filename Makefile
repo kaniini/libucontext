@@ -92,7 +92,7 @@ install: all
 		destfn=$$(echo $$i | sed s:include/::g); \
 		install -D -m644 $$i ${DESTDIR}${INCLUDEDIR}/$$destfn; \
 	done
-	install -D -m644 ${LIBUCONTEXT_PC} ${DESTDIR}${PKGCONFIGDIR}
+	install -D -m644 ${LIBUCONTEXT_PC} ${DESTDIR}${PKGCONFIGDIR}/${LIBUCONTEXT_PC}
 
 install_docs: docs
 	install -D -m644 doc/libucontext.3 ${DESTDIR}/usr/share/man/man3/libucontext.3

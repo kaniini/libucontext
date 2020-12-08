@@ -58,10 +58,10 @@ ${LIBUCONTEXT_PC}: libucontext.pc.in
 	    -e s:@LIBUCONTEXT_INCLUDEDIR@:${INCLUDEDIR}:g $< > $@
 
 MANPAGES_SYMLINKS_3 = \
-	doc/libucontext_getcontext.3 \
-	doc/libucontext_makecontext.3 \
-	doc/libucontext_setcontext.3 \
-	doc/libucontext_swapcontext.3
+	libucontext_getcontext.3 \
+	libucontext_makecontext.3 \
+	libucontext_setcontext.3 \
+	libucontext_swapcontext.3
 MANPAGES_3 = doc/libucontext.3
 
 MANPAGES = ${MANPAGES_3}
@@ -93,6 +93,12 @@ install: all
 		install -D -m644 $$i ${DESTDIR}${INCLUDEDIR}/$$destfn; \
 	done
 	install -D -m644 ${LIBUCONTEXT_PC} ${DESTDIR}${PKGCONFIGDIR}
+
+install_docs: docs
+	install -D -m644 doc/libucontext.3 ${DESTDIR}/usr/share/man/man3/libucontext.3
+	for i in ${MANPAGES_SYMLINKS_3}; do \
+		ln -s libucontext.3 ${DESTDIR}/usr/share/man/man3/$$i; \
+	done
 
 check: test_libucontext ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext

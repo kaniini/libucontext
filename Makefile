@@ -37,6 +37,8 @@ LIBUCONTEXT_STATIC_PATH = ${LIBDIR}/${LIBUCONTEXT_STATIC_NAME}
 LIBUCONTEXT_HEADERS = \
 	include/libucontext/libucontext.h \
 	include/libucontext/bits.h
+LIBUCONTEXT_EXAMPLES = \
+	examples/cooperative_threading
 
 all: ${LIBUCONTEXT_SONAME} ${LIBUCONTEXT_STATIC_NAME} ${LIBUCONTEXT_PC}
 
@@ -96,6 +98,10 @@ check: test_libucontext ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext
 
 test_libucontext: test_libucontext.c ${LIBUCONTEXT_NAME}
+	$(CC) -std=c99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+
+examples: ${LIBUCONTEXT_EXAMPLES}
+examples/cooperative_threading: examples/cooperative_threading.c ${LIBUCONTEXT_NAME}
 	$(CC) -std=c99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
 
 ifeq ($(FREESTANDING),no)

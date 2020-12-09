@@ -61,6 +61,9 @@ ${LIBUCONTEXT_POSIX_NAME}: ${LIBUCONTEXT_NAME} ${LIBUCONTEXT_POSIX_OBJ}
 ${LIBUCONTEXT_POSIX_STATIC_NAME}: ${LIBUCONTEXT_POSIX_OBJ}
 	$(AR) rcs ${LIBUCONTEXT_POSIX_STATIC_NAME} ${LIBUCONTEXT_POSIX_OBJ}
 
+${LIBUCONTEXT_POSIX_SONAME}: ${LIBUCONTEXT_POSIX_NAME}
+	ln -sf ${LIBUCONTEXT_POSIX_NAME} ${LIBUCONTEXT_POSIX_SONAME}
+
 ${LIBUCONTEXT_STATIC_NAME}: ${LIBUCONTEXT_OBJ}
 	$(AR) rcs ${LIBUCONTEXT_STATIC_NAME} ${LIBUCONTEXT_OBJ}
 
@@ -98,10 +101,55 @@ docs: ${MANPAGES}
 .S.o:
 	$(CC) -fPIC -DPIC -DLIBUCONTEXT_ASSEMBLY ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
-clean:
-	rm -f ${LIBUCONTEXT_NAME} ${LIBUCONTEXT_SONAME} ${LIBUCONTEXT_STATIC_NAME} \
-		${LIBUCONTEXT_OBJ} ${LIBUCONTEXT_PC} ${LIBUCONTEXT_POSIX_NAME} ${LIBUCONTEXT_POSIX_STATIC_NAME} \
-		include/libucontext/bits.h test_libucontext ${MANPAGES}
+${LIBUCONTEXT_NAME}_clean:
+	rm -f ${LIBUCONTEXT_NAME}
+
+${LIBUCONTEXT_SONAME}_clean:
+	rm -f ${LIBUCONTEXT_SONAME}
+
+${LIBUCONTEXT_STATIC_NAME}_clean:
+	rm -f ${LIBUCONTEXT_STATIC_NAME}
+
+libucontext_obj_clean:
+	rm -f ${LIBUCONTEXT_OBJ}
+
+${LIBUCONTEXT_PC}_clean:
+	rm -f ${LIBUCONTEXT_PC}
+
+bits_clean:
+	rm -f include/libucontext/bits.h
+
+${LIBUCONTEXT_POSIX_NAME}_clean:
+	rm -f ${LIBUCONTEXT_POSIX_NAME}
+
+${LIBUCONTEXT_POSIX_STATIC_NAME}_clean:
+	rm -f ${LIBUCONTEXT_POSIX_STATIC_NAME}
+
+libucontext_posix_obj_clean:
+	rm -f ${LIBUCONTEXT_POSIX_OBJ}
+
+check_clean: check_bare_clean check_posix_clean
+
+check_bare_clean:
+	rm -f test_libucontext
+
+check_posix_clean:
+	rm -f test_libucontext_posix
+
+docs_clean:
+	rm -f ${MANPAGES}
+
+clean: ${LIBUCONTEXT_NAME}_clean
+clean: ${LIBUCONTEXT_SONAME}_clean
+clean: ${LIBUCONTEXT_STATIC_NAME}_clean
+clean: ${LIBUCONTEXT_PC}_clean
+clean: bits_clean
+clean: ${LIBUCONTEXT_POSIX_NAME}_clean
+clean: ${LIBUCONTEXT_POSIX_STATIC_NAME}_clean
+clean: libucontext_posix_obj_clean
+clean: libucontext_obj_clean
+clean: check_clean
+clean: docs_clean
 
 install: all
 	install -D -m755 ${LIBUCONTEXT_NAME} ${DESTDIR}${LIBUCONTEXT_PATH}
@@ -122,6 +170,16 @@ install_docs: docs
 	for i in ${MANPAGES_SYMLINKS_3}; do \
 		ln -s libucontext.3 ${DESTDIR}/usr/share/man/man3/$$i; \
 	done
+
+ifneq (${FREESTANDING},yes)
+check: check_libucontext_posix
+
+check_libucontext_posix: test_libucontext_posix ${LIBUCONTEXT_POSIX_SONAME}
+	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext_posix
+
+test_libucontext_posix: test_libucontext_posix.c ${LIBUCONTEXT_POSIX_NAME}
+	$(CC) -std=c99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+endif
 
 check: test_libucontext ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext

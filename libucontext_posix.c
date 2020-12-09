@@ -11,15 +11,24 @@
  */
 
 #include <stddef.h>
+#include <stdio.h>
 #include <libucontext/libucontext.h>
 
 #ifdef FREESTANDING
 # error libucontext_posix cannot be built in FREESTANDING mode.
 #endif
 
+#ifdef DEBUG
+# define TRACE(...)	fprintf(stderr, "TRACE: " __VA_ARGS__)
+#else
+# define TRACE(...)
+#endif
+
 int
 getcontext(libucontext_ucontext_t *ucp)
 {
+	TRACE("getcontext(%p)\n", ucp);
+
 	if (sigprocmask(SIG_SETMASK, NULL, &ucp->uc_sigmask))
 		return -1;
 
@@ -29,6 +38,8 @@ getcontext(libucontext_ucontext_t *ucp)
 int
 setcontext(const libucontext_ucontext_t *ucp)
 {
+	TRACE("setcontext(%p)\n", ucp);
+
 	if (sigprocmask(SIG_SETMASK, &ucp->uc_sigmask, NULL))
 		return -1;
 
@@ -38,6 +49,8 @@ setcontext(const libucontext_ucontext_t *ucp)
 int
 swapcontext(libucontext_ucontext_t *oucp, const libucontext_ucontext_t *ucp)
 {
+	TRACE("swapcontext(%p, %p)\n", oucp, ucp);
+
 	if (sigprocmask(SIG_SETMASK, &ucp->uc_sigmask, &oucp->uc_sigmask))
 		return -1;
 

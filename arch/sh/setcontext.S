@@ -1,0 +1,52 @@
+/*
+ * Copyright (c) 2020 Ariadne Conill <ariadne@dereferenced.org>
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * This software is provided 'as is' and without any warranty, express or
+ * implied.  In no event shall the authors be liable for any damages arising
+ * from the use of this software.
+ */
+
+#include "defs.h"
+
+ALIAS(setcontext, libucontext_setcontext)
+
+FUNC(libucontext_setcontext)
+	mov	r4, r0
+
+	add	#(REG_OFFSET(REG_PC)), r0			/* restore PR */
+	mov.l	@r0+, r2
+	lds.l	@r0+, pr
+
+	mov.l	@r0+, r1					/* restore T-flag */
+	shlr	r1
+
+	add	#REG_SZ, r0					/* skip GBR (used for TLS) */
+
+	lds.l	@r0+, mach					/* load mach/macl registers */
+	lds.l	@r0+, macl
+
+	mov	r4, r0						/* bring r0 back to the top of the context */
+
+	mov.l	@(REG_OFFSET(1), r0), r1			/* restore GPRs r1-15 */
+	mov.l	@(REG_OFFSET(2), r0), r2
+	mov.l	@(REG_OFFSET(3), r0), r3
+	mov.l	@(REG_OFFSET(4), r0), r4
+	mov.l	@(REG_OFFSET(5), r0), r5
+	mov.l	@(REG_OFFSET(6), r0), r6
+	mov.l	@(REG_OFFSET(7), r0), r7
+	mov.l	@(REG_OFFSET(8), r0), r8
+	mov.l	@(REG_OFFSET(9), r0), r9
+	mov.l	@(REG_OFFSET(10), r0), r10
+	mov.l	@(REG_OFFSET(11), r0), r11
+	mov.l	@(REG_OFFSET(12), r0), r12
+	mov.l	@(REG_OFFSET(13), r0), r13
+	mov.l	@(REG_OFFSET(14), r0), r14
+	mov.l	@(REG_OFFSET(15), r0), r15
+
+	mov.l	@(REG_OFFSET(REG_PC), r0), r0
+	jmp	@r0
+END(libucontext_setcontext)

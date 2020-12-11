@@ -99,7 +99,7 @@ MANPAGES = ${MANPAGES_3}
 docs: ${MANPAGES}
 
 .c.o:
-	$(CC) -std=c99 -D_BSD_SOURCE -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
+	$(CC) -std=gnu99 -D_BSD_SOURCE -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
 .S.o:
 	$(CC) -fPIC -DPIC -DLIBUCONTEXT_ASSEMBLY ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
@@ -181,18 +181,18 @@ check_libucontext_posix: test_libucontext_posix ${LIBUCONTEXT_POSIX_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext_posix
 
 test_libucontext_posix: test_libucontext_posix.c ${LIBUCONTEXT_POSIX_NAME}
-	$(CC) -std=c99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
 endif
 
 check: test_libucontext ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext
 
 test_libucontext: test_libucontext.c ${LIBUCONTEXT_NAME}
-	$(CC) -std=c99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
 
 examples: ${LIBUCONTEXT_EXAMPLES}
 examples/cooperative_threading: examples/cooperative_threading.c ${LIBUCONTEXT_NAME}
-	$(CC) -std=c99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
 
 ifeq ($(FREESTANDING),no)
 

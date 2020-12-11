@@ -37,12 +37,15 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int arg
 	ucp->uc_mcontext.sr = (libucontext_greg_t) sp;
 	ucp->uc_mcontext.pr = (libucontext_greg_t) libucontext_trampoline;
 	ucp->uc_mcontext.pc = (libucontext_greg_t) func;
+	ucp->uc_mcontext.gregs[8] = (libucontext_greg_t) ucp->uc_link;
 
 	/* pass up to four args in r4-r7, rest on stack */
 	va_start(va, argc);
 
+	regp = &ucp->uc_mcontext.gregs[4];
+
 	for (i = 0; i < argc && i < 4; i++)
-		ucp->uc_mcontext.gregs[4 + i] = va_arg(va, libucontext_greg_t);
+		*regp++ = va_arg(va, libucontext_greg_t);
 
 	for (; i < argc; i++)
 		*sp++ = va_arg(va, libucontext_greg_t);

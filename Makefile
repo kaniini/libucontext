@@ -4,6 +4,9 @@ ARCH := $(shell uname -m)
 ifeq ($(ARCH),$(filter $(ARCH),i386 i686))
 	override ARCH = x86
 endif
+ifeq ($(ARCH),$(filter $(ARCH),sh2 sh4))
+	override ARCH = sh
+endif
 
 LIBDIR := /lib
 INCLUDEDIR := /usr/include

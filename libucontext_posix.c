@@ -12,6 +12,7 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <signal.h>
 #include <libucontext/libucontext.h>
 
 #ifdef FREESTANDING

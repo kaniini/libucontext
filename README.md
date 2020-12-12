@@ -16,20 +16,20 @@ target to do it.
 
 ## supported features
 
-| Architecture | Works on musl | Syscall | Supports FREESTANDING |
-|--------------|---------------|---------|-----------------------|
-|    aarch64   | ✓             |         | ✓                     |
-|      arm     | ✓             |         | ✓                     |
-|     m68k     | ✓             |         | ✓                     |
-|     mips     | ✓             |         | ✓                     |
-|    mips64    | ✓             |         | ✓                     |
-|      ppc     | ✓             | ✓       |                       |
-|     ppc64    | ✓             | ✓       |                       |
-|    riscv64   | ✓             |         | ✓                     |
-|     s390x    | ✓             |         | ✓                     |
-|      sh      | ✓             |         | ✓                     |
-|      x86     | ✓             |         | ✓                     |
-|    x86_64    | ✓             |         | ✓                     |
+| Architecture | Works on musl | Syscall | Supports FREESTANDING | Common trampoline |
+|--------------|---------------|---------|-----------------------|-------------------|
+|    aarch64   | ✓             |         | ✓                     | ✓                 |
+|      arm     | ✓             |         | ✓                     | ✓                 |
+|     m68k     | ✓             |         | ✓                     | ✓                 |
+|     mips     | ✓             |         | ✓                     |                   |
+|    mips64    | ✓             |         | ✓                     |                   |
+|      ppc     | ✓             | ✓       |                       |                   |
+|     ppc64    | ✓             | ✓       |                       |                   |
+|    riscv64   | ✓             |         | ✓                     |                   |
+|     s390x    | ✓             |         | ✓                     |                   |
+|      sh      | ✓             |         | ✓                     | ✓                 |
+|      x86     | ✓             |         | ✓                     | ✓                 |
+|    x86_64    | ✓             |         | ✓                     | ✓                 |
 
 
 ## building

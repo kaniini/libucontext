@@ -30,7 +30,7 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int arg
 	int i;
 
 	/* set up and align the stack */
-	sp = (libucontext_greg_t *) (((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size) & 0x4);
+	sp = (libucontext_greg_t *) (((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size) & -4L);
 	sp -= argc > 4 ? argc - 4 : 0;
 
 	/* set up the context */

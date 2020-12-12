@@ -7,6 +7,9 @@ endif
 ifeq ($(ARCH),$(filter $(ARCH),sh2 sh4))
 	override ARCH = sh
 endif
+ifeq ($(ARCH),$(filter $(ARCH),ppc64le))
+	override ARCH = ppc64
+endif
 
 LIBDIR := /lib
 INCLUDEDIR := /usr/include

@@ -47,6 +47,9 @@
 
 #define PC_OFFSET	REG_OFFSET(REG_PC)
 
+#define FETCH_LINKPTR(dest) \
+	asm("mv	%0, s1" : "=rm" ((dest)))
+
 #include "common-defs.h"
 
 #endif

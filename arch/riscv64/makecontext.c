@@ -37,10 +37,9 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int arg
 	/* set up the ucontext structure */
 	ucp->uc_mcontext.__gregs[REG_RA] = (libucontext_greg_t) libucontext_trampoline;
 	ucp->uc_mcontext.__gregs[REG_S0] = 0;
-	ucp->uc_mcontext.__gregs[REG_S1] = (libucontext_greg_t) func;
-	ucp->uc_mcontext.__gregs[REG_S2] = (libucontext_greg_t) ucp->uc_link;
+	ucp->uc_mcontext.__gregs[REG_S1] = (libucontext_greg_t) ucp->uc_link;
 	ucp->uc_mcontext.__gregs[REG_SP] = (libucontext_greg_t) sp;
-	ucp->uc_mcontext.__gregs[REG_PC] = 0;
+	ucp->uc_mcontext.__gregs[REG_PC] = (libucontext_greg_t) func;
 
 	va_start(va, argc);
 

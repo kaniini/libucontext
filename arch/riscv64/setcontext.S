@@ -50,6 +50,6 @@ FUNC(libucontext_setcontext)
 	ld s10, REG_OFFSET(REG_S10)(t0)
 	ld s11, REG_OFFSET(REG_S11)(t0)
 
-	/* done saving, return */
-	ret
+	/* done restoring, jump to new pc in S1 */
+	jr t1
 END(libucontext_setcontext)

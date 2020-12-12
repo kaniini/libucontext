@@ -13,14 +13,11 @@
 #include "defs.h"
 
 FUNC(libucontext_trampoline)
-	/* call the function passed to makecontext() */
-	jalr	s1
-
 	/* check for linked context */
-	beqz	s2, no_linked_context
+	beqz	s1, no_linked_context
 
 	/* if one is set, invoke it */
-	mv	a0, s2
+	mv	a0, s1
 	jal	libucontext_setcontext
 
 	/* otherwise, exit. */

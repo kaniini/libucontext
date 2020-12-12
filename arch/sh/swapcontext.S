@@ -15,25 +15,6 @@
 ALIAS(swapcontext, libucontext_swapcontext)
 
 FUNC(libucontext_swapcontext)
-	mov	#0, r0						/* zero out r0, not preserved per ABI */
-
-	mov.l	r0, @(REG_OFFSET(0), r4)			/* save GPRs r0-r15 */
-	mov.l	r1, @(REG_OFFSET(1), r4)
-	mov.l	r2, @(REG_OFFSET(2), r4)
-	mov.l	r3, @(REG_OFFSET(3), r4)
-	mov.l	r4, @(REG_OFFSET(4), r4)
-	mov.l	r5, @(REG_OFFSET(5), r4)
-	mov.l	r6, @(REG_OFFSET(6), r4)
-	mov.l	r7, @(REG_OFFSET(7), r4)
-	mov.l	r8, @(REG_OFFSET(8), r4)
-	mov.l	r9, @(REG_OFFSET(9), r4)
-	mov.l	r10, @(REG_OFFSET(10), r4)
-	mov.l	r11, @(REG_OFFSET(11), r4)
-	mov.l	r12, @(REG_OFFSET(12), r4)
-	mov.l	r13, @(REG_OFFSET(13), r4)
-	mov.l	r14, @(REG_OFFSET(14), r4)
-	mov.l	r15, @(REG_OFFSET(15), r4)
-
 	mov	r4, r0						/* move r4 to r0, and increment by REG_OFFSET(REG_MACL) + REG_SZ. */
 	add	#(REG_OFFSET(REG_MACL + 1)), r0
 
@@ -47,6 +28,27 @@ FUNC(libucontext_swapcontext)
 
 	sts.l	pr, @-r0					/* save current PR */
 	sts.l	pr, @-r0					/* save current PR as PC as well */
+
+	mov.l	r15, @-r0					/* preserve registers backwards, from r15 to r1 */
+	mov.l	r14, @-r0
+	mov.l	r13, @-r0
+	mov.l	r12, @-r0
+	mov.l	r11, @-r0
+	mov.l	r10, @-r0
+	mov.l	r9, @-r0
+	mov.l	r8, @-r0
+	mov.l	r7, @-r0
+	mov.l	r6, @-r0
+	mov.l	r5, @-r0
+	mov.l	r4, @-r0
+	mov.l	r3, @-r0
+	mov.l	r2, @-r0
+	mov.l	r1, @-r0
+
+	mov	r0, r1
+	mov	#0, r0
+
+	mov.l	r0, @-r1					/* preserve r0 as explicit zero */
 
 	mov	r5, r0						/* now restore the new context */
 

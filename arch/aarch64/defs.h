@@ -18,6 +18,9 @@
 # define ESR_MAGIC	0x45535201
 #endif
 
+#define FETCH_LINKPTR(dest) \
+	asm("mov	x0, %0" : "=rm" ((dest)))
+
 #include "common-defs.h"
 
 #endif

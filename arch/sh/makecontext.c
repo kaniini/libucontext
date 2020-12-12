@@ -34,7 +34,7 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int arg
 	sp -= argc > 4 ? argc - 4 : 0;
 
 	/* set up the context */
-	ucp->uc_mcontext.sr = (libucontext_greg_t) sp;
+	ucp->uc_mcontext.gregs[REG_SP] = (libucontext_greg_t) sp;
 	ucp->uc_mcontext.pr = (libucontext_greg_t) libucontext_trampoline;
 	ucp->uc_mcontext.pc = (libucontext_greg_t) func;
 	ucp->uc_mcontext.gregs[8] = (libucontext_greg_t) ucp->uc_link;

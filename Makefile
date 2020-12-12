@@ -181,7 +181,7 @@ check_libucontext_posix: test_libucontext_posix ${LIBUCONTEXT_POSIX_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext_posix
 
 test_libucontext_posix: test_libucontext_posix.c ${LIBUCONTEXT_POSIX_NAME}
-	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext -lucontext_posix
 endif
 
 check: test_libucontext ${LIBUCONTEXT_SONAME}

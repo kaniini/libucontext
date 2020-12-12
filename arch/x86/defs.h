@@ -59,6 +59,9 @@
 
 #define MCONTEXT_GREGS	(20)
 
+#define FETCH_LINKPTR(dest) \
+	asm("movl (%%esp, %%ebx, 4), %0" : "=rm" ((dest)));
+
 #include "common-defs.h"
 
 #endif

@@ -13,7 +13,7 @@
 #define REG_MACL		(21)
 
 #define FETCH_LINKPTR(dest)	\
-	asm("mov r8, %0" : "=rm" (dest));
+	asm("mov r8, %0" : "=r" (dest));
 
 #include "common-defs.h"
 

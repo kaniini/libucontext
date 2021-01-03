@@ -19,6 +19,7 @@ libucontext_trampoline(void)
 {
 	libucontext_ucontext_t *uc_link;
 
+    // FIXME: there's no guarantee that input is not clobbered!
 	FETCH_LINKPTR(uc_link);
 
 	if (uc_link == NULL)

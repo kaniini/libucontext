@@ -6,7 +6,7 @@
 #define TYPE(__proc)
 
 #define FETCH_LINKPTR(dest) \
-	asm("movs    r0, %0" : "=rm" ((dest)))
+	asm("movs    r0, %0" : "=r" ((dest)))
 
 #include "common-defs.h"
 

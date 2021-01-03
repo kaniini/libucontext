@@ -55,5 +55,6 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int arg
 	*argp++ = (uintptr_t) ucp->uc_link;
 }
 
-
+#ifdef EXPORT_UNPREFIXED
 extern __typeof(libucontext_makecontext) makecontext __attribute__((weak, __alias__("libucontext_makecontext")));
+#endif

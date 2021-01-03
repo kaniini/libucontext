@@ -19,6 +19,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "defs.h"
+#include <libucontext/libucontext.h>
 
 
 extern void libucontext_trampoline(void);

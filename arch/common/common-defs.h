@@ -58,10 +58,4 @@ PROC_NAME(__proc):					\
 
 #define REG_OFFSET(__reg)       (MCONTEXT_GREGS + ((__reg) * REG_SZ))
 
-#ifndef LIBUCONTEXT_ASSEMBLY
-
-#include <libucontext/libucontext.h>
-
-#endif
-
 #endif

@@ -105,7 +105,7 @@ docs: ${MANPAGES}
 	$(CC) -std=gnu99 -D_BSD_SOURCE -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
 .S.o:
-	$(CC) -fPIC -DPIC -DLIBUCONTEXT_ASSEMBLY ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
+	$(CC) -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
 ${LIBUCONTEXT_NAME}_clean:
 	rm -f ${LIBUCONTEXT_NAME}

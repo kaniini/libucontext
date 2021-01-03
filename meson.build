@@ -1,0 +1,175 @@
+project(
+  'libucontext',
+  'c',
+  meson_version : '>=0.55.0',
+  version : run_command('head', files('VERSION')).stdout()
+)
+
+cpu = host_machine.cpu_family()
+if cpu == 'sh4'
+  cpu = 'sh'
+endif
+
+project_description = 'Portable implementation of ucontext'
+
+project_headers = [
+  'include/libucontext/libucontext.h'
+]
+
+project_source_files = [
+  'arch' / cpu / 'getcontext.S',
+  'arch' / cpu / 'setcontext.S',
+  'arch' / cpu / 'swapcontext.S',
+]
+if cpu in ['mips', 'mips64']
+  project_source_files += [
+    'arch' / cpu / 'makecontext.S'
+  ]
+else
+  project_source_files += [
+    'arch' / cpu / 'makecontext.c'
+  ]
+endif
+if cpu in ['ppc', 'ppc64']
+  project_source_files += [
+    'arch' / cpu / 'retfromsyscall.c'
+  ]
+endif
+if cpu not in ['mips', 'mips64', 'ppc', 'ppc64', 's390x']
+  project_source_files += [
+    'arch' / cpu / 'trampoline.c'
+  ]
+endif
+
+project_includes = [
+  'include',
+  'arch/common'
+]
+
+build_args = [
+  '-std=gnu99',
+  '-D_BSD_SOURCE',
+  '-fPIC',
+  '-DPIC'
+]
+
+
+# ===================================================================
+
+# ======
+# Options
+# ======
+
+freestanding = get_option('freestanding')
+export_unprefixed = get_option('export_unprefixed')
+build_posix = true
+
+if freestanding
+  build_args += '-DFREESTANDING'
+  build_posix = false
+  export_unprefixed = false
+  project_headers += ['arch' / cpu / 'include/libucontext/bits.h']
+  project_includes += ['arch' / cpu / 'include']
+else
+  project_headers += ['arch/common/include/libucontext/bits.h']
+  project_includes += ['arch/common/include']
+endif
+
+if export_unprefixed
+  build_args += '-DEXPORT_UNPREFIXED'
+endif
+
+# ======
+# Target
+# ======
+
+headers = include_directories(project_includes)
+is_subproject = meson.is_subproject()
+# Build only static library if subproject
+
+libucontext_target = both_libraries(
+  'ucontext',
+  project_source_files,
+  version: meson.project_version(),
+  install : not is_subproject,
+  c_args : build_args,
+  include_directories : headers,
+)
+if is_subproject
+  libucontext_target = libucontext_target.get_static_lib()
+endif
+libucontext_dep = declare_dependency(
+  include_directories: headers,
+  link_with : libucontext_target
+)
+
+if build_posix
+  libucontext_posix_target = both_libraries(
+    'ucontext_posix',
+    project_source_files + ['libucontext_posix.c'],
+    version: meson.project_version(),
+    install : not is_subproject,
+    c_args : build_args,
+    include_directories : headers,
+  )
+  if is_subproject
+    libucontext_posix_target = libucontext_posix_target.get_static_lib()
+  endif
+  libucontext_posix_dep = declare_dependency(
+    include_directories: headers,
+    link_with : libucontext_posix_target
+  )
+endif
+
+# =======
+# Project
+# =======
+
+if not is_subproject
+  # Make this library usable from the system's
+  # package manager.
+  install_headers(project_headers, subdir : meson.project_name())
+
+  pkg_mod = import('pkgconfig')
+  pkg_mod.generate(
+    name : meson.project_name(),
+    filebase : meson.project_name(),
+    description : project_description,
+    subdirs : meson.project_name(),
+    libraries : libucontext_target,
+  )
+endif
+
+# ====
+# Docs
+# ====
+
+# TODO: meson.build for docs
+if not is_subproject
+  #subdir('docs')
+endif
+
+# ==========
+# Unit Tests
+# ==========
+
+if not is_subproject
+  test('test_libucontext',
+    executable(
+      'test_libucontext',
+      files('test_libucontext.c'),
+      dependencies : libucontext_dep,
+      install : false
+    )
+  )
+  if build_posix
+    test('test_libucontext_posix',
+      executable(
+        'test_libucontext_posix',
+        files('test_libucontext_posix.c'),
+        dependencies : libucontext_posix_dep,
+        install : false
+      )
+    )
+  endif
+endif

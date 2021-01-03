@@ -19,7 +19,7 @@
 #endif
 
 #define FETCH_LINKPTR(dest) \
-	asm("mov	x0, %0" : "=r" ((dest)))
+	asm("mov	%0, x19" : "=r" ((dest)))
 
 #include "common-defs.h"
 

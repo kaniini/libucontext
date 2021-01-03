@@ -1,6 +1,7 @@
 #ifndef LIBUCONTEXT_LIBUCONTEXT_H
 #define LIBUCONTEXT_LIBUCONTEXT_H
 
+#include <stddef.h>
 #include <libucontext/bits.h>
 
 int  libucontext_getcontext(libucontext_ucontext_t *);

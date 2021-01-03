@@ -18,15 +18,27 @@
 #endif
 
 #ifndef TYPE
-# define TYPE(__proc)	.type	__proc, @function;
+# ifdef __clang__
+#  define TYPE(__proc) // .type not supported
+# else
+#  define TYPE(__proc)	.type	__proc, @function;
+#endif
+#endif
+
+#ifndef PROC_NAME
+# ifdef __MACH__
+#  define PROC_NAME(__proc) _ ## __proc
+# else
+#  define PROC_NAME(__proc) __proc
+# endif
 #endif
 
 #define FUNC(__proc)					\
-	.global __proc;					\
+	.global PROC_NAME(__proc);			\
 	.align  2;					\
 	TYPE(__proc)					\
 	ENT(__proc)					\
-__proc:							\
+PROC_NAME(__proc):					\
 	SETUP_FRAME(__proc)
 #ifdef __clang__
 #define END(__proc)

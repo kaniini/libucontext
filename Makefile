@@ -20,7 +20,7 @@ EXPORT_UNPREFIXED := yes
 FREESTANDING := no
 
 ifeq ($(FREESTANDING),yes)
-	CFLAGS += -DFREESTANDING -isystem arch/${ARCH}/freestanding
+	CFLAGS += -DFREESTANDING
 	EXPORT_UNPREFIXED = no
 endif
 
@@ -199,13 +199,13 @@ examples/cooperative_threading: examples/cooperative_threading.c ${LIBUCONTEXT_N
 
 ifeq ($(FREESTANDING),no)
 
-include/libucontext/bits.h: arch/common/bits.h
-	cp arch/common/bits.h $@
+include/libucontext/bits.h: arch/common/include/libucontext/bits.h
+	cp $< $@
 
 else
 
-include/libucontext/bits.h: arch/${ARCH}/freestanding/bits.h
-	cp arch/${ARCH}/freestanding/bits.h $@
+include/libucontext/bits.h: arch/${ARCH}/include/libucontext/bits.h
+	cp $< $@
 
 endif
 

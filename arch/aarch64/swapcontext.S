@@ -14,7 +14,11 @@
 
 ALIAS(swapcontext, libucontext_swapcontext)
 
-FUNC(libucontext_swapcontext)
+	.global PROC_NAME(libucontext_swapcontext);
+	.align  2;
+	TYPE(libucontext_swapcontext)
+	ENT(libucontext_swapcontext)
+PROC_NAME(libucontext_swapcontext):
 	str	xzr, [x0, #REG_OFFSET(0)]
 
 	/* save GPRs */

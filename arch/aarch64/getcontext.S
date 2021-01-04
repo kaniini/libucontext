@@ -14,7 +14,11 @@
 
 ALIAS(getcontext, libucontext_getcontext)
 
-FUNC(libucontext_getcontext)
+	.global PROC_NAME(libucontext_getcontext);
+	.align  2;
+	TYPE(libucontext_getcontext)
+	ENT(libucontext_getcontext)
+PROC_NAME(libucontext_getcontext):
 	str	xzr, [x0, #REG_OFFSET(0)]
 
 	/* save GPRs */

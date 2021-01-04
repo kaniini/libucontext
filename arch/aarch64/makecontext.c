@@ -32,14 +32,16 @@ _Static_assert(offsetof(libucontext_ucontext_t, uc_mcontext.pstate) == PSTATE_OF
 void
 libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
-	unsigned long *sp;
-	unsigned long *regp;
+	// specs require only 'int' arguments so stack arguments are int type
+	// while register argument take the full width of libucontext_greg_t
+	int *sp;
+	libucontext_greg_t *regp;
 	va_list va;
 	int i;
 
-	sp = (unsigned long *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
+	sp = (int *) ((uintptr_t) ucp->uc_stack.ss_sp + ucp->uc_stack.ss_size);
 	sp -= argc < 8 ? 0 : argc - 8;
-	sp = (unsigned long *) (((uintptr_t) sp & -16L));
+	sp = (int *) (((uintptr_t) sp & -16L));
 
 	ucp->uc_mcontext.sp = (uintptr_t) sp;
 	ucp->uc_mcontext.pc = (uintptr_t) func;
@@ -51,10 +53,10 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int arg
 	regp = &(ucp->uc_mcontext.regs[0]);
 
 	for (i = 0; (i < argc && i < 8); i++)
-		*regp++ = va_arg (va, unsigned long);
+		*regp++ = va_arg (va, int);
 
 	for (; i < argc; i++)
-		*sp++ = va_arg (va, unsigned long);
+		*sp++ = va_arg (va, int);
 
 	va_end(va);
 }

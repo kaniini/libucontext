@@ -31,7 +31,7 @@ endif
 LIBUCONTEXT_C_SRC = $(wildcard arch/${ARCH}/*.c)
 LIBUCONTEXT_S_SRC = $(wildcard arch/${ARCH}/*.S)
 
-LIBUCONTEXT_VERSION := $(shell head VERSION)
+LIBUCONTEXT_VERSION := $(shell head -n 1 VERSION)
 LIBUCONTEXT_OBJ = ${LIBUCONTEXT_C_SRC:.c=.o} ${LIBUCONTEXT_S_SRC:.S=.o}
 LIBUCONTEXT_SOVERSION = 0
 LIBUCONTEXT_NAME = libucontext.so

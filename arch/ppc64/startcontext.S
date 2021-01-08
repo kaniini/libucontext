@@ -10,9 +10,10 @@
  * from the use of this software.
  */
 
-.globl libucontext_trampoline;
-.hidden libucontext_trampoline;
-libucontext_trampoline:
+#include "common-defs.h"
+
+.hidden libucontext_trampoline
+FUNC(libucontext_trampoline)
 	cmpdi	31,0			/* test if ucontext link pointer is null */
 	beq	no_linked_context	/* if it is, exit */
 
@@ -29,3 +30,4 @@ libucontext_trampoline:
 no_linked_context:
 	b	exit@GOT
 	nop
+END(libucontext_trampoline)

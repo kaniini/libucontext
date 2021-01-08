@@ -2,6 +2,7 @@ project(
   'libucontext',
   'c',
   meson_version : '>=0.55.0',
+  default_options: ['c_std=gnu99'],
   version : run_command('head', files('VERSION')).stdout()
 )
 
@@ -39,6 +40,10 @@ if cpu not in ['mips', 'mips64', 'ppc', 'ppc64', 's390x']
   project_source_files += [
     'arch' / cpu / 'trampoline.c'
   ]
+else
+  project_source_files += [
+    'arch' / cpu / 'startcontext.S'
+  ]
 endif
 
 project_includes = [
@@ -47,9 +52,7 @@ project_includes = [
 ]
 
 build_args = [
-  '-std=gnu99',
   '-D_BSD_SOURCE',
-  '-fPIC',
   '-DPIC'
 ]
 
@@ -68,11 +71,9 @@ if freestanding
   build_args += '-DFREESTANDING'
   build_posix = false
   export_unprefixed = false
-  project_headers += ['arch' / cpu / 'include/libucontext/bits.h']
-  project_includes += ['arch' / cpu / 'include']
+  project_headers += ['arch' / cpu / 'freestanding/bits.h']
 else
-  project_headers += ['arch/common/include/libucontext/bits.h']
-  project_includes += ['arch/common/include']
+  project_headers += ['arch/common/bits.h']
 endif
 
 if export_unprefixed
@@ -93,6 +94,7 @@ libucontext_target = both_libraries(
   version: meson.project_version(),
   install : not is_subproject,
   c_args : build_args,
+  pic: true,
   include_directories : headers,
 )
 if is_subproject
@@ -110,6 +112,7 @@ if build_posix
     version: meson.project_version(),
     install : not is_subproject,
     c_args : build_args,
+    pic: true,
     include_directories : headers,
   )
   if is_subproject
@@ -167,7 +170,7 @@ if not is_subproject
       executable(
         'test_libucontext_posix',
         files('test_libucontext_posix.c'),
-        dependencies : libucontext_posix_dep,
+        dependencies : [libucontext_dep, libucontext_posix_dep],
         install : false
       )
     )

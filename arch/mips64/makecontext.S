@@ -27,6 +27,7 @@ A7_OFF = FRAMESZ - (1 * REG_SZ)
  */
 
 ALIAS(makecontext, libucontext_makecontext)
+ALIAS(__makecontext, libucontext_makecontext)
 
 FUNC(libucontext_makecontext)
 	PUSH_FRAME(libucontext_makecontext)

@@ -13,6 +13,7 @@
 #include "defs.h"
 
 ALIAS(setcontext, libucontext_setcontext)
+ALIAS(__setcontext, libucontext_setcontext)
 
 FUNC(libucontext_setcontext)
 	/* move $a0 to $t0 to avoid clobbering. */

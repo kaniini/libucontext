@@ -22,6 +22,7 @@ A3_OFF = FRAMESZ + (3 * REG_SZ)
  */
 
 ALIAS(makecontext, libucontext_makecontext)
+ALIAS(__makecontext, libucontext_makecontext)
 
 FUNC(libucontext_makecontext)
 	PUSH_FRAME(libucontext_makecontext)

@@ -13,6 +13,7 @@
 #include "common-defs.h"
 
 ALIAS(setcontext, libucontext_setcontext)
+ALIAS(__setcontext, libucontext_setcontext)
 
 .hidden __libucontext_swapcontext
 FUNC(libucontext_setcontext)

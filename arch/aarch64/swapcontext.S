@@ -13,6 +13,7 @@
 #include "defs.h"
 
 ALIAS(swapcontext, libucontext_swapcontext)
+ALIAS(__swapcontext, libucontext_swapcontext)
 
 FUNC(libucontext_swapcontext)
 	str	xzr, [x0, #REG_OFFSET(0)]

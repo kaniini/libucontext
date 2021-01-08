@@ -13,6 +13,7 @@
 #include "defs.h"
 
 ALIAS(getcontext, libucontext_getcontext)
+ALIAS(__getcontext, libucontext_getcontext)
 
 FUNC(libucontext_getcontext)
 	mov	r4, r0						/* move r4 to r0, and increment by REG_OFFSET(REG_MACL) + REG_SZ. */

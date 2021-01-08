@@ -13,6 +13,7 @@
 #include "defs.h"
 
 ALIAS(getcontext, libucontext_getcontext)
+ALIAS(__getcontext, libucontext_getcontext)
 
 FUNC(libucontext_getcontext)
 	lgr	%r1, %r2			/* use %r1 as our working register */

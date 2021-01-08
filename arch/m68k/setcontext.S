@@ -13,6 +13,7 @@
 #include "defs.h"
 
 ALIAS(setcontext, libucontext_setcontext)
+ALIAS(__setcontext, libucontext_setcontext)
 
 FUNC(libucontext_setcontext)
 	move.l		4(%sp), %a0				/* load ucontext_t pointer from stack */

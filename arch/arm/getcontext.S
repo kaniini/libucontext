@@ -13,6 +13,7 @@
 #include "defs.h"
 
 ALIAS(getcontext, libucontext_getcontext)
+ALIAS(__getcontext, libucontext_getcontext)
 
 FUNC(libucontext_getcontext)
 	/* copy all of the current registers into the ucontext structure */

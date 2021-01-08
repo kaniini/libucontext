@@ -15,6 +15,7 @@ LOCALSZ = 1
 #include "defs.h"
 
 ALIAS(setcontext, libucontext_setcontext)
+ALIAS(__setcontext, libucontext_setcontext)
 
 FUNC(libucontext_setcontext)
 	PUSH_FRAME(libucontext_setcontext)

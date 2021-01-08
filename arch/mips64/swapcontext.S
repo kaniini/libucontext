@@ -17,6 +17,7 @@ LOCALSZ = 2
 A1_OFFSET = FRAMESZ - (1 * REG_SZ)
 
 ALIAS(swapcontext, libucontext_swapcontext)
+ALIAS(__swapcontext, libucontext_swapcontext)
 
 FUNC(libucontext_swapcontext)
 	/* copy $gp, $sp, $fp to temporary registers so we don't clobber them */

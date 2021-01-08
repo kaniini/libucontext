@@ -13,6 +13,7 @@
 #include "defs.h"
 
 ALIAS(getcontext, libucontext_getcontext)
+ALIAS(__getcontext, libucontext_getcontext)
 
 FUNC(libucontext_getcontext)
 	/* load address of the ucontext structure */

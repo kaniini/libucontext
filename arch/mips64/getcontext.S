@@ -15,6 +15,7 @@ LOCALSZ = 1
 #include "defs.h"
 
 ALIAS(getcontext, libucontext_getcontext)
+ALIAS(__getcontext, libucontext_getcontext)
 
 FUNC(libucontext_getcontext)
 	/* copy $gp, $sp, $fp to temporary registers so we don't clobber them */

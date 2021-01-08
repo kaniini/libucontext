@@ -2,6 +2,7 @@ project(
   'libucontext',
   'c',
   meson_version : '>=0.55.0',
+  default_options: ['c_std=gnu99', 'default_library=both'],
   version : run_command('head', files('VERSION')).stdout()
 )
 
@@ -39,6 +40,10 @@ if cpu not in ['mips', 'mips64', 'ppc', 'ppc64', 's390x']
   project_source_files += [
     'arch' / cpu / 'trampoline.c'
   ]
+else
+  project_source_files += [
+    'arch' / cpu / 'startcontext.S'
+  ]
 endif
 
 project_includes = [
@@ -47,10 +52,7 @@ project_includes = [
 ]
 
 build_args = [
-  '-std=gnu99',
-  '-D_BSD_SOURCE',
-  '-fPIC',
-  '-DPIC'
+  '-D_BSD_SOURCE'
 ]
 
 
@@ -68,11 +70,9 @@ if freestanding
   build_args += '-DFREESTANDING'
   build_posix = false
   export_unprefixed = false
-  project_headers += ['arch' / cpu / 'include/libucontext/bits.h']
-  project_includes += ['arch' / cpu / 'include']
+  project_headers += ['arch' / cpu / 'freestanding/bits.h']
 else
-  project_headers += ['arch/common/include/libucontext/bits.h']
-  project_includes += ['arch/common/include']
+  project_headers += ['arch/common/bits.h']
 endif
 
 if export_unprefixed
@@ -84,37 +84,31 @@ endif
 # ======
 
 headers = include_directories(project_includes)
-is_subproject = meson.is_subproject()
-# Build only static library if subproject
 
-libucontext_target = both_libraries(
+libucontext_target = library(
   'ucontext',
   project_source_files,
   version: meson.project_version(),
-  install : not is_subproject,
+  install : not meson.is_subproject(),
   c_args : build_args,
+  pic: true,
   include_directories : headers,
 )
-if is_subproject
-  libucontext_target = libucontext_target.get_static_lib()
-endif
 libucontext_dep = declare_dependency(
   include_directories: headers,
   link_with : libucontext_target
 )
 
 if build_posix
-  libucontext_posix_target = both_libraries(
+  libucontext_posix_target = library(
     'ucontext_posix',
     project_source_files + ['libucontext_posix.c'],
     version: meson.project_version(),
-    install : not is_subproject,
+    install : not meson.is_subproject(),
     c_args : build_args,
+    pic: true,
     include_directories : headers,
   )
-  if is_subproject
-    libucontext_posix_target = libucontext_posix_target.get_static_lib()
-  endif
   libucontext_posix_dep = declare_dependency(
     include_directories: headers,
     link_with : libucontext_posix_target
@@ -125,7 +119,7 @@ endif
 # Project
 # =======
 
-if not is_subproject
+if not meson.is_subproject()
   # Make this library usable from the system's
   # package manager.
   install_headers(project_headers, subdir : meson.project_name())
@@ -145,7 +139,7 @@ endif
 # ====
 
 # TODO: meson.build for docs
-if not is_subproject
+if not meson.is_subproject()
   #subdir('docs')
 endif
 
@@ -153,23 +147,21 @@ endif
 # Unit Tests
 # ==========
 
-if not is_subproject
-  test('test_libucontext',
+test('test_libucontext',
+  executable(
+    'test_libucontext',
+    files('test_libucontext.c'),
+    dependencies : libucontext_dep,
+    install : false
+  )
+)
+if build_posix
+  test('test_libucontext_posix',
     executable(
-      'test_libucontext',
-      files('test_libucontext.c'),
-      dependencies : libucontext_dep,
+      'test_libucontext_posix',
+      files('test_libucontext_posix.c'),
+      dependencies : [libucontext_dep, libucontext_posix_dep],
       install : false
     )
   )
-  if build_posix
-    test('test_libucontext_posix',
-      executable(
-        'test_libucontext_posix',
-        files('test_libucontext_posix.c'),
-        dependencies : libucontext_posix_dep,
-        install : false
-      )
-    )
-  endif
 endif

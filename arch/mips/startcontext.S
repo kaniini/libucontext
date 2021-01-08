@@ -14,6 +14,7 @@ LOCALSZ = 1
 
 #include "defs.h"
 
+.hidden libucontext_trampoline
 FUNC(libucontext_trampoline)
 	move	$gp, $s1
 

@@ -12,6 +12,7 @@
 
 #include "defs.h"
 
+.hidden libucontext_trampoline
 FUNC(libucontext_trampoline)
 	basr	%r14, %r7			/* run function pointer (%r7) and return here */
 	ltgr	%r8, %r8			/* check to see if uc_link (%r8) is null */

@@ -61,4 +61,5 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(), int argc, .
 
 #ifdef EXPORT_UNPREFIXED
 extern __typeof(libucontext_makecontext) makecontext __attribute__((weak, __alias__("libucontext_makecontext")));
+extern __typeof(libucontext_makecontext) __makecontext __attribute__((weak, __alias__("libucontext_makecontext")));
 #endif

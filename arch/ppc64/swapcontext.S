@@ -11,6 +11,7 @@
  */
 
 .global __libucontext_swapcontext
+.type __libucontext_swapcontext, @function
 __libucontext_swapcontext:
 	addis 2, 12, .TOC.-__libucontext_swapcontext@ha
 	addi  2, 12, .TOC.-__libucontext_swapcontext@l

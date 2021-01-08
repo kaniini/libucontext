@@ -12,6 +12,7 @@
 
 .global libucontext_getcontext
 .hidden __libucontext_swapcontext
+.type libucontext_getcontext, @function
 libucontext_getcontext:
 	li 4, 0
 	b __libucontext_swapcontext@local

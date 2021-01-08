@@ -12,6 +12,7 @@
 
 .global libucontext_setcontext
 .hidden __libucontext_swapcontext
+.type libucontext_setcontext, @function
 libucontext_setcontext:
 	mr 4, 3
 	li 3, 0

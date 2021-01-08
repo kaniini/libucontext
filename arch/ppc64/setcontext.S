@@ -12,6 +12,7 @@
 
 .global libucontext_setcontext
 .hidden __libucontext_swapcontext
+.type libucontext_setcontext, @function
 libucontext_setcontext:
 	addis 2, 12, .TOC.-libucontext_setcontext@ha
 	addi  2, 12, .TOC.-libucontext_setcontext@l

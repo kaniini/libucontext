@@ -11,6 +11,7 @@
  */
 
 .global __libucontext_swapcontext
+.type __libucontext_swapcontext, @function
 __libucontext_swapcontext:
 	li 0, 249     # SYS_swapcontext
 	li 5, 1184    # sizeof(ucontext_t)

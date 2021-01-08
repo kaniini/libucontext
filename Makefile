@@ -134,13 +134,16 @@ ${LIBUCONTEXT_POSIX_STATIC_NAME}_clean:
 libucontext_posix_obj_clean:
 	rm -f ${LIBUCONTEXT_POSIX_OBJ}
 
-check_clean: check_bare_clean check_posix_clean
+check_clean: check_bare_clean check_posix_clean check_bare_posixabi_clean
 
 check_bare_clean:
 	rm -f test_libucontext
 
 check_posix_clean:
 	rm -f test_libucontext_posix
+
+check_bare_posixabi_clean:
+	rm -f test_libucontext_bare_posixabi
 
 docs_clean:
 	rm -f ${MANPAGES}
@@ -185,6 +188,16 @@ check_libucontext_posix: test_libucontext_posix ${LIBUCONTEXT_POSIX_SONAME}
 
 test_libucontext_posix: test_libucontext_posix.c ${LIBUCONTEXT_POSIX_NAME}
 	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext -lucontext_posix
+endif
+
+ifeq ($(EXPORT_UNPREFIXED),yes)
+check: check_libucontext_bare_posixabi
+
+check_libucontext_bare_posixabi: test_libucontext_bare_posixabi ${LIBUCONTEXT_SONAME}
+	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext_bare_posixabi
+
+test_libucontext_bare_posixabi: test_libucontext_posix.c ${LIBUCONTEXT_NAME}
+	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} test_libucontext_posix.c -o $@ -L. -lucontext
 endif
 
 check: test_libucontext ${LIBUCONTEXT_SONAME}

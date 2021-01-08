@@ -3,6 +3,7 @@ include/libucontext/bits.h
 examples/cooperative_threading
 test_libucontext
 test_libucontext_posix
+test_libucontext_bare_posixabi
 libucontext.a
 libucontext.so
 libucontext.so.*

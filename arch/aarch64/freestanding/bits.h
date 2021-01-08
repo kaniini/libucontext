@@ -27,7 +27,7 @@ typedef struct libucontext_ucontext {
 	unsigned long uc_flags;
 	struct libucontext_ucontext *uc_link;
 	libucontext_stack_t uc_stack;
-	unsigned char __pad[128];
+	unsigned char __pad[136];
 	libucontext_mcontext_t uc_mcontext;
 } libucontext_ucontext_t;
 

@@ -2,7 +2,7 @@ project(
   'libucontext',
   'c',
   meson_version : '>=0.55.0',
-  default_options: ['c_std=gnu99', 'default_library=both'],
+  default_options: ['c_std=gnu11', 'default_library=both'],
   version : run_command('head', files('VERSION')).stdout()
 )
 

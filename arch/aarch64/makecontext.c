@@ -24,6 +24,10 @@
 
 extern void libucontext_trampoline(void);
 
+_Static_assert(offsetof(libucontext_ucontext_t, uc_mcontext.regs[0]) == R0_OFFSET, "R0_OFFSET is invalid");
+_Static_assert(offsetof(libucontext_ucontext_t, uc_mcontext.sp) == SP_OFFSET, "SP_OFFSET is invalid");
+_Static_assert(offsetof(libucontext_ucontext_t, uc_mcontext.pc) == PC_OFFSET, "PC_OFFSET is invalid");
+_Static_assert(offsetof(libucontext_ucontext_t, uc_mcontext.pstate) == PSTATE_OFFSET, "PSTATE_OFFSET is invalid");
 
 void
 libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int argc, ...)

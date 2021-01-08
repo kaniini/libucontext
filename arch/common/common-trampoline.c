@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+__attribute__ ((visibility ("hidden")))
 void
 libucontext_trampoline(void)
 {

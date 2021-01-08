@@ -1,3 +1,5 @@
+#include <stddef.h>
+
 #ifndef LIBUCONTEXT_BITS_H
 #define LIBUCONTEXT_BITS_H
 

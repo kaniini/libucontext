@@ -20,6 +20,7 @@
 
 extern void libucontext_trampoline(void);
 
+_Static_assert(offsetof(libucontext_ucontext_t, uc_mcontext.gregs) == MCONTEXT_GREGS, "MCONTEXT_GREGS is invalid");
 
 void
 libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int argc, ...)

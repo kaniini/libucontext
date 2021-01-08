@@ -14,7 +14,10 @@
 
 ALIAS(swapcontext, __libucontext_swapcontext)
 ALIAS(__swapcontext, __libucontext_swapcontext)
-ALIAS(libucontext_swapcontext, __libucontext_swapcontext)
+
+/* make sure this is visible regardless of EXPORT_UNPREFIXED */
+.weak libucontext_swapcontext
+libucontext_swapcontext = __libucontext_swapcontext
 
 FUNC(__libucontext_swapcontext)
 	addis 2, 12, .TOC.-__libucontext_swapcontext@ha

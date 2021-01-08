@@ -10,12 +10,12 @@
  * from the use of this software.
  */
 
-.global libucontext_getcontext
+#include "common-defs.h"
+
+ALIAS(getcontext, libucontext_getcontext)
+
 .hidden __libucontext_swapcontext
-.type libucontext_getcontext, @function
-libucontext_getcontext:
+FUNC(libucontext_getcontext)
 	li 4, 0
 	b __libucontext_swapcontext@local
-
-.weak getcontext
-getcontext = libucontext_getcontext
+END(libucontext_getcontext)

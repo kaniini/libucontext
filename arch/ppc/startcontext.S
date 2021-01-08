@@ -10,8 +10,10 @@
  * from the use of this software.
  */
 
-.globl libucontext_trampoline;
-libucontext_trampoline:
+#include "common-defs.h"
+
+.hidden libucontext_trampoline
+FUNC(libucontext_trampoline)
 	/* get the proper context into position and test for NULL */
 	mr.	3,31
 
@@ -23,3 +25,4 @@ libucontext_trampoline:
 
 no_linked_context:
 	b	exit@GOT
+END(libucontext_trampoline)

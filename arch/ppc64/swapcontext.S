@@ -10,9 +10,12 @@
  * from the use of this software.
  */
 
-.global __libucontext_swapcontext
-.type __libucontext_swapcontext, @function
-__libucontext_swapcontext:
+#include "common-defs.h"
+
+ALIAS(swapcontext, __libucontext_swapcontext)
+ALIAS(libucontext_swapcontext, __libucontext_swapcontext)
+
+FUNC(__libucontext_swapcontext)
 	addis 2, 12, .TOC.-__libucontext_swapcontext@ha
 	addi  2, 12, .TOC.-__libucontext_swapcontext@l
 
@@ -24,9 +27,4 @@ __libucontext_swapcontext:
 
 .hidden __retfromsyscall
 	b __retfromsyscall
-
-.weak swapcontext
-swapcontext = __libucontext_swapcontext
-
-.weak libucontext_swapcontext
-libucontext_swapcontext = __libucontext_swapcontext
+END(__libucontext_swapcontext)

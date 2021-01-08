@@ -10,18 +10,16 @@
  * from the use of this software.
  */
 
-.global __libucontext_swapcontext
-.type __libucontext_swapcontext, @function
-__libucontext_swapcontext:
+#include "common-defs.h"
+
+ALIAS(swapcontext, __libucontext_swapcontext)
+ALIAS(libucontext_swapcontext, __libucontext_swapcontext)
+
+FUNC(__libucontext_swapcontext)
 	li 0, 249     # SYS_swapcontext
 	li 5, 1184    # sizeof(ucontext_t)
 	sc
 
 .hidden __retfromsyscall
 	b __retfromsyscall@local
-
-.weak swapcontext
-swapcontext = libucontext_swapcontext
-
-.weak libucontext_swapcontext
-libucontext_swapcontext = __libucontext_swapcontext
+END(__libucontext_swapcontext)

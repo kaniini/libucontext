@@ -88,7 +88,7 @@ headers = include_directories(project_includes)
 libucontext_target = library(
   'ucontext',
   project_source_files,
-  version: meson.project_version(),
+  version: '1',
   install : not meson.is_subproject(),
   c_args : build_args,
   pic: true,
@@ -103,7 +103,7 @@ if build_posix
   libucontext_posix_target = library(
     'ucontext_posix',
     project_source_files + ['libucontext_posix.c'],
-    version: meson.project_version(),
+    version: '1',
     install : not meson.is_subproject(),
     c_args : build_args,
     pic: true,

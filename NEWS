@@ -6,6 +6,14 @@ Changes from 0.13.1 to 1.0
 
 * Added Renesas / Hitachi SH-2/SH-4 port (sh).
 
+* Added Meson build system, primarily for the convenience of using
+  libucontext with qemu as a subproject.
+
+* Added support for Mach-O ABI.
+
+* Fixed deficiencies in libucontext ABI, SONAME has been bumped due
+  to the ABI regressions in 0.13.
+
 Changes from 0.13 to 0.13.1
 ---------------------------
 

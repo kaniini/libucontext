@@ -1,7 +1,6 @@
 #ifndef __ARCH_X86_DEFS_H
 #define __ARCH_X86_DEFS_H
 
-#ifndef _GNU_SOURCE
 #ifndef REG_GS
 # define REG_GS		(0)
 #endif
@@ -52,7 +51,6 @@
 
 #ifndef REG_EIP
 # define REG_EIP	(14)
-#endif
 #endif
 
 #define REG_SZ		(4)

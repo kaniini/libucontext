@@ -71,15 +71,26 @@ $ make DESTDIR=out install_docs
 ```
 
 
+## real-world use cases
+
+`libucontext` is used on almost all musl distributions to provide the legacy `ucontext.h` API.
+Additionally, it is used by:
+
+* [UTM](https://getutm.app) -- friendly qemu distribution for macOS and iOS devices.  UTM uses libucontext
+  as qemu's coroutine backend.
+
+* [Lwan](https://lwan.ws) -- a high-performance embeddable asynchronous web server.  Lwan uses libucontext
+  to provide green threads when building on non-x86 architectures.
+
+
 ## caveats
 
 `libucontext`, while largely functionally equivalent does have some differences over traditional POSIX
 ucontext functions:
 
-* Saving and restoring the signal mask is not implemented.  This is largely a non-issue because most
-  uses of these functions did not modify the signal mask anyway, but saving/restoring the signal mask
-  (even though it is unmodified in basically all cases in practice) induces a significant performance
-  penalty due to having to make kernel syscalls.
+* Saving and restoring the signal mask is not implemented by default in order to avoid kernel syscall
+  overhead.  Use `-lucontext_posix` if you actually need this functionality, which provides a POSIX
+  compliant implementation at the cost of performance.
 
 * Only basic GPR registers are saved and restored when context swapping.  The glibc implementation uses
   hardware capability detection to save/restore other register groups, such as the FPU registers or

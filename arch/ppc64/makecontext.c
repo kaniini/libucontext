@@ -11,9 +11,6 @@
  * from the use of this software.
  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
 #include <stdarg.h>
 #include <stdint.h>
 

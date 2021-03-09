@@ -1,3 +1,19 @@
+Changes from 1.0 to 1.1
+-----------------------
+
+* Added RISC-V RV32 port.
+
+* Cleaned up use of _GNU_SOURCE in C code.
+  Partially from patches contributed by osy.
+
+* Added automatic detection of armv7l architecture.
+  Patch contributed by Leandro Pereira.
+
+* Fixed installation path of libucontext_posix.a.
+
+* Work around deficiency in clang built-in assembler on AArch64 targets.
+  Patch contributed by osy.
+
 Changes from 0.13.1 to 1.0
 --------------------------
 

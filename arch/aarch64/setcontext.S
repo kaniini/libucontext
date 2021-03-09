@@ -15,7 +15,11 @@
 ALIAS(setcontext, libucontext_setcontext)
 ALIAS(__setcontext, libucontext_setcontext)
 
-FUNC(libucontext_setcontext)
+	.global PROC_NAME(libucontext_setcontext);
+	.align  2;
+	TYPE(libucontext_setcontext)
+	ENT(libucontext_setcontext)
+PROC_NAME(libucontext_setcontext):
 	/* restore GPRs */
 	ldp	x18, x19, [x0, #REG_OFFSET(18)]
 	ldp	x20, x21, [x0, #REG_OFFSET(20)]

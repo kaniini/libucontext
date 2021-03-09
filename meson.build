@@ -70,9 +70,11 @@ if freestanding
   build_args += '-DFREESTANDING'
   build_posix = false
   export_unprefixed = false
-  project_headers += ['arch' / cpu / 'freestanding/bits.h']
+  project_headers += ['arch' / cpu / 'include/libucontext/bits.h']
+  project_includes += ['arch' / cpu / 'include']
 else
-  project_headers += ['arch/common/bits.h']
+  project_headers += ['arch/common/include/libucontext/bits.h']
+  project_includes += ['arch/common/include']
 endif
 
 if export_unprefixed

@@ -6,7 +6,11 @@ project(
   version : run_command('head', files('VERSION')).stdout()
 )
 
-cpu = host_machine.cpu_family()
+cpu = get_option('cpu')
+if cpu == ''
+  cpu = host_machine.cpu_family()
+endif
+
 if cpu == 'sh4'
   cpu = 'sh'
 endif

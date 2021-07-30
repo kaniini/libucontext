@@ -49,6 +49,11 @@ PROC_NAME(libucontext_swapcontext):
 	/* save pstate */
 	str	xzr, [x0, #PSTATE_OFFSET]
 
+	stp d8, d9,   [x0, #D8_OFFSET +  0]
+	stp d10, d11, [x0, #D8_OFFSET + 16]
+	stp d12, d13, [x0, #D8_OFFSET + 32]
+	stp d14, d15, [x0, #D8_OFFSET + 48]
+
 	/* context to swap to is in x1 so... we move to x0 and call setcontext */
 	/* store our link register in x28 */
 	mov	x28, x30

@@ -50,7 +50,10 @@ PROC_NAME(libucontext_getcontext):
 	/* save pstate */
 	str	xzr, [x0, #PSTATE_OFFSET]
 
-	/* TODO: SIMD / FPRs */
+	stp d8, d9,   [x0, #D8_OFFSET +  0]
+	stp d10, d11, [x0, #D8_OFFSET + 16]
+	stp d12, d13, [x0, #D8_OFFSET + 32]
+	stp d14, d15, [x0, #D8_OFFSET + 48]
 
 	mov	x0, #0
 	ret

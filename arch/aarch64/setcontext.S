@@ -33,7 +33,10 @@ PROC_NAME(libucontext_setcontext):
 	ldr	x2, [x0, #SP_OFFSET]
 	mov	sp, x2
 
-	/* TODO: SIMD / FPRs */
+	ldp d8, d9,   [x0, #D8_OFFSET +  0]
+	ldp d10, d11, [x0, #D8_OFFSET + 16]
+	ldp d12, d13, [x0, #D8_OFFSET + 32]
+	ldp d14, d15, [x0, #D8_OFFSET + 48]
 
 	/* save current program counter in link register */
 	ldr	x16, [x0, #PC_OFFSET]

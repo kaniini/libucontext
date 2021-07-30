@@ -9,6 +9,7 @@
 #define SP_OFFSET	432
 #define PC_OFFSET	440
 #define PSTATE_OFFSET	448
+#define D8_OFFSET 456
 
 #ifndef FPSIMD_MAGIC
 # define FPSIMD_MAGIC	0x46508001

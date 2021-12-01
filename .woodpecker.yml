@@ -23,6 +23,14 @@ pipeline:
     when:
       platform: linux/ppc64le
 
+  build-armv7:
+    image: alpine
+    commands:
+      - apk add --no-cache build-base
+      - make check ARCH=arm
+    when:
+      platform: linux/arm
+
   build-aarch64:
     image: alpine
     commands:

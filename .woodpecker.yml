@@ -1,0 +1,32 @@
+pipeline:
+  build-x86_64:
+    image: alpine
+    commands:
+      - apk add --no-cache build-base
+      - make check ARCH=x86_64
+    when:
+      platform: linux/amd64
+
+  build-s390x:
+    image: alpine
+    commands:
+      - apk add --no-cache build-base
+      - make check ARCH=s390x
+    when:
+      platform: linux/s390x
+
+  build-ppc64le:
+    image: alpine
+    commands:
+      - apk add --no-cache build-base
+      - make check ARCH=ppc64le
+    when:
+      platform: linux/ppc64le
+
+  build-aarch64:
+    image: alpine
+    commands:
+      - apk add --no-cache build-base
+      - make check ARCH=aarch64
+    when:
+      platform: linux/arm64

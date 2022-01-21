@@ -51,3 +51,6 @@ PROC_NAME(libucontext_setcontext):
 	/* jump to new PC */
 	br	x16
 END(libucontext_setcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

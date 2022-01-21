@@ -49,3 +49,6 @@ FUNC(libucontext_setcontext)
 
 	POP_FRAME(libucontext_setcontext)
 END(libucontext_setcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

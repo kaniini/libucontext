@@ -25,3 +25,6 @@ FUNC(libucontext_setcontext)
 	/* load link register and jump to new context */
 	ldmia	r14, {r14, pc}
 END(libucontext_setcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

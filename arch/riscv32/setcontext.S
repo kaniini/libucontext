@@ -54,3 +54,6 @@ FUNC(libucontext_setcontext)
 	/* done restoring, jump to new pc in S1 */
 	jr t1
 END(libucontext_setcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

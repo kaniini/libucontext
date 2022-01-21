@@ -29,3 +29,6 @@ FUNC(libucontext_setcontext)
 
 	jmp		(%a1)					/* jump to *$a1 */
 END(libucontext_setcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

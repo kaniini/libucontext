@@ -93,3 +93,6 @@ FUNC(libucontext_swapcontext)
 
 	mov.l	@r15+, r0					/* pop original r0 from stack */
 END(libucontext_swapcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

@@ -29,3 +29,6 @@ FUNC(libucontext_swapcontext)
 	add	r14, r14, #56
 	ldmia	r14, {r14, pc}
 END(libucontext_swapcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

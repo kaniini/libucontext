@@ -54,3 +54,6 @@ FUNC(libucontext_getcontext)
 	mov	#0, r0						/* set return value as zero */
 	rts
 END(libucontext_getcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

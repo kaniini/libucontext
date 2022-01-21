@@ -23,3 +23,6 @@ FUNC(libucontext_setcontext)
 
 	br	%r14				/* return to new link register address */
 END(libucontext_setcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

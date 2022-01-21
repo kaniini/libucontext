@@ -26,3 +26,6 @@ FUNC(libucontext_trampoline)
 no_linked_context:
 	b	exit@GOT
 END(libucontext_trampoline)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

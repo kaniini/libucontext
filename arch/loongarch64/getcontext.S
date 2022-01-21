@@ -44,3 +44,6 @@ FUNC(libucontext_getcontext)
 
 	jr	$ra
 END(libucontext_getcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

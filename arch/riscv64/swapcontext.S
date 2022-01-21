@@ -79,3 +79,6 @@ FUNC(libucontext_swapcontext)
 	/* done swapping, jump to new PC in S1 */
 	jr t1
 END(libucontext_swapcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

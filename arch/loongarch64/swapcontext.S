@@ -87,3 +87,6 @@ fail:
 	jirl	$ra, $t8, 0
 	move	$v0, $zero
 END(libucontext_swapcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

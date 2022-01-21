@@ -43,3 +43,6 @@ FUNC(libucontext_getcontext)
 	/* done saving, return */
 	ret
 END(libucontext_getcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

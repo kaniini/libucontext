@@ -33,3 +33,6 @@ no_linked_context:
 	jalr	$t9
 	nop
 END(libucontext_trampoline)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

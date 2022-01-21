@@ -85,3 +85,6 @@ fail:
 	move	$v0, $zero
 	jalr	$t9
 END(libucontext_swapcontext)
+#if defined(__linux__) && defined(__ELF__)
+.section .note.GNU-stack,"",%progbits
+#endif

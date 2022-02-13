@@ -229,8 +229,10 @@ test_libucontext_bare_posixabi: test_libucontext_posix.c ${LIBUCONTEXT_NAME}
 	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} test_libucontext_posix.c -o $@ -L. -lucontext
 endif
 
-check: test_libucontext ${LIBUCONTEXT_SONAME}
+check_libucontext: test_libucontext ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext
+
+check: check_libucontext
 
 test_libucontext: test_libucontext.c ${LIBUCONTEXT_NAME}
 	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext

@@ -212,7 +212,7 @@ install_docs: docs
 ifneq (${FREESTANDING},yes)
 check: check_libucontext_posix
 
-check_libucontext_posix: test_libucontext_posix ${LIBUCONTEXT_POSIX_SONAME}
+check_libucontext_posix: test_libucontext_posix ${LIBUCONTEXT_POSIX_SONAME} ${LIBUCONTEXT_SONAME}
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext_posix
 
 test_libucontext_posix: test_libucontext_posix.c ${LIBUCONTEXT_POSIX_NAME}

@@ -20,7 +20,7 @@ endif
 LIBDIR := /lib
 INCLUDEDIR := /usr/include
 PKGCONFIGDIR := /usr/lib/pkgconfig
-CFLAGS := -ggdb3 -O2 -Wall
+CFLAGS ?= -ggdb3 -O2 -Wall
 CPPFLAGS := -Iinclude -Iarch/${ARCH} -Iarch/common
 ifneq ($(shell uname),Darwin)
 	EXPORT_UNPREFIXED := yes

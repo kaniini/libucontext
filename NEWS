@@ -3,6 +3,8 @@ Changes from 1.1 to 1.2
 
 * Added Loongarch64 port.
 
+* Added OpenRISC (or1k) port.
+
 * Fixed various build system issues:
   - libucontext_posix.so is no longer underlinked
   - Executable stacks are now disabled when using GNU-like toolchains

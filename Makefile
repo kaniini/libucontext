@@ -153,6 +153,9 @@ bits_clean:
 ${LIBUCONTEXT_POSIX_NAME}_clean:
 	rm -f ${LIBUCONTEXT_POSIX_NAME}
 
+${LIBUCONTEXT_POSIX_SONAME}_clean:
+	rm -f ${LIBUCONTEXT_POSIX_SONAME}
+
 ${LIBUCONTEXT_POSIX_STATIC_NAME}_clean:
 	rm -f ${LIBUCONTEXT_POSIX_STATIC_NAME}
 
@@ -179,6 +182,7 @@ clean: ${LIBUCONTEXT_STATIC_NAME}_clean
 clean: ${LIBUCONTEXT_PC}_clean
 clean: bits_clean
 clean: ${LIBUCONTEXT_POSIX_NAME}_clean
+clean: ${LIBUCONTEXT_POSIX_SONAME}_clean
 clean: ${LIBUCONTEXT_POSIX_STATIC_NAME}_clean
 clean: libucontext_posix_obj_clean
 clean: libucontext_obj_clean

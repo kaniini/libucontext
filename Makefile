@@ -61,8 +61,9 @@ else
 	LIBUCONTEXT_SONAME = libucontext.so.${LIBUCONTEXT_SOVERSION}
 	LIBUCONTEXT_POSIX_NAME = libucontext_posix.so
 	LIBUCONTEXT_POSIX_SONAME = libucontext_posix.so.${LIBUCONTEXT_SOVERSION}
-	LIBUCONTEXT_LINKER_FLAGS = -shared -Wl,-soname,${LIBUCONTEXT_SONAME}
-	LIBUCONTEXT_POSIX_LINKER_FLAGS = -shared -Wl,-soname,${LIBUCONTEXT_POSIX_SONAME}
+	LIBUCONTEXT_LINKER_FLAGS = -shared -Wl,-soname,${LIBUCONTEXT_SONAME} -Wl,-z,noexecstack
+	LIBUCONTEXT_POSIX_LINKER_FLAGS = -shared -Wl,-soname,${LIBUCONTEXT_POSIX_SONAME} -Wl,-z,noexecstack
+	ASFLAGS = -Wa,--noexecstack
 endif
 LIBUCONTEXT_STATIC_NAME = libucontext.a
 LIBUCONTEXT_PC = libucontext.pc
@@ -129,7 +130,7 @@ docs: ${MANPAGES}
 	$(CC) -std=gnu99 -D_BSD_SOURCE -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
 .S.o:
-	$(CC) -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
+	$(CC) -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} ${ASFLAGS} -c -o $@ $<
 
 ${LIBUCONTEXT_NAME}_clean:
 	rm -f ${LIBUCONTEXT_NAME}

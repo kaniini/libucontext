@@ -1,3 +1,18 @@
+Changes from 1.1 to 1.2
+-----------------------
+
+* Added Loongarch64 port.
+
+* Fixed various build system issues:
+  - libucontext_posix.so is no longer underlinked
+  - Executable stacks are now disabled when using GNU-like toolchains
+  - CPPFLAGS is used consistently
+  - Users may now build on Darwin without using Meson
+
+* aarch64 now implements the necessary SIMD register save/restore as
+  mandatory in AAPCS64.
+  Patches contributed by Richard Campbell.
+
 Changes from 1.0 to 1.1
 -----------------------
 

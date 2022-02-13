@@ -18,7 +18,7 @@ __attribute__ ((visibility ("hidden")))
 void
 libucontext_trampoline(void)
 {
-	register libucontext_ucontext_t *uc_link;
+	register libucontext_ucontext_t *uc_link = NULL;
 
 	FETCH_LINKPTR(uc_link);
 

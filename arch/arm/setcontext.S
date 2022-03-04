@@ -16,6 +16,22 @@ ALIAS(setcontext, libucontext_setcontext)
 ALIAS(__setcontext, libucontext_setcontext)
 
 FUNC(libucontext_setcontext)
+#ifndef FORCE_SOFT_FLOAT
+#ifndef FORCE_HARD_FLOAT
+	/* test for vfp magic number set by getcontext */
+	ldr	r2, [r0, #VFP_MAGIC_OFFSET]
+	ldr	r3, =#0x56465001
+	cmp	r2, r3
+        bne     1f
+#endif
+	/* if vfp in use, restore d8-d15 from uc_regspace */
+	.fpu	vfp
+	add	r14, r0, #VFP_D8_OFFSET
+	vldmia	r14, {d8-d15}
+	.fpu 	softvfp
+1:
+#endif
+
 	/* copy all of the current registers into the ucontext structure */
 	add	r14, r0, #REG_OFFSET(0)
 	ldmia	r14, {r0-r12}

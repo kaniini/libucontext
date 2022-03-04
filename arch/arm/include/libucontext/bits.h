@@ -23,6 +23,8 @@ typedef struct libucontext_ucontext {
 	struct libucontext_ucontext *uc_link;
 	libucontext_stack_t uc_stack;
 	libucontext_mcontext_t uc_mcontext;
+	unsigned long uc_sigmask[128 / sizeof(long)];
+	unsigned long long uc_regspace[64];
 } libucontext_ucontext_t;
 
 #endif

@@ -22,6 +22,27 @@ FUNC(libucontext_getcontext)
 	str	r13, [r0, #REG_OFFSET(13)]
 	str	r14, [r0, #REG_OFFSET(15)]
 
+#ifndef FORCE_SOFT_FLOAT
+#ifndef FORCE_HARD_FLOAT
+        /* test for vfp, set kernel-defined magic number in uc_regspace */
+        push    {r0-r1,fp,lr}
+        mov     r0, #16
+        bl      getauxval
+        tst     r0, #64
+        pop     {r0-r1,fp,lr}
+	moveq	r2, #0
+	ldrne	r2, =#0x56465001
+	str	r2, [r0, #VFP_MAGIC_OFFSET]
+        beq     1f
+#endif
+	/* if vfp detected, save d8-d15 */
+	.fpu	vfp
+	add	r1, r0, #VFP_D8_OFFSET
+	vstmia	r1, {d8-d15}
+	.fpu	softvfp
+1:
+#endif
+
 	/* return 0 */
 	mov	r0, #0
 	mov	pc, lr

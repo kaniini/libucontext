@@ -35,6 +35,18 @@ ifeq ($(FREESTANDING),yes)
 	EXPORT_UNPREFIXED = no
 endif
 
+FORCE_SOFT_FLOAT := no
+
+ifeq ($(FORCE_SOFT_FLOAT),yes)
+        CPPFLAGS += -DFORCE_SOFT_FLOAT
+endif
+
+FORCE_HARD_FLOAT := no
+
+ifeq ($(FORCE_HARD_FLOAT),yes)
+        CPPFLAGS += -DFORCE_HARD_FLOAT
+endif
+
 ifeq ($(EXPORT_UNPREFIXED),yes)
 	CPPFLAGS += -DEXPORT_UNPREFIXED
 endif

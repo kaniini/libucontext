@@ -2,6 +2,8 @@
 
 #define REG_SZ		(4)
 #define MCONTEXT_GREGS	(32)
+#define VFP_MAGIC_OFFSET (232)
+#define VFP_D8_OFFSET (304)
 
 #define TYPE(__proc)
 

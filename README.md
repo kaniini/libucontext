@@ -101,4 +101,5 @@ ucontext functions:
   save/restore FPU registers or vector registers may be added in a later release as a build-time
   setting -- for now, we assume a soft-float ABI with no optional processor features.  In practice, this
   does not really matter, code using these functions are unlikely to be impacted by this design
-  assumption.
+  assumption. This is a work in progress, as newer compilers will spill even non-floating-point state
+  through floating point registers when allowed to do so.

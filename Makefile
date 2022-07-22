@@ -31,6 +31,7 @@ ifneq ($(shell uname),Darwin)
 else
 	# Darwin does not support aliases
 	EXPORT_UNPREFIXED := no
+	CPPFLAGS += -D_XOPEN_SOURCE
 endif
 FREESTANDING := no
 

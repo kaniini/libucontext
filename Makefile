@@ -17,9 +17,13 @@ ifeq ($(ARCH),$(filter $(ARCH),arm64))
 	override ARCH = aarch64
 endif
 
-LIBDIR := /lib
-INCLUDEDIR := /usr/include
-PKGCONFIGDIR := /usr/lib/pkgconfig
+prefix = /usr
+libdir = ${prefix}/lib
+shared_libdir = ${libdir}
+static_libdir = ${libdir}
+includedir = ${prefix}/include
+pkgconfigdir = ${prefix}/lib/pkgconfig
+
 CFLAGS ?= -ggdb3 -O2 -Wall
 CPPFLAGS := -Iinclude -Iarch/${ARCH} -Iarch/common
 ifneq ($(shell uname),Darwin)
@@ -79,8 +83,8 @@ else
 endif
 LIBUCONTEXT_STATIC_NAME = libucontext.a
 LIBUCONTEXT_PC = libucontext.pc
-LIBUCONTEXT_PATH = ${LIBDIR}/${LIBUCONTEXT_SONAME}
-LIBUCONTEXT_STATIC_PATH = ${LIBDIR}/${LIBUCONTEXT_STATIC_NAME}
+LIBUCONTEXT_PATH = ${shared_libdir}/${LIBUCONTEXT_SONAME}
+LIBUCONTEXT_STATIC_PATH = ${static_libdir}/${LIBUCONTEXT_STATIC_NAME}
 LIBUCONTEXT_HEADERS = \
 	include/libucontext/libucontext.h \
 	include/libucontext/bits.h
@@ -89,8 +93,8 @@ LIBUCONTEXT_EXAMPLES = \
 LIBUCONTEXT_POSIX_STATIC_NAME = libucontext_posix.a
 LIBUCONTEXT_POSIX_C_SRC = libucontext_posix.c
 LIBUCONTEXT_POSIX_OBJ = ${LIBUCONTEXT_POSIX_C_SRC:.c=.o}
-LIBUCONTEXT_POSIX_PATH = ${LIBDIR}/${LIBUCONTEXT_POSIX_SONAME}
-LIBUCONTEXT_POSIX_STATIC_PATH = ${LIBDIR}/${LIBUCONTEXT_POSIX_STATIC_NAME}
+LIBUCONTEXT_POSIX_PATH = ${shared_libdir}/${LIBUCONTEXT_POSIX_SONAME}
+LIBUCONTEXT_POSIX_STATIC_PATH = ${static_libdir}/${LIBUCONTEXT_POSIX_STATIC_NAME}
 
 ifeq ($(FREESTANDING),yes)
 	LIBUCONTEXT_POSIX_NAME =
@@ -119,8 +123,9 @@ ${LIBUCONTEXT_SONAME}: ${LIBUCONTEXT_NAME}
 
 ${LIBUCONTEXT_PC}: libucontext.pc.in
 	sed -e s:@LIBUCONTEXT_VERSION@:${LIBUCONTEXT_VERSION}:g \
-	    -e s:@LIBUCONTEXT_LIBDIR@:${LIBDIR}:g \
-	    -e s:@LIBUCONTEXT_INCLUDEDIR@:${INCLUDEDIR}:g $< > $@
+	    -e s:@LIBUCONTEXT_SHARED_LIBDIR@:${shared_libdir}:g \
+	    -e s:@LIBUCONTEXT_STATIC_LIBDIR@:${static_libdir}:g \
+	    -e s:@LIBUCONTEXT_INCLUDEDIR@:${includedir}:g $< > $@
 
 MANPAGES_SYMLINKS_3 = \
 	libucontext_getcontext.3 \
@@ -204,12 +209,12 @@ clean: docs_clean
 install: all
 	install -D -m755 ${LIBUCONTEXT_NAME} ${DESTDIR}${LIBUCONTEXT_PATH}
 	install -D -m664 ${LIBUCONTEXT_STATIC_NAME} ${DESTDIR}${LIBUCONTEXT_STATIC_PATH}
-	ln -sf ${LIBUCONTEXT_SONAME} ${DESTDIR}${LIBDIR}/${LIBUCONTEXT_NAME}
+	ln -sf ${LIBUCONTEXT_SONAME} ${DESTDIR}${shared_libdir}/${LIBUCONTEXT_NAME}
 	for i in ${LIBUCONTEXT_HEADERS}; do \
 		destfn=$$(echo $$i | sed s:include/::g); \
-		install -D -m644 $$i ${DESTDIR}${INCLUDEDIR}/$$destfn; \
+		install -D -m644 $$i ${DESTDIR}${includedir}/$$destfn; \
 	done
-	install -D -m644 ${LIBUCONTEXT_PC} ${DESTDIR}${PKGCONFIGDIR}/${LIBUCONTEXT_PC}
+	install -D -m644 ${LIBUCONTEXT_PC} ${DESTDIR}${pkgconfigdir}/${LIBUCONTEXT_PC}
 	if [ -n ${LIBUCONTEXT_POSIX_NAME} ]; then \
 		install -D -m755 ${LIBUCONTEXT_POSIX_NAME} ${DESTDIR}${LIBUCONTEXT_POSIX_PATH}; \
 		install -D -m644 ${LIBUCONTEXT_POSIX_STATIC_NAME} ${DESTDIR}${LIBUCONTEXT_POSIX_STATIC_PATH}; \

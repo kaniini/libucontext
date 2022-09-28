@@ -1,7 +1,7 @@
 project(
   'libucontext',
   'c',
-  meson_version : '>=0.55.0',
+  meson_version : '>=0.59.0',
   default_options: ['c_std=gnu11', 'default_library=both'],
   version : run_command('head', files('VERSION')).stdout()
 )
@@ -144,9 +144,8 @@ endif
 # Docs
 # ====
 
-# TODO: meson.build for docs
-if not meson.is_subproject()
-  #subdir('docs')
+if not meson.is_subproject() and get_option('docs')
+  subdir('doc')
 endif
 
 # ==========

@@ -4,3 +4,5 @@ option('export_unprefixed', type : 'boolean', value : true,
        description: 'Export POSIX 2004 ucontext names as alises')
 option('cpu', type : 'string', value : '',
        description: 'Target CPU architecture for cross compile')
+option('docs', type : 'boolean', value : false,
+       description: 'Build and install man pages')

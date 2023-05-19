@@ -215,7 +215,7 @@ install: all
 		install -D -m644 $$i ${DESTDIR}${includedir}/$$destfn; \
 	done
 	install -D -m644 ${LIBUCONTEXT_PC} ${DESTDIR}${pkgconfigdir}/${LIBUCONTEXT_PC}
-	if [ -n ${LIBUCONTEXT_POSIX_NAME} ]; then \
+	if [ -n "${LIBUCONTEXT_POSIX_NAME}" ]; then \
 		install -D -m755 ${LIBUCONTEXT_POSIX_NAME} ${DESTDIR}${LIBUCONTEXT_POSIX_PATH}; \
 		install -D -m644 ${LIBUCONTEXT_POSIX_STATIC_NAME} ${DESTDIR}${LIBUCONTEXT_POSIX_STATIC_PATH}; \
 	fi

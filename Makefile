@@ -36,7 +36,9 @@ FREESTANDING := no
 
 ifeq ($(FREESTANDING),yes)
 	CPPFLAGS += -DFREESTANDING
-	EXPORT_UNPREFIXED = no
+	EXPORT_UNPREFIXED = no -Iarch/${ARCH}/include
+else
+	CPPFLAGS += -Iarch/common/include
 endif
 
 FORCE_SOFT_FLOAT := no
@@ -86,8 +88,12 @@ LIBUCONTEXT_PC = libucontext.pc
 LIBUCONTEXT_PATH = ${shared_libdir}/${LIBUCONTEXT_SONAME}
 LIBUCONTEXT_STATIC_PATH = ${static_libdir}/${LIBUCONTEXT_STATIC_NAME}
 LIBUCONTEXT_HEADERS = \
-	include/libucontext/libucontext.h \
-	include/libucontext/bits.h
+	include/libucontext/libucontext.h
+ifeq ($(FREESTANDING),yes)
+LIBUCONTEXT_HEADERS += arch/${ARCH}/include/libucontext/bits.h
+else
+LIBUCONTEXT_HEADERS += arch/common/include/libucontext/bits.h
+endif
 LIBUCONTEXT_EXAMPLES = \
 	examples/cooperative_threading
 LIBUCONTEXT_POSIX_STATIC_NAME = libucontext_posix.a
@@ -112,10 +118,10 @@ ${LIBUCONTEXT_POSIX_STATIC_NAME}: ${LIBUCONTEXT_STATIC_NAME} ${LIBUCONTEXT_POSIX
 ${LIBUCONTEXT_POSIX_SONAME}: ${LIBUCONTEXT_POSIX_NAME}
 	ln -sf ${LIBUCONTEXT_POSIX_NAME} ${LIBUCONTEXT_POSIX_SONAME}
 
-${LIBUCONTEXT_STATIC_NAME}: ${LIBUCONTEXT_HEADERS} ${LIBUCONTEXT_OBJ}
+${LIBUCONTEXT_STATIC_NAME}: ${LIBUCONTEXT_OBJ}
 	$(AR) rcs ${LIBUCONTEXT_STATIC_NAME} ${LIBUCONTEXT_OBJ}
 
-${LIBUCONTEXT_NAME}: ${LIBUCONTEXT_HEADERS} ${LIBUCONTEXT_OBJ}
+${LIBUCONTEXT_NAME}: ${LIBUCONTEXT_OBJ}
 	$(CC) -fPIC -o ${LIBUCONTEXT_NAME} ${LIBUCONTEXT_LINKER_FLAGS} ${LIBUCONTEXT_OBJ} ${LDFLAGS}
 
 ${LIBUCONTEXT_SONAME}: ${LIBUCONTEXT_NAME}
@@ -164,9 +170,6 @@ libucontext_obj_clean:
 ${LIBUCONTEXT_PC}_clean:
 	rm -f ${LIBUCONTEXT_PC}
 
-bits_clean:
-	rm -f include/libucontext/bits.h
-
 ${LIBUCONTEXT_POSIX_NAME}_clean:
 	rm -f ${LIBUCONTEXT_POSIX_NAME}
 
@@ -197,7 +200,6 @@ clean: ${LIBUCONTEXT_NAME}_clean
 clean: ${LIBUCONTEXT_SONAME}_clean
 clean: ${LIBUCONTEXT_STATIC_NAME}_clean
 clean: ${LIBUCONTEXT_PC}_clean
-clean: bits_clean
 clean: ${LIBUCONTEXT_POSIX_NAME}_clean
 clean: ${LIBUCONTEXT_POSIX_SONAME}_clean
 clean: ${LIBUCONTEXT_POSIX_STATIC_NAME}_clean
@@ -257,18 +259,6 @@ test_libucontext: test_libucontext.c ${LIBUCONTEXT_NAME}
 examples: ${LIBUCONTEXT_EXAMPLES}
 examples/cooperative_threading: examples/cooperative_threading.c ${LIBUCONTEXT_NAME}
 	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
-
-ifeq ($(FREESTANDING),no)
-
-include/libucontext/bits.h: arch/common/include/libucontext/bits.h
-	cp $< $@
-
-else
-
-include/libucontext/bits.h: arch/${ARCH}/include/libucontext/bits.h
-	cp $< $@
-
-endif
 
 PACKAGE_NAME = libucontext
 PACKAGE_VERSION = ${LIBUCONTEXT_VERSION}

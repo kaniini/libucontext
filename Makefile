@@ -88,8 +88,12 @@ LIBUCONTEXT_PC = libucontext.pc
 LIBUCONTEXT_PATH = ${shared_libdir}/${LIBUCONTEXT_SONAME}
 LIBUCONTEXT_STATIC_PATH = ${static_libdir}/${LIBUCONTEXT_STATIC_NAME}
 LIBUCONTEXT_HEADERS = \
-	include/libucontext/libucontext.h \
-	include/libucontext/bits.h
+	include/libucontext/libucontext.h
+ifeq ($(FREESTANDING),yes)
+LIBUCONTEXT_HEADERS += arch/${ARCH}/include/libucontext/bits.h
+else
+LIBUCONTEXT_HEADERS += arch/common/include/libucontext/bits.h
+endif
 LIBUCONTEXT_EXAMPLES = \
 	examples/cooperative_threading
 LIBUCONTEXT_POSIX_STATIC_NAME = libucontext_posix.a

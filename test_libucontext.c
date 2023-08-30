@@ -9,6 +9,9 @@
 #include <string.h>
 #include <libucontext/libucontext.h>
 
+#define handle_error(msg) \
+           do { perror(msg); exit(EXIT_FAILURE); } while (0)
+
 static libucontext_ucontext_t ctx[3];
 
 
@@ -36,7 +39,8 @@ static void f1 (int a, int b, int c, int d, int e, int f, int g, int h, int i, i
 	printf("looks like all arguments are passed correctly\n");
 
 	printf("swap back to f2\n");
-	libucontext_swapcontext(&ctx[1], &ctx[2]);
+	if (libucontext_swapcontext(&ctx[1], &ctx[2]) != 0)
+		handle_error("libucontext_swapcontext");
 	printf("finish f1\n");
 }
 
@@ -44,7 +48,8 @@ static void f1 (int a, int b, int c, int d, int e, int f, int g, int h, int i, i
 static void f2 (void) {
 	printf("start f2\n");
 	printf("swap to f1\n");
-	libucontext_swapcontext(&ctx[2], &ctx[1]);
+	if (libucontext_swapcontext(&ctx[2], &ctx[1]) != 0)
+		handle_error("libucontext_swapcontext");
 	printf("finish f2, should swap to f1\n");
 }
 
@@ -63,7 +68,8 @@ int main (int argc, const char *argv[]) {
 	printf("setting up context 1\n");
 
 
-	libucontext_getcontext(&ctx[1]);
+	if (libucontext_getcontext(&ctx[1]) != 0)
+		handle_error("libucontext_getcontext");
 	ctx[1].uc_stack.ss_sp = st1;
 	ctx[1].uc_stack.ss_size = sizeof st1;
 	ctx[1].uc_link = &ctx[0];
@@ -83,16 +89,20 @@ int main (int argc, const char *argv[]) {
 	printf("doing initial swapcontext\n");
 
 
-	libucontext_swapcontext(&ctx[0], &ctx[2]);
+	if (libucontext_swapcontext(&ctx[0], &ctx[2]) != 0)
+		handle_error("libucontext_swapcontext");
 
 
 	printf("returned from initial swapcontext\n");
 
 
 	/* test ability to use getcontext/setcontext without makecontext */
-	libucontext_getcontext(&ctx[1]);
+	if (libucontext_getcontext(&ctx[1]) != 0)
+		handle_error("libucontext_getcontext");
 	printf("done = %d\n", done);
-	if (done++ == 0) libucontext_setcontext(&ctx[1]);
+	if (done++ == 0)
+		if (libucontext_setcontext(&ctx[1]) != 0)
+			handle_error("libucontext_setcontext");
 	if (done != 2) {
 		fprintf(stderr, "wrong value for done.  got %d, expected 2\n", done);
 		abort();

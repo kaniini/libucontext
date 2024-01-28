@@ -30,7 +30,7 @@ void
 libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int argc, ...)
 {
 	unsigned long *sp;
-	unsigned long *regp;
+	unsigned long long *regp;
 	va_list va;
 	int i;
 
@@ -48,7 +48,7 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int arg
 	regp = &(ucp->uc_mcontext.regs[0]);
 
 	for (i = 0; (i < argc && i < 8); i++)
-		*regp++ = va_arg (va, unsigned long);
+		*regp++ = va_arg (va, unsigned long long);
 
 	for (; i < argc; i++)
 		*sp++ = va_arg (va, unsigned long);

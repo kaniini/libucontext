@@ -14,7 +14,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/* We need to make sure that the C compiler doesn't push any
+ * additional data to the stack frame. Otherwise, assumptions
+ * made by the architecture-specific implementation of the
+ * FETCH_LINKPTR() macro about the location of the linkptr,
+ * relative to the stack pointer, will not hold.
+ *
+ * Hence, we compile this function with -fomit-frame-pointer
+ * and use the register storage-class specifier for all local
+ * vars. Note that the latter is just a "suggestion" (see C99).
+ */
+
 __attribute__ ((visibility ("hidden")))
+__attribute__ ((optimize ("omit-frame-pointer")))
 void
 libucontext_trampoline(void)
 {

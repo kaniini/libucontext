@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018, 2020, 2024 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,12 +19,14 @@ FUNC(libucontext_swapcontext)
 	lgr	%r1, %r2			/* use %r1 to save current context to */
 	lgr	%r0, %r3			/* use %r0 for source context */
 
+	la	%r2, 0				/* zero out future return value */
+
 	stam	%a0, %a15, AREG_OFFSET(0)(%r1)	/* store access registers */
 	stmg	%r0, %r15, REG_OFFSET(0)(%r1)	/* store general-purpose registers */
 
-	lgr	%r2, %r0			/* swap %r0 to %r2 (XXX: figure out why it hates loading from %r0) */
-	lam	%a2, %a15, AREG_OFFSET(2)(%r2)	/* load access registers, but skip %a0 and %a1 which are for TLS */
-	lmg	%r0, %r15, REG_OFFSET(0)(%r2)	/* load general-purpose registers */
+	lgr	%r5, %r0			/* copy %r0 to %r5 so that %r0 doesn't get clobbered */
+	lam	%a2, %a15, AREG_OFFSET(2)(%r5)	/* load access registers, but skip %a0 and %a1 which are for TLS */
+	lmg	%r0, %r15, REG_OFFSET(0)(%r5)	/* load general-purpose registers */
 
 	br	%r14				/* return to new link register address */
 END(libucontext_swapcontext)

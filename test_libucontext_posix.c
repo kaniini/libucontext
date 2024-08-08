@@ -72,7 +72,7 @@ int main (int argc, const char *argv[]) {
 	ctx[1].uc_stack.ss_sp = st1;
 	ctx[1].uc_stack.ss_size = sizeof st1;
 	ctx[1].uc_link = &ctx[0];
-	makecontext(&ctx[1], f1, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+	makecontext(&ctx[1], (void *) f1, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 
 	printf("setting up context 2\n");
@@ -82,7 +82,7 @@ int main (int argc, const char *argv[]) {
 	ctx[2].uc_stack.ss_sp = st2;
 	ctx[2].uc_stack.ss_size = sizeof st2;
 	ctx[2].uc_link = &ctx[1];
-	makecontext(&ctx[2], f2, 0);
+	makecontext(&ctx[2], (void *) f2, 0);
 
 
 	printf("doing initial swapcontext\n");

@@ -20,8 +20,8 @@ FUNC(libucontext_swapcontext)
 	l.sw		REG_OFFSET(1)(r3), r1			/* store r1 and r2 */
 	l.sw		REG_OFFSET(2)(r3), r2
 
-	l.sw		REG_OFFSET(9)(r3), r9			/* store r9 to both r9 and r11 in the context */
-	l.sw		REG_OFFSET(11)(r3), r9
+	l.sw		REG_OFFSET(9)(r3), r9			/* link register */
+	l.sw		REG_OFFSET(11)(r3), r0			/* return value is zero */
 
 	l.sw		REG_OFFSET(10)(r3), r10			/* store r10 for TLS */
 
@@ -63,6 +63,6 @@ FUNC(libucontext_swapcontext)
 	l.lwz		r28, REG_OFFSET(28)(r30)
 	l.lwz		r30, REG_OFFSET(30)(r30)
 
-	l.jr		r11					/* jump to new starting address */
 	l.ori		r11, r0, 0
+	l.jr		r9					/* jump to new starting address */
 END(libucontext_swapcontext)

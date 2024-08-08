@@ -49,7 +49,7 @@ FUNC(libucontext_setcontext)
 	ld.d	$t8, $t5, (MCONTEXT_PC)
 
 	jr	$t8
-	move	$v0, $zero
+	move	$a0, $zero
 
 	POP_FRAME(libucontext_setcontext)
 END(libucontext_setcontext)

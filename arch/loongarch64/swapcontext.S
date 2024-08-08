@@ -77,7 +77,7 @@ FUNC(libucontext_swapcontext)
 	ld.d	$t8, $t4, (MCONTEXT_PC)
 
 	jr	$t8
-	move	$v0, $zero
+	move	$a0, $zero
 
 fail:
 	la.global	$t8, exit
@@ -85,5 +85,5 @@ fail:
 	POP_FRAME(libucontext_swapcontext)
 
 	jirl	$ra, $t8, 0
-	move	$v0, $zero
+	move	$a0, $zero
 END(libucontext_swapcontext)

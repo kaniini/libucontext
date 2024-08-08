@@ -40,12 +40,15 @@
 	ENT(__proc)					\
 PROC_NAME(__proc):					\
 	SETUP_FRAME(__proc)
+
+#ifndef END
 #ifdef __clang__
 #define END(__proc)
 #else
 #define END(__proc)					\
 	.end	__proc;					\
 	.size	__proc,.-__proc;
+#endif
 #endif
 
 #ifdef EXPORT_UNPREFIXED

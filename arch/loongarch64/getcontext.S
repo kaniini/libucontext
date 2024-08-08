@@ -35,10 +35,13 @@ FUNC(libucontext_getcontext)
 	st.d	$s8, $a0, REG_OFFSET(31)
 
 	st.d	$a2, $a0, REG_OFFSET(3)
+	st.d	$zero, $a0, REG_OFFSET(4)
 	st.d	$a3, $a0, REG_OFFSET(22)
 	st.d	$ra, $a0, REG_OFFSET(1)
 
 	st.d	$ra, $a0, (MCONTEXT_PC)
+
+	move	$a0, $zero
 
 	POP_FRAME(libucontext_getcontext)
 

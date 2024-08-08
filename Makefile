@@ -42,7 +42,8 @@ else
 	CPPFLAGS += -Iarch/common/include
 endif
 
-FORCE_SOFT_FLOAT := no
+# ARM hard float support is presently broken.
+FORCE_SOFT_FLOAT := yes
 
 ifeq ($(FORCE_SOFT_FLOAT),yes)
         CPPFLAGS += -DFORCE_SOFT_FLOAT

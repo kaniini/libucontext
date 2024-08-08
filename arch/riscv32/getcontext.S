@@ -25,8 +25,8 @@ FUNC(libucontext_getcontext)
 	sw s1, REG_OFFSET(REG_S1)(a0)
 
 	/* return register block */
-	sw a0, REG_OFFSET(REG_A0)(a0)
-	sw a1, REG_OFFSET(REG_A1)(a0)
+	sw x0, REG_OFFSET(REG_A0)(a0)
+	sw x0, REG_OFFSET(REG_A1)(a0)
 
 	/* second saved register block */
 	sw s2, REG_OFFSET(REG_S2)(a0)
@@ -41,5 +41,6 @@ FUNC(libucontext_getcontext)
 	sw s11, REG_OFFSET(REG_S11)(a0)
 
 	/* done saving, return */
+	mv a0, x0
 	ret
 END(libucontext_getcontext)

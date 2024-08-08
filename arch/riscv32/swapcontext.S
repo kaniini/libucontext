@@ -28,8 +28,8 @@ FUNC(libucontext_swapcontext)
 	sw s1, REG_OFFSET(REG_S1)(a0)
 
 	/* return register block */
-	sw a0, REG_OFFSET(REG_A0)(a0)
-	sw a1, REG_OFFSET(REG_A1)(a0)
+	sw x0, REG_OFFSET(REG_A0)(a0)
+	sw x0, REG_OFFSET(REG_A1)(a0)
 
 	/* second saved register block */
 	sw s2, REG_OFFSET(REG_S2)(a0)

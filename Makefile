@@ -151,7 +151,7 @@ MANPAGES = ${MANPAGES_3}
 docs: ${MANPAGES}
 
 .c.o:
-	$(CC) -std=gnu99 -D_BSD_SOURCE -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
+	$(CC) -std=gnu99 -D_DEFAULT_SOURCE -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
 .S.o:
 	$(CC) -fPIC -DPIC ${CFLAGS} ${CPPFLAGS} ${ASFLAGS} -c -o $@ $<
@@ -236,7 +236,7 @@ check_libucontext_posix: test_libucontext_posix ${LIBUCONTEXT_POSIX_SONAME} ${LI
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext_posix
 
 test_libucontext_posix: test_libucontext_posix.c ${LIBUCONTEXT_POSIX_NAME}
-	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext -lucontext_posix
+	$(CC) -std=gnu99 -D_DEFAULT_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext -lucontext_posix
 endif
 
 ifeq ($(EXPORT_UNPREFIXED),yes)
@@ -246,7 +246,7 @@ check_libucontext_bare_posixabi: test_libucontext_bare_posixabi ${LIBUCONTEXT_SO
 	env LD_LIBRARY_PATH=$(shell pwd) ./test_libucontext_bare_posixabi
 
 test_libucontext_bare_posixabi: test_libucontext_posix.c ${LIBUCONTEXT_NAME}
-	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} test_libucontext_posix.c -o $@ -L. -lucontext
+	$(CC) -std=gnu99 -D_DEFAULT_SOURCE ${CFLAGS} ${CPPFLAGS} test_libucontext_posix.c -o $@ -L. -lucontext
 endif
 
 check_libucontext: test_libucontext ${LIBUCONTEXT_SONAME}
@@ -255,11 +255,11 @@ check_libucontext: test_libucontext ${LIBUCONTEXT_SONAME}
 check: check_libucontext
 
 test_libucontext: test_libucontext.c ${LIBUCONTEXT_NAME}
-	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+	$(CC) -std=gnu99 -D_DEFAULT_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
 
 examples: ${LIBUCONTEXT_EXAMPLES}
 examples/cooperative_threading: examples/cooperative_threading.c ${LIBUCONTEXT_NAME}
-	$(CC) -std=gnu99 -D_BSD_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
+	$(CC) -std=gnu99 -D_DEFAULT_SOURCE ${CFLAGS} ${CPPFLAGS} $@.c -o $@ -L. -lucontext
 
 PACKAGE_NAME = libucontext
 PACKAGE_VERSION = ${LIBUCONTEXT_VERSION}

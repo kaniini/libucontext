@@ -56,7 +56,7 @@ project_includes = [
 ]
 
 build_args = [
-  '-D_BSD_SOURCE'
+  '-D_DEFAULT_SOURCE'
 ]
 
 

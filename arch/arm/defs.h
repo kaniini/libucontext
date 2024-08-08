@@ -6,6 +6,7 @@
 #define VFP_D8_OFFSET (304)
 
 #define TYPE(__proc)	.type	__proc, %function;
+#define END(__proc)
 
 #define FETCH_LINKPTR(dest) \
 	asm("movs    %0, r4" : "=r" ((dest)))

@@ -45,11 +45,17 @@
 /* frame pointer is actually $22 */
 #define REG_FP		(22)
 
+/* $s0 is $23 */
+#define REG_S0		(23)
+
+/* $ra is $1 */
+#define REG_RA		(1)
+
 /* offset to mc_gregs in ucontext_t */
-#define MCONTEXT_GREGS	(48)
+#define MCONTEXT_GREGS	(184)
 
 /* offset to PC in ucontext_t */
-#define MCONTEXT_PC	(40)
+#define MCONTEXT_PC	(176)
 
 /* offset to uc_link in ucontext_t */
 #define UCONTEXT_UC_LINK	(8)

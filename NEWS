@@ -1,3 +1,11 @@
+Changes from 1.3.1 to 1.3.2
+---------------------------
+
+* Rewrite makecontext in C on LoongArch.
+
+* Fix building x86 and loongarch64 variants on Meson.
+  Patch by Volker Christian.
+
 Changes from 1.3 to 1.3.1
 -------------------------
 

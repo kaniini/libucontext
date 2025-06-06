@@ -36,8 +36,8 @@ endif
 FREESTANDING := no
 
 ifeq ($(FREESTANDING),yes)
-	CPPFLAGS += -DFREESTANDING
-	EXPORT_UNPREFIXED = no -Iarch/${ARCH}/include
+	CPPFLAGS += -DFREESTANDING -Iarch/${ARCH}/include
+	EXPORT_UNPREFIXED = no
 else
 	CPPFLAGS += -Iarch/common/include
 endif

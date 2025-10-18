@@ -28,6 +28,6 @@ FUNC(libucontext_trampoline)
 	li	3,-1
 
 no_linked_context:
-	b	exit@GOT
+	bl	exit
 	nop
 END(libucontext_trampoline)

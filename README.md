@@ -62,6 +62,9 @@ There are a few options:
   systems, but you may wish to disable this when using `FREESTANDING` mode to avoid conflicts with
   the target's libc.  Default is `yes`.
 
+* `BUILD_POSIX`: If this is set to `yes`, the POSIX compatibility library libucontext_posix will be built.
+  Default is `yes`.
+
 * `DESTDIR`: If this variable is set, the installed files will be installed to the specified path instead
   of the system root.
 

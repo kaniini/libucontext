@@ -1,0 +1,42 @@
+---
+name: mkosi
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  mkosi:
+    runs-on: ${{ matrix.runner }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.distro }}-${{ github.ref }}-${{ matrix.runner }}
+      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        - distro: [arch, debian, fedora, centos, opensuse]
+        - runner: [ubuntu-24.04, ubuntu-24.04-arm]
+    
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: systemd/mkosi@d45142e329550abc9c6fc63c1f1f86e5286d3d67
+
+      - name: Configure
+        run: |
+          tee mkosi/mkosi.local.conf <<EOF
+          [Build]
+          ToolsTreeDistribution=${{ matrix.distro }}
+          EOF
+
+      - name: Setup
+        run: mkosi -f box -- meson setup build
+
+      - name: Build
+        run: mkosi -f box -- meson compile -C build
+
+      - name: Test
+        run: mkosi -f box -- meson test -C build --print-errorlogs

@@ -68,7 +68,7 @@ build_args = [
 
 freestanding = get_option('freestanding')
 export_unprefixed = get_option('export_unprefixed')
-build_posix = true
+build_posix = get_option('build_posix')
 
 if freestanding
   build_args += '-DFREESTANDING'

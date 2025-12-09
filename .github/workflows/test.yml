@@ -32,10 +32,9 @@ jobs:
           - arch: s390x
             platform: linux/s390x
             image: alpine:latest
-          # Blocked by https://github.com/tonistiigi/binfmt/issues/133
-          # - arch: loongarch64
-          #   platform: linux/loong64
-          #   image: registry.alpinelinux.org/alpine:latest
+          - arch: loongarch64
+            platform: linux/loong64
+            image: registry.alpinelinux.org/img/alpine:latest
 
     steps:
       - name: Checkout

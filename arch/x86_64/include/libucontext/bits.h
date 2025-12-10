@@ -59,6 +59,8 @@ typedef struct libucontext_ucontext {
 	struct libucontext_ucontext *uc_link;
 	libucontext_stack_t uc_stack;
 	libucontext_mcontext_t uc_mcontext;
+	unsigned char __sigmask[128];
+	unsigned long __fpregs_mem[64];
 } libucontext_ucontext_t;
 
 #endif

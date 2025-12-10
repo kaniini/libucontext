@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2020 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2018-2025 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -42,6 +42,16 @@ FUNC(libucontext_getcontext)
 	   target. */
 	leaq	8(%rsp), %rcx
 	movq	%rcx, REG_OFFSET(REG_RSP)(%rdi)
+
+#ifndef FORCE_SOFT_FLOAT
+	/* preserve the FPU context and registers,
+	   ucontext_t.__fpregs_mem is used as a scratch buffer */
+	leaq	MCONTEXT_FPREGSMEM(%rdi), %rcx
+	movq	%rcx, MCONTEXT_FPREGS(%rdi)
+	fnstenv	(%rcx)
+	fldenv	(%rcx)
+	stmxcsr	MCONTEXT_MXCSR(%rdi)
+#endif
 
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax

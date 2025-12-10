@@ -94,6 +94,9 @@
 #endif
 
 #define MCONTEXT_GREGS	(40)
+#define MCONTEXT_FPREGS	(224)
+#define MCONTEXT_FPREGSMEM	(424)
+#define MCONTEXT_MXCSR	(448)
 
 #define REG_SZ		(8)
 

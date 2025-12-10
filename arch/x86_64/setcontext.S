@@ -16,6 +16,13 @@ ALIAS(setcontext, libucontext_setcontext)
 ALIAS(__setcontext, libucontext_setcontext)
 
 FUNC(libucontext_setcontext)
+#ifndef FORCE_SOFT_FLOAT
+	/* restore the FPU context, but not the registers */
+	movq	MCONTEXT_FPREGS(%rdi), %rcx
+	fldenv	(%rcx)
+	ldmxcsr	MCONTEXT_MXCSR(%rdi)
+#endif
+
 	/* set all of the registers */
 	movq	REG_OFFSET(REG_R8)(%rdi), %r8
 	movq	REG_OFFSET(REG_R9)(%rdi), %r9

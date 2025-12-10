@@ -44,6 +44,21 @@ FUNC(libucontext_swapcontext)
 	leaq	8(%rsp), %rcx
 	movq	%rcx, REG_OFFSET(REG_RSP)(%rdi)
 
+#ifndef FORCE_SOFT_FLOAT
+	/* preserve the FPU context and registers,
+	   ucontext_t.__fpregs_mem is used as a scratch buffer */
+	leaq	MCONTEXT_FPREGSMEM(%rdi), %rcx
+	movq	%rcx, MCONTEXT_FPREGS(%rdi)
+	fnstenv	(%rcx)
+	fldenv	(%rcx)
+	stmxcsr	MCONTEXT_MXCSR(%rdi)
+
+	/* restore the new FPU context, but not the registers */
+	movq	MCONTEXT_FPREGS(%rsi), %rcx
+	fldenv	(%rcx)
+	ldmxcsr	MCONTEXT_MXCSR(%rsi)
+#endif
+
 	/* set all of the registers to their new states, stored in the second
 	   ucontext structure */	
 	movq	REG_OFFSET(REG_R8)(%rsi), %r8

@@ -16,23 +16,23 @@ target to do it.
 
 ## supported features
 
-| Architecture | Works on musl | Syscall | Supports FREESTANDING | Common trampoline |
-|--------------|---------------|---------|-----------------------|-------------------|
-|    aarch64   | ✓             |         | ✓                     | ✓                 |
-|      arm     | ✓             |         | ✓                     | ✓                 |
-| loongarch64  | ✓             |         | ✓                     |                   |
-|     m68k     | ✓             |         | ✓                     | ✓                 |
-|     mips     | ✓             |         | ✓                     |                   |
-|    mips64    | ✓             |         | ✓                     |                   |
-|     or1k     | ✓             |         | ✓                     | ✓                 |
-|      ppc     | ✓             | ✓       |                       |                   |
-|     ppc64    | ✓             | ✓       |                       |                   |
-|    riscv32   | ✓             |         | ✓                     | ✓                 |
-|    riscv64   | ✓             |         | ✓                     | ✓                 |
-|     s390x    | ✓             |         | ✓                     |                   |
-|      sh      | ✓             |         | ✓                     | ✓                 |
-|      x86     | ✓             |         | ✓                     |                   |
-|    x86_64    | ✓             |         | ✓                     | ✓                 |
+| Architecture | Works on musl | Hard-float | Syscall | Supports FREESTANDING | Common trampoline |
+|--------------|---------------|------------|---------|-----------------------|-------------------|
+|    aarch64   | ✓             | ✓          |         | ✓                     | ✓                 |
+|      arm     | ✓             | ✓          |         | ✓                     | ✓                 |
+| loongarch64  | ✓             |            |         | ✓                     |                   |
+|     m68k     | ✓             |            |         | ✓                     | ✓                 |
+|     mips     | ✓             |            |         | ✓                     |                   |
+|    mips64    | ✓             |            |         | ✓                     |                   |
+|     or1k     | ✓             |            |         | ✓                     | ✓                 |
+|      ppc     | ✓             | ✓          | ✓       |                       |                   |
+|     ppc64    | ✓             | ✓          | ✓       |                       |                   |
+|    riscv32   | ✓             |            |         | ✓                     | ✓                 |
+|    riscv64   | ✓             |            |         | ✓                     | ✓                 |
+|     s390x    | ✓             |            |         | ✓                     |                   |
+|      sh      | ✓             |            |         | ✓                     | ✓                 |
+|      x86     | ✓             |            |         | ✓                     |                   |
+|    x86_64    | ✓             |            |         | ✓                     | ✓                 |
 
 
 ## building
@@ -97,12 +97,5 @@ ucontext functions:
   overhead.  Use `-lucontext_posix` if you actually need this functionality, which provides a POSIX
   compliant implementation at the cost of performance.
 
-* Only basic GPR registers are saved and restored when context swapping.  The glibc implementation uses
-  hardware capability detection to save/restore other register groups, such as the FPU registers or
-  vector processing (AltiVec/AVX/NEON) registers.  Adding this capability detection would significantly
-  increase the complexity of the project and thus is not implemented.  Support for compiling in code to
-  save/restore FPU registers or vector registers may be added in a later release as a build-time
-  setting -- for now, we assume a soft-float ABI with no optional processor features.  In practice, this
-  does not really matter, code using these functions are unlikely to be impacted by this design
-  assumption. This is a work in progress, as newer compilers will spill even non-floating-point state
-  through floating point registers when allowed to do so.
+* Some architectures do not have support for saving/restoring FPU/vector registers.
+  Consult the above table.

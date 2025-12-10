@@ -56,6 +56,8 @@
 #define REG_SZ		(4)
 
 #define MCONTEXT_GREGS	(20)
+#define MCONTEXT_FPREGS	(96)
+#define MCONTEXT_FPREGSMEM	(236)
 
 #include "common-defs.h"
 

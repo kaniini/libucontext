@@ -19,6 +19,12 @@ FUNC(libucontext_setcontext)
 	/* load address of the ucontext structure */
 	movl	4(%esp), %eax
 
+#ifndef FORCE_SOFT_FLOAT
+	/* restore the FPU context, but not the registers */
+	movl	MCONTEXT_FPREGS(%eax), %ecx
+	fldenv	(%ecx)
+#endif
+
 	/* set up the FS segment register */
 	movl	REG_OFFSET(REG_FS)(%eax), %ecx
 	movw	%cx, %fs

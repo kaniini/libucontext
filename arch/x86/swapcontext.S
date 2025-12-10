@@ -44,8 +44,23 @@ FUNC(libucontext_swapcontext)
 	movw	%fs, %cx
 	movl	%ecx, REG_OFFSET(REG_FS)(%eax)
 
+#ifndef FORCE_SOFT_FLOAT
+	/* preserve the FPU context and registers,
+	   ucontext_t.__fpregs_mem is used as a scratch buffer */
+	leal	MCONTEXT_FPREGSMEM(%eax), %ecx
+	movl	%ecx, MCONTEXT_FPREGS(%eax)
+	fnstenv	(%ecx)
+	fldenv	(%ecx)
+#endif
+
 	/* load address of the ucontext structure */
 	movl	8(%esp), %eax
+
+#ifndef FORCE_SOFT_FLOAT
+	/* restore the FPU context, but not the registers */
+	movl	MCONTEXT_FPREGS(%eax), %ecx
+	fldenv	(%ecx)
+#endif
 
 	/* set up the FS segment register */
 	movl	REG_OFFSET(REG_FS)(%eax), %ecx

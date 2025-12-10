@@ -44,6 +44,15 @@ FUNC(libucontext_getcontext)
 	movw	%fs, %cx
 	movl	%ecx, REG_OFFSET(REG_FS)(%eax)
 
+#ifndef FORCE_SOFT_FLOAT
+	/* preserve the FPU context and registers,
+	   ucontext_t.__fpregs_mem is used as a scratch buffer */
+	leal	MCONTEXT_FPREGSMEM(%eax), %ecx
+	movl	%ecx, MCONTEXT_FPREGS(%ecx)
+	fnstenv	(%ecx)
+	fldenv	(%ecx)
+#endif
+
 	/* we're all done here, return 0 */
 	xorl	%eax, %eax
 	ret

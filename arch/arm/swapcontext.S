@@ -41,10 +41,11 @@ FUNC(libucontext_swapcontext)
 #endif
 
 	add	r2, r0, #REG_OFFSET(0)
+
 	/* copy r0 with value 0 to indicate success (return value 0) */
-	mov r0, #0
+	mov	r0, #0
 	stmia	r2, {r0-r12}
-	
+
 	/* load new registers from the second ucontext structure */
 	add	r14, r1, #REG_OFFSET(0)
 	ldmia	r14, {r0-r12}

@@ -22,13 +22,13 @@ FUNC(libucontext_setcontext)
 	ldr	r2, [r0, #VFP_MAGIC_OFFSET]
 	ldr	r3, =#0x56465001
 	cmp	r2, r3
-        bne     1f
+	bne	1f
 #endif
 	/* if vfp in use, restore d8-d15 from uc_regspace */
 	.fpu	vfp
 	add	r14, r0, #VFP_D8_OFFSET
 	vldmia	r14, {d8-d15}
-	.fpu 	softvfp
+	.fpu	softvfp
 1:
 #endif
 

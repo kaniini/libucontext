@@ -17,9 +17,10 @@ jobs:
           - arch: x86_64
             platform: linux/amd64
             image: alpine:latest
-          - arch: ppc
-            platform: linux/ppc
-            image: adelielinux/adelie:latest
+          # Blocked by https://github.com/tonistiigi/binfmt/issues/280
+          # - arch: ppc
+          #  platform: linux/ppc
+          #  image: adelielinux/adelie:latest
           - arch: ppc64le
             platform: linux/ppc64le
             image: alpine:latest

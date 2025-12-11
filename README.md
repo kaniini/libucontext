@@ -16,24 +16,34 @@ target to do it.
 
 ## supported features
 
+### tier 1 architectures
+
+These architectures are tested with CI and are supported by Alpine.
+
 | Architecture | Works on musl | Hard-float | Syscall | Supports FREESTANDING | Common trampoline |
 |--------------|---------------|------------|---------|-----------------------|-------------------|
 |    aarch64   | ✓             | ✓          |         | ✓                     | ✓                 |
 |      arm     | ✓             | ✓          |         | ✓                     | ✓                 |
 | loongarch64  | ✓             |            |         | ✓                     |                   |
+|      ppc     | ✓             | ✓          | ✓       |                       |                   |
+|     ppc64    | ✓             | ✓          | ✓       |                       |                   |
+|    riscv64   | ✓             | ✓          |         | ✓                     | ✓                 |
+|     s390x    | ✓             | ✓          |         | ✓                     |                   |
+|      x86     | ✓             | ✓          |         | ✓                     |                   |
+|    x86_64    | ✓             | ✓          |         | ✓                     | ✓                 |
+
+### tier 2 architectures
+
+These architectures are not tested with CI due to lack of Alpine support.
+
+| Architecture | Works on musl | Hard-float | Syscall | Supports FREESTANDING | Common trampoline |
+|--------------|---------------|------------|---------|-----------------------|-------------------|
 |     m68k     | ✓             |            |         | ✓                     | ✓                 |
 |     mips     | ✓             |            |         | ✓                     |                   |
 |    mips64    | ✓             |            |         | ✓                     |                   |
 |     or1k     | ✓             |            |         | ✓                     | ✓                 |
-|      ppc     | ✓             | ✓          | ✓       |                       |                   |
-|     ppc64    | ✓             | ✓          | ✓       |                       |                   |
 |    riscv32   | ✓             |            |         | ✓                     | ✓                 |
-|    riscv64   | ✓             | ✓          |         | ✓                     | ✓                 |
-|     s390x    | ✓             | ✓          |         | ✓                     |                   |
 |      sh      | ✓             |            |         | ✓                     | ✓                 |
-|      x86     | ✓             | ✓          |         | ✓                     |                   |
-|    x86_64    | ✓             | ✓          |         | ✓                     | ✓                 |
-
 
 ## building
 

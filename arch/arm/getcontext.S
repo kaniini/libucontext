@@ -31,7 +31,7 @@ FUNC(libucontext_getcontext)
 	tst	r0, #64
 	pop	{r0-r1,fp,lr}
 	moveq	r2, #0
-	ldrne	r2, =#0x56465001
+	ldrne	r2, =0x56465001
 	str	r2, [r0, #VFP_MAGIC_OFFSET]
 	beq	1f
 #endif

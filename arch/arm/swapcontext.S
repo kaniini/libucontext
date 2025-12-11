@@ -24,7 +24,7 @@ FUNC(libucontext_swapcontext)
 #ifndef FORCE_HARD_FLOAT
 	/* test for vfp magic number, copy to other ucontext */
 	ldr	r3, [r1, #VFP_MAGIC_OFFSET]
-	ldr	r2, =#0x56465001
+	ldr	r2, =0x56465001
 	str	r3, [r0, #VFP_MAGIC_OFFSET]
 	cmp	r3, r2
 	bne	1f

@@ -20,7 +20,7 @@ FUNC(libucontext_setcontext)
 #ifndef FORCE_HARD_FLOAT
 	/* test for vfp magic number set by getcontext */
 	ldr	r2, [r0, #VFP_MAGIC_OFFSET]
-	ldr	r3, =#0x56465001
+	ldr	r3, =0x56465001
 	cmp	r2, r3
 	bne	1f
 #endif

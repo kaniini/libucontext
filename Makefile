@@ -217,7 +217,7 @@ install: all
 	ln -sf ${LIBUCONTEXT_SONAME} ${DESTDIR}${shared_libdir}/${LIBUCONTEXT_NAME}
 	for i in ${LIBUCONTEXT_HEADERS}; do \
 		destfn=$$(basename $$i); \
-		install -D -m644 $$i ${DESTDIR}${includedir}/$(basename $(LIBUCONTEXT_NAME))/$$destfn; \
+		install -D -m644 $$i ${DESTDIR}${includedir}/libucontext/$$destfn; \
 	done
 	install -D -m644 ${LIBUCONTEXT_PC} ${DESTDIR}${pkgconfigdir}/${LIBUCONTEXT_PC}
 	if [ -n "${LIBUCONTEXT_POSIX_NAME}" ]; then \

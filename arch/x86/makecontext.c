@@ -36,7 +36,7 @@ libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(void), int arg
 	sp -= uc_link;
 	sp = (libucontext_greg_t *) (((uintptr_t) sp & -16L) - 8);
 
-	ucp->uc_mcontext.fpregs = (void *) &ucp->__fpregs_mem[0];
+	ucp->uc_mcontext.fpregs = (void *) &ucp->__fpregs_mem;
 	ucp->uc_mcontext.gregs[REG_EIP] = (uintptr_t) func;
 	ucp->uc_mcontext.gregs[REG_EBX] = (uintptr_t) argc;
 	ucp->uc_mcontext.gregs[REG_ESP] = (uintptr_t) sp;

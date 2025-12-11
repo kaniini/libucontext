@@ -231,7 +231,7 @@ install_docs: docs
 		ln -s libucontext.3 ${DESTDIR}/usr/share/man/man3/$$i; \
 	done
 
-ifneq (${FREESTANDING},yes)
+ifeq (${BUILD_POSIX},yes)
 check: check_libucontext_posix
 
 check_libucontext_posix: test_libucontext_posix ${LIBUCONTEXT_POSIX_SONAME} ${LIBUCONTEXT_SONAME}

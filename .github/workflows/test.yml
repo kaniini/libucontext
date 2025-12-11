@@ -13,20 +13,52 @@ jobs:
         include:
           - arch: x86
             platform: linux/386
+            compiler: gcc
           - arch: x86_64
             platform: linux/amd64
+            compiler: gcc
           - arch: ppc64le
             platform: linux/ppc64le
+            compiler: gcc
           - arch: arm
             platform: linux/arm/v7
+            compiler: gcc
           - arch: aarch64
             platform: linux/arm64
+            compiler: gcc
           - arch: riscv64
             platform: linux/riscv64
+            compiler: gcc
           - arch: s390x
             platform: linux/s390x
+            compiler: gcc
           - arch: loongarch64
             platform: linux/loong64
+            compiler: gcc
+          - arch: x86
+            platform: linux/386
+            compiler: clang
+          - arch: x86_64
+            platform: linux/amd64
+            compiler: clang
+          - arch: ppc64le
+            platform: linux/ppc64le
+            compiler: clang
+          - arch: arm
+            platform: linux/arm/v7
+            compiler: clang
+          - arch: aarch64
+            platform: linux/arm64
+            compiler: clang
+          - arch: riscv64
+            platform: linux/riscv64
+            compiler: clang
+          - arch: s390x
+            platform: linux/s390x
+            compiler: clang
+          - arch: loongarch64
+            platform: linux/loong64
+            compiler: clang
 
     steps:
       - name: Checkout
@@ -45,6 +77,6 @@ jobs:
             -w /work \
             registry.alpinelinux.org/img/alpine:latest \
             sh -lc '
-              apk add build-base
-              make check ARCH=${{matrix.arch}}
+              apk add build-base ${{matrix.compiler}}
+              make check ARCH=${{matrix.arch}} CC=${{matrix.compiler}}
             '

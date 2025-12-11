@@ -18,7 +18,7 @@ target to do it.
 
 ### tier 1 architectures
 
-These architectures are tested with CI and are supported by Alpine.
+These architectures are tested with CI using either Alpine or Adélie Linux.
 
 | Architecture | Works on musl | Hard-float | Syscall | Supports FREESTANDING | Common trampoline |
 |--------------|---------------|------------|---------|-----------------------|-------------------|
@@ -34,7 +34,10 @@ These architectures are tested with CI and are supported by Alpine.
 
 ### tier 2 architectures
 
-These architectures are not tested with CI due to lack of Alpine support.
+These architectures are not tested with CI due to lack of distribution support.
+
+It may be possible to test them using OpenWrt docker images, but this hasn't been
+investigated yet.
 
 | Architecture | Works on musl | Hard-float | Syscall | Supports FREESTANDING | Common trampoline |
 |--------------|---------------|------------|---------|-----------------------|-------------------|

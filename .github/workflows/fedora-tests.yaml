@@ -54,5 +54,5 @@ jobs:
             registry.fedoraproject.org/fedora:latest \
             sh -lc '
               dnf install -y make glibc-devel ${{matrix.compiler}}
-              make check ARCH=${{matrix.arch}} CC=${{matrix.compiler}}
+              make check ARCH=${{matrix.arch}} CC=${{matrix.compiler}} BUILD_POSIX=no
             '

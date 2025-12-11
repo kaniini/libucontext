@@ -24,6 +24,7 @@ FUNC(libucontext_swapcontext)
 	stam	%a0, %a15, AREG_OFFSET(0)(%r1)	/* store access registers */
 	stmg	%r0, %r15, REG_OFFSET(0)(%r1)	/* store general-purpose registers */
 
+#ifndef FORCE_SOFT_FLOAT
 	stfpc	MCONTEXT_FPC(%r1)		/* store fpc register */
 	std	%f0, FPREG_OFFSET(0)(%r1)	/* store fpregs %f0-%f15 */
 	std	%f1, FPREG_OFFSET(1)(%r1)
@@ -41,9 +42,11 @@ FUNC(libucontext_swapcontext)
 	std	%f13, FPREG_OFFSET(13)(%r1)
 	std	%f14, FPREG_OFFSET(14)(%r1)
 	std	%f15, FPREG_OFFSET(15)(%r1)
+#endif
 
 	lgr	%r5, %r0			/* copy %r0 to %r5 so that %r0 doesn't get clobbered */
 
+#ifndef FORCE_SOFT_FLOAT
 	lfpc	MCONTEXT_FPC(%r5)		/* load fpc register */
 	ld	%f0, FPREG_OFFSET(0)(%r5)	/* load %f0-%f15 from context */
 	ld	%f1, FPREG_OFFSET(1)(%r5)
@@ -61,6 +64,7 @@ FUNC(libucontext_swapcontext)
 	ld	%f13, FPREG_OFFSET(13)(%r5)
 	ld	%f14, FPREG_OFFSET(14)(%r5)
 	ld	%f15, FPREG_OFFSET(15)(%r5)
+#endif
 
 	lam	%a2, %a15, AREG_OFFSET(2)(%r5)	/* load access registers, but skip %a0 and %a1 which are for TLS */
 	lmg	%r0, %r15, REG_OFFSET(0)(%r5)	/* load general-purpose registers */

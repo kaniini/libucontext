@@ -18,6 +18,7 @@ ALIAS(__setcontext, libucontext_setcontext)
 FUNC(libucontext_setcontext)
 	lgr	%r1, %r2			/* use %r1 as our working register */
 
+#ifndef FORCE_SOFT_FLOAT
 	lfpc	MCONTEXT_FPC(%r1)		/* load fpc register */
 	ld	%f0, FPREG_OFFSET(0)(%r1)	/* load %f0-%f15 from context */
 	ld	%f1, FPREG_OFFSET(1)(%r1)
@@ -35,6 +36,7 @@ FUNC(libucontext_setcontext)
 	ld	%f13, FPREG_OFFSET(13)(%r1)
 	ld	%f14, FPREG_OFFSET(14)(%r1)
 	ld	%f15, FPREG_OFFSET(15)(%r1)
+#endif
 
 	lam	%a2, %a15, AREG_OFFSET(2)(%r1)	/* load access registers, but skip %a0 and %a1 which are for TLS */
 	lmg	%r0, %r15, REG_OFFSET(0)(%r1)	/* store general-purpose registers */

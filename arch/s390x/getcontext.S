@@ -22,6 +22,7 @@ FUNC(libucontext_getcontext)
 	stam	%a0, %a15, AREG_OFFSET(0)(%r1)	/* store access registers */
 	stmg	%r0, %r15, REG_OFFSET(0)(%r1)	/* store general-purpose registers */
 
+#ifndef FORCE_SOFT_FLOAT
 	stfpc	MCONTEXT_FPC(%r1)		/* store fpc register */
 	std	%f0, FPREG_OFFSET(0)(%r1)	/* store fpregs %f0-%f15 */
 	std	%f1, FPREG_OFFSET(1)(%r1)
@@ -39,6 +40,7 @@ FUNC(libucontext_getcontext)
 	std	%f13, FPREG_OFFSET(13)(%r1)
 	std	%f14, FPREG_OFFSET(14)(%r1)
 	std	%f15, FPREG_OFFSET(15)(%r1)
+#endif
 
 	br	%r14				/* return to where we came from */
 END(libucontext_getcontext)

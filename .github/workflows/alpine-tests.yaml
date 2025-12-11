@@ -1,4 +1,4 @@
-name: Build and test libucontext
+name: Build and test libucontext (Alpine)
 
 on:
   push:

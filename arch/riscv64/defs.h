@@ -2,7 +2,10 @@
 #define __ARCH_RISCV64_DEFS_H
 
 #define REG_SZ		(8)
+#define FPREG_SZ	(8)
 #define MCONTEXT_GREGS	(176)
+#define MCONTEXT_FPREGS	(432)
+#define MCONTEXT_FCSR	(688)
 
 /* program counter is saved in x0 as well as x1, similar to mips */
 #ifndef REG_PC
@@ -46,6 +49,7 @@
 #define REG_S11		(27)
 
 #define PC_OFFSET	REG_OFFSET(REG_PC)
+#define FPREG_OFFSET(i)	(MCONTEXT_FPREGS + ((i) * FPREG_SZ))
 
 #define FETCH_LINKPTR(dest) \
 	asm("mv	%0, s1" : "=r" ((dest)))

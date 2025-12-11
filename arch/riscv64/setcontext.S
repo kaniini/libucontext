@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2020-2025 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -18,6 +18,26 @@ ALIAS(__setcontext, libucontext_setcontext)
 FUNC(libucontext_setcontext)
 	/* move $a0 to $t0 to avoid clobbering. */
 	mv t0, a0
+
+#ifndef FORCE_SOFT_FLOAT
+	/* floating point register block */
+	lw t1, MCONTEXT_FCSR(t0)
+
+	fld fs0, FPREG_OFFSET(8)(t0)
+	fld fs1, FPREG_OFFSET(9)(t0)
+	fld fs2, FPREG_OFFSET(18)(t0)
+	fld fs3, FPREG_OFFSET(19)(t0)
+	fld fs4, FPREG_OFFSET(20)(t0)
+	fld fs5, FPREG_OFFSET(21)(t0)
+	fld fs6, FPREG_OFFSET(22)(t0)
+	fld fs7, FPREG_OFFSET(23)(t0)
+	fld fs8, FPREG_OFFSET(24)(t0)
+	fld fs9, FPREG_OFFSET(25)(t0)
+	fld fs10, FPREG_OFFSET(26)(t0)
+	fld fs11, FPREG_OFFSET(27)(t0)
+
+	fssr t1
+#endif
 
 	ld t1, PC_OFFSET(t0)
 	ld ra, REG_OFFSET(REG_RA)(t0)

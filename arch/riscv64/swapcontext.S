@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Ariadne Conill <ariadne@dereferenced.org>
+ * Copyright (c) 2020-2025 Ariadne Conill <ariadne@dereferenced.org>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -42,6 +42,44 @@ FUNC(libucontext_swapcontext)
 	sd s9, REG_OFFSET(REG_S9)(a0)
 	sd s10, REG_OFFSET(REG_S10)(a0)
 	sd s11, REG_OFFSET(REG_S11)(a0)
+
+#ifndef FORCE_SOFT_FLOAT
+	/* floating point register block */
+	frsr a1
+
+	fsd fs0, FPREG_OFFSET(8)(a0)
+	fsd fs1, FPREG_OFFSET(9)(a0)
+	fsd fs2, FPREG_OFFSET(18)(a0)
+	fsd fs3, FPREG_OFFSET(19)(a0)
+	fsd fs4, FPREG_OFFSET(20)(a0)
+	fsd fs5, FPREG_OFFSET(21)(a0)
+	fsd fs6, FPREG_OFFSET(22)(a0)
+	fsd fs7, FPREG_OFFSET(23)(a0)
+	fsd fs8, FPREG_OFFSET(24)(a0)
+	fsd fs9, FPREG_OFFSET(25)(a0)
+	fsd fs10, FPREG_OFFSET(26)(a0)
+	fsd fs11, FPREG_OFFSET(27)(a0)
+
+	sw a1, MCONTEXT_FCSR(a0)
+
+	/* restore new floating point register block */
+	lw t1, MCONTEXT_FCSR(t0)
+
+	fld fs0, FPREG_OFFSET(8)(t0)
+	fld fs1, FPREG_OFFSET(9)(t0)
+	fld fs2, FPREG_OFFSET(18)(t0)
+	fld fs3, FPREG_OFFSET(19)(t0)
+	fld fs4, FPREG_OFFSET(20)(t0)
+	fld fs5, FPREG_OFFSET(21)(t0)
+	fld fs6, FPREG_OFFSET(22)(t0)
+	fld fs7, FPREG_OFFSET(23)(t0)
+	fld fs8, FPREG_OFFSET(24)(t0)
+	fld fs9, FPREG_OFFSET(25)(t0)
+	fld fs10, FPREG_OFFSET(26)(t0)
+	fld fs11, FPREG_OFFSET(27)(t0)
+
+	fssr t1
+#endif
 
 	/* restore the other context from $t0. */
 	ld t1, REG_OFFSET(REG_PC)(t0)

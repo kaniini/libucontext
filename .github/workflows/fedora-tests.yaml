@@ -1,0 +1,58 @@
+name: Build and test libucontext (Fedora)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            platform: linux/amd64
+            compiler: gcc
+          - arch: ppc64le
+            platform: linux/ppc64le
+            compiler: gcc
+          - arch: aarch64
+            platform: linux/arm64
+            compiler: gcc
+          - arch: s390x
+            platform: linux/s390x
+            compiler: gcc
+          - arch: x86_64
+            platform: linux/amd64
+            compiler: clang
+          - arch: ppc64le
+            platform: linux/ppc64le
+            compiler: clang
+          - arch: aarch64
+            platform: linux/arm64
+            compiler: clang
+          - arch: s390x
+            platform: linux/s390x
+            compiler: clang
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up QEMU user emulation
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+
+      - name: Build and run tests using Docker
+        run: |
+          docker run --rm \
+            --platform=${{matrix.platform}} \
+            -v "$PWD:/work" \
+            -w /work \
+            registry.fedoraproject.org/fedora:latest \
+            sh -lc '
+              dnf install -y make glibc-devel ${{matrix.compiler}}
+              make check ARCH=${{matrix.arch}} CC=${{matrix.compiler}}
+            '

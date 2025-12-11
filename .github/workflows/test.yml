@@ -13,32 +13,20 @@ jobs:
         include:
           - arch: x86
             platform: linux/386
-            image: alpine:latest
           - arch: x86_64
             platform: linux/amd64
-            image: alpine:latest
-          # Blocked by https://github.com/tonistiigi/binfmt/issues/280
-          # - arch: ppc
-          #  platform: linux/ppc
-          #  image: adelielinux/adelie:latest
           - arch: ppc64le
             platform: linux/ppc64le
-            image: alpine:latest
           - arch: arm
             platform: linux/arm/v7
-            image: alpine:latest
           - arch: aarch64
             platform: linux/arm64
-            image: alpine:latest
           - arch: riscv64
             platform: linux/riscv64
-            image: alpine:latest
           - arch: s390x
             platform: linux/s390x
-            image: alpine:latest
           - arch: loongarch64
             platform: linux/loong64
-            image: registry.alpinelinux.org/img/alpine:latest
 
     steps:
       - name: Checkout
@@ -55,7 +43,7 @@ jobs:
             --platform=${{matrix.platform}} \
             -v "$PWD:/work" \
             -w /work \
-            ${{matrix.image}} \
+            registry.alpinelinux.org/img/alpine:latest \
             sh -lc '
               apk add build-base
               make check ARCH=${{matrix.arch}}

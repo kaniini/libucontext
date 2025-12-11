@@ -25,7 +25,6 @@ These architectures are tested with CI using either Alpine or Adélie Linux.
 |    aarch64   | ✓             | ✓          |         | ✓                     | ✓                 |
 |      arm     | ✓             | ✓          |         | ✓                     | ✓                 |
 | loongarch64  | ✓             |            |         | ✓                     |                   |
-|      ppc     | ✓             | ✓          | ✓       |                       |                   |
 |     ppc64    | ✓             | ✓          | ✓       |                       |                   |
 |    riscv64   | ✓             | ✓          |         | ✓                     | ✓                 |
 |     s390x    | ✓             | ✓          |         | ✓                     |                   |
@@ -34,7 +33,8 @@ These architectures are tested with CI using either Alpine or Adélie Linux.
 
 ### tier 2 architectures
 
-These architectures are not tested with CI due to lack of distribution support.
+These architectures are not tested with CI due to lack of distribution support or
+lack of support by `docker/setup-qemu-action`.
 
 It may be possible to test them using OpenWrt docker images, but this hasn't been
 investigated yet.
@@ -45,6 +45,7 @@ investigated yet.
 |     mips     | ✓             |            |         | ✓                     |                   |
 |    mips64    | ✓             |            |         | ✓                     |                   |
 |     or1k     | ✓             |            |         | ✓                     | ✓                 |
+|      ppc     | ✓             | ✓          | ✓       |                       |                   |
 |    riscv32   | ✓             |            |         | ✓                     | ✓                 |
 |      sh      | ✓             |            |         | ✓                     | ✓                 |
 

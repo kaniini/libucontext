@@ -20,6 +20,9 @@ jobs:
           - arch: s390x
             platform: linux/s390x
             compiler: gcc
+          - arch: ppc64le
+            platform: linux/ppc64le
+            compiler: gcc
           - arch: x86_64
             platform: linux/amd64
             compiler: clang
@@ -28,6 +31,9 @@ jobs:
             compiler: clang
           - arch: s390x
             platform: linux/s390x
+            compiler: clang
+          - arch: ppc64le
+            platform: linux/ppc64le
             compiler: clang
 
     steps:
@@ -48,5 +54,5 @@ jobs:
             registry.fedoraproject.org/fedora:latest \
             sh -lc '
               dnf install -y make glibc-devel ${{matrix.compiler}}
-              make check ARCH=${{matrix.arch}} CC=${{matrix.compiler}} EXPORT_UNPREFIXED=no BUILD_POSIX=no
+              make check ARCH=${{matrix.arch}} CC=${{matrix.compiler}} FREESTANDING=yes
             '

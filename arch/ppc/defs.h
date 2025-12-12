@@ -1,6 +1,8 @@
 #ifndef __ARCH_PPC_DEFS_H
 #define __ARCH_PPC_DEFS_H
 
+#define KERNEL_UAPI_CONTEXT_SIZE (1184)
+
 #define REG_R0		(0)
 #define REG_R1		(1)
 #define REG_R2		(2)

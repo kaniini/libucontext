@@ -1,6 +1,9 @@
 #ifndef __ARCH_PPC_DEFS_H
 #define __ARCH_PPC_DEFS_H
 
+/* sizeof(struct ucontext) from kernel UAPI */
+#define KERNEL_UAPI_UCONTEXT_SIZE	(1696)
+
 #define REG_R0		(0)
 #define REG_R1		(1)
 #define REG_R2		(2)

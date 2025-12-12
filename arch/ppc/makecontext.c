@@ -22,6 +22,10 @@
 extern void libucontext_trampoline(void);
 
 
+_Static_assert(sizeof(libucontext_ucontext_t) == KERNEL_UAPI_UCONTEXT_SIZE,
+	"layout mismatch between kernel UAPI structure and libc ucontext_t");
+
+
 void
 libucontext_makecontext(libucontext_ucontext_t *ucp, void (*func)(), int argc, ...)
 {

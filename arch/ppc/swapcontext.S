@@ -10,7 +10,7 @@
  * from the use of this software.
  */
 
-#include "common-defs.h"
+#include "defs.h"
 
 ALIAS(swapcontext, __libucontext_swapcontext)
 ALIAS(__swapcontext, __libucontext_swapcontext)
@@ -20,8 +20,8 @@ ALIAS(__swapcontext, __libucontext_swapcontext)
 libucontext_swapcontext = __libucontext_swapcontext
 
 FUNC(__libucontext_swapcontext)
-	li 0, 249     # SYS_swapcontext
-	li 5, 1184    # sizeof(ucontext_t)
+	li 0, 249     				# SYS_swapcontext
+	li 5, KERNEL_UAPI_UCONTEXT_SIZE		# sizeof(ucontext_t)
 	sc
 
 .hidden __retfromsyscall

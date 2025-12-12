@@ -14,9 +14,6 @@ jobs:
           - arch: x86_64
             platform: linux/amd64
             compiler: gcc
-          - arch: ppc64le
-            platform: linux/ppc64le
-            compiler: gcc
           - arch: aarch64
             platform: linux/arm64
             compiler: gcc
@@ -25,9 +22,6 @@ jobs:
             compiler: gcc
           - arch: x86_64
             platform: linux/amd64
-            compiler: clang
-          - arch: ppc64le
-            platform: linux/ppc64le
             compiler: clang
           - arch: aarch64
             platform: linux/arm64

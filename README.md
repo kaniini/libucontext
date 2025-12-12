@@ -4,15 +4,10 @@
 it faithfully follows the kernel process ABI when doing context swaps.
 
 Notably, when combined with `gcompat`, it provides a fully compatible implementation of the ucontext
-functions that are ABI compatible with glibc.
-
-Since version 0.13, for some architectures, you can deploy to bare metal using newlib via the
-`FREESTANDING=yes` make option.  Systems which use a syscall cannot work this way.  The table
-below shows which architecture ports have been adapted to build with `FREESTANDING=yes`.
+functions that are ABI compatible with glibc on most architectures.
 
 Adding support for new architectures is easy, but you need to know assembly language for the
 target to do it.
-
 
 ## supported features
 
@@ -25,7 +20,7 @@ These architectures are tested with CI using either Alpine or Adélie Linux.
 |    aarch64   | ✓             | ✓          |         | ✓                     | ✓                 |
 |      arm     | ✓             | ✓          |         | ✓                     | ✓                 |
 | loongarch64  | ✓             |            |         | ✓                     |                   |
-|     ppc64    | ✓             | ✓          | ✓       |                       |                   |
+|     ppc64    | ✓             | ✓          | ✓       | ✓                     |                   |
 |    riscv64   | ✓             | ✓          |         | ✓                     | ✓                 |
 |     s390x    | ✓             | ✓          |         | ✓                     |                   |
 |      x86     | ✓             | ✓          |         | ✓                     |                   |
@@ -48,6 +43,19 @@ investigated yet.
 |      ppc     | ✓             | ✓          | ✓       |                       |                   |
 |    riscv32   | ✓             |            |         | ✓                     | ✓                 |
 |      sh      | ✓             |            |         | ✓                     | ✓                 |
+
+## freestanding mode
+
+Since version 0.13, for some architectures, you can deploy to bare metal using newlib via the
+`FREESTANDING=yes` make option.  Systems which use a syscall cannot work this way.  The table
+above shows which architecture ports have been adapted to build with `FREESTANDING=yes`.
+
+Applications consuming libucontext in freestanding mode must use the native libucontext APIs directly
+rather than the POSIX `ucontext.h` APIs.
+
+Freestanding mode is also recommended for distributions which want to provide fast userspace context
+swapping without adherence to a given libc context ABI where applications will only use libucontext
+directly.
 
 ## building
 

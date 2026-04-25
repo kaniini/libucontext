@@ -1,19 +1,19 @@
 #ifndef LIBUCONTEXT_BITS_H
 #define LIBUCONTEXT_BITS_H
 
-#define REG_GS		(0)
-#define REG_FS		(1)
-#define REG_ES		(2)
-#define REG_DS		(3)
-#define REG_EDI		(4)
-#define REG_ESI		(5)
-#define REG_EBP		(6)
-#define REG_ESP		(7)
-#define REG_EBX		(8)
-#define REG_EDX		(9)
-#define REG_ECX		(10)
-#define REG_EAX		(11)
-#define REG_EIP		(14)
+#define LIBUCONTEXT_REG_GS		(0)
+#define LIBUCONTEXT_REG_FS		(1)
+#define LIBUCONTEXT_REG_ES		(2)
+#define LIBUCONTEXT_REG_DS		(3)
+#define LIBUCONTEXT_REG_EDI		(4)
+#define LIBUCONTEXT_REG_ESI		(5)
+#define LIBUCONTEXT_REG_EBP		(6)
+#define LIBUCONTEXT_REG_ESP		(7)
+#define LIBUCONTEXT_REG_EBX		(8)
+#define LIBUCONTEXT_REG_EDX		(9)
+#define LIBUCONTEXT_REG_ECX		(10)
+#define LIBUCONTEXT_REG_EAX		(11)
+#define LIBUCONTEXT_REG_EIP		(14)
 
 typedef int libucontext_greg_t, libucontext_gregset_t[19];
 
@@ -47,4 +47,3 @@ typedef struct libucontext_ucontext {
 } libucontext_ucontext_t;
 
 #endif
-

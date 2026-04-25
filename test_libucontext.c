@@ -9,6 +9,16 @@
 #include <string.h>
 #include <libucontext/libucontext.h>
 
+/* Verify libucontext's public headers do not shadow libc's REG_* enum
+ * members from <sys/ucontext.h>.  Including it after libucontext.h is
+ * the order that used to produce a hard syntax error on x86/x86_64 in
+ * freestanding mode. */
+#if defined(__has_include)
+# if __has_include(<sys/ucontext.h>)
+#  include <sys/ucontext.h>
+# endif
+#endif
+
 #define handle_error(msg) \
            do { perror(msg); exit(EXIT_FAILURE); } while (0)
 

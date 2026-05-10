@@ -1,3 +1,10 @@
+Changes from 1.5 to 1.5.1
+-------------------------
+
+* Rename public register definitions on x86 and x86_64 to avoid clashing
+  with glibc definitions when built in freestanding mode.
+  Patch contributed by Daan De Meyer.
+
 Changes from 1.4 to 1.5
 -----------------------
 

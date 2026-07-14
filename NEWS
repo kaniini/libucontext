@@ -1,3 +1,8 @@
+Changes from 1.5.1 to 1.5.2
+---------------------------
+
+* Fix KERNEL_UAPI_UCONTEXT_SIZE typo in 32-bit PowerPC headers.
+
 Changes from 1.5 to 1.5.1
 -------------------------
 

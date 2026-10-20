@@ -40,7 +40,7 @@ if cpu in ['ppc', 'ppc64']
     'arch' / cpu / 'retfromsyscall.c'
   ]
 endif
-if cpu not in ['loongarch64', 'mips', 'mips64', 'ppc', 'ppc64', 's390x', 'x86']
+if cpu not in ['loongarch64', 'mips', 'mips64', 'ppc', 'ppc64', 's390x', 'x86', 'x86_64']
   project_source_files += [
     'arch' / cpu / 'trampoline.c'
   ]

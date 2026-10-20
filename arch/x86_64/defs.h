@@ -100,9 +100,6 @@
 
 #define REG_SZ		(8)
 
-#define FETCH_LINKPTR(dest) \
-	asm("movq (%%rbx), %0" : "=r" ((dest)));
-
 #include "common-defs.h"
 
 #endif

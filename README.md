@@ -24,7 +24,7 @@ These architectures are tested with CI using either Alpine or Adélie Linux.
 |    riscv64   | ✓             | ✓          |         | ✓                     | ✓                 |
 |     s390x    | ✓             | ✓          |         | ✓                     |                   |
 |      x86     | ✓             | ✓          |         | ✓                     |                   |
-|    x86_64    | ✓             | ✓          |         | ✓                     | ✓                 |
+|    x86_64    | ✓             | ✓          |         | ✓                     |                   |
 
 ### tier 2 architectures
 

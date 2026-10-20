@@ -64,6 +64,11 @@ static void f2 (void) {
 }
 
 
+static void f3 (void) {
+	printf("finish f3, should exit with no linked context\n");
+}
+
+
 char st1[8192];
 char st2[8192];
 volatile int done = 0;
@@ -118,5 +123,18 @@ int main (int argc, const char *argv[]) {
 		abort();
 	}
 
-	return 0;
+	/* Returning with a null uc_link must exit successfully, not resume main. */
+	if (libucontext_getcontext(&ctx[1]) != 0)
+		handle_error("libucontext_getcontext");
+
+	ctx[1].uc_stack.ss_sp = st1;
+	ctx[1].uc_stack.ss_size = sizeof st1;
+	ctx[1].uc_link = NULL;
+	libucontext_makecontext(&ctx[1], f3, 0);
+
+	if (libucontext_swapcontext(&ctx[0], &ctx[1]) != 0)
+		handle_error("libucontext_swapcontext");
+
+	fprintf(stderr, "returned from a context with a null uc_link\n");
+	return EXIT_FAILURE;
 }
